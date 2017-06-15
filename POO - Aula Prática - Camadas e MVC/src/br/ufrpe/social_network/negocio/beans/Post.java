@@ -14,7 +14,6 @@ public class Post {
     public Post(String texto, Person author) {
         this.id = nextid;
         nextid++;
-    	
         this.texto = texto;
         this.author = author;
         this.comments = new ArrayList<>();
@@ -64,6 +63,7 @@ public class Post {
 			if (comments.get(i).getId() == id) {
 				resultado = true;
 				comments.remove(i);
+				i--;
 			}
 		}
     }

@@ -78,4 +78,33 @@ public class Person {
     public String toString() {
         return "ID: " + this.id + "\nName: " + this.name +"\nCountry: " + this.country + "\nBirthDate: " + this.birthDate + "\n";
     }
+
+	@Override
+	public boolean equals(Object obj) {     //Gerei esse equals para usar na verificação de Persons e Posts / obs: sem id na comparação
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Person other = (Person) obj;
+		if (birthDate == null) {
+			if (other.birthDate != null)
+				return false;
+		} else if (!birthDate.equals(other.birthDate))
+			return false;
+		if (country == null) {
+			if (other.country != null)
+				return false;
+		} else if (!country.equals(other.country))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+    
+    
 }
