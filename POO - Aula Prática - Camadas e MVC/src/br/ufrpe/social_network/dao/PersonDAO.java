@@ -48,7 +48,7 @@ public class PersonDAO {
 		int posicao = procurarIndice(idInt);
 		if (posicao != proximaPosicao) {
 			this.repositorioPerson[posicao] = this.repositorioPerson[proximaPosicao - 1];
-			Arrays.sort(this.repositorioPerson); // ******testar
+			this.repositorioPerson[proximaPosicao - 1] = null;
 			proximaPosicao--;
 		}
 	}

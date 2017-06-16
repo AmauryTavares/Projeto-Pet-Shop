@@ -60,4 +60,7 @@ public class PostController {
     	return busca;
     }
     
+    public ArrayList<Post> listarTudo() {
+    	return this.postsRepository.listarTudo();
+    }
 }

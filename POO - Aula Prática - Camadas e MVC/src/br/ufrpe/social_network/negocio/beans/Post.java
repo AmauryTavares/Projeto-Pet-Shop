@@ -70,13 +70,16 @@ public class Post {
     
     @Override
     public String toString() {
-    	String text = "Nome: " + this.author.getName() + "\nTexto: " + this.texto;
+    	String text = "Nome: " + this.author.getName() + "\n\tTexto: " + this.texto;
     	
     	if (comments.size() != 0) {
+    		text += "\n\n\tCometário(s): ";
     		for (int i = 0; i < comments.size(); i++) {
-    			text += "\n\t Cometário: " + this.comments.get(i);
+    			text +=  "\n\t" + this.comments.get(i);
 			}
     	}
+    	
+    	text += "\n";
     	
         return text;
     }

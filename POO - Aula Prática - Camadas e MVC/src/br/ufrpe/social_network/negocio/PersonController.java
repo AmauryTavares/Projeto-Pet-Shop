@@ -40,4 +40,8 @@ public class PersonController {
     		this.personsRepository.excluir(p.getId());
     	}
     }
+    
+    public Person[] listarPessoas() {   //retorna o repositorio
+    	return this.personsRepository.listarTudo();
+    }
 }

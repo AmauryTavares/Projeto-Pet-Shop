@@ -63,15 +63,19 @@ public class PostDAO {
 		return busca;
 	}
 	
+	
 	public ArrayList<Post> listarComentarios(ArrayList<Post> comentarios, Person p) {
 		ArrayList<Post> busca = new ArrayList<>();
 		for (int i = 0; i < comentarios.size(); i++) {
-			if (comentarios.get(i).getComments().size() > 0) {
-				busca.addAll(listarComentarios(comentarios.get(i).getComments(), p));
-			}
-			if (p.equals(comentarios.get(i).getAuthor())) {
-				busca.add(comentarios.get(i));
-			}
+			if (comentarios.get(i).getComments().size() > 0) { 
+				busca.addAll(listarComentarios(comentarios.get(i).getComments(), p)); //Enquanto o post tiver comentário, faz uma chamada recursiva dese método para dentro dos comentários
+				for (int j = 0; j < comentarios.get(i).getComments().size(); j++) {   // verifica todos dessa chamada
+					if (p.equals(comentarios.get(i).getComments().get(j).getAuthor())) {
+						busca.add(comentarios.get(i).getComments().get(j));
+					}
+				}
+				
+			}	
 		}
 		return busca;
 	}
