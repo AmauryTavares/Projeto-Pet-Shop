@@ -22,6 +22,16 @@ public class Post {
     public Post() {
         this(null, null);
     }
+<<<<<<< HEAD
+=======
+
+    public long getId() {
+        return this.id;
+    }
+    
+    
+    // TODO gerar todos os métodos get/set, exceto o setId
+>>>>>>> refs/remotes/upstream/master
     
     public void addComment(Post comment) {
         if (comment != null) {
