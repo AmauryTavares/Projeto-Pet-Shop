@@ -163,10 +163,27 @@ public class SistemaFachada {
 
 	/**
 	 * @param c
-	 * @see pet_shop.negocio.ClienteController#cadastrar(pet_shop.negocio.beans.Cliente)
+	 * @see pet_shop.negocio.ClienteController#cadastrarCliente(pet_shop.negocio.beans.Cliente)
 	 */
-	public void cadastrar(Cliente c) {
-		controllerClientes.cadastrar(c);
+	public void cadastrarCliente(Cliente c) {
+		controllerClientes.cadastrarCliente(c);
+	}
+
+	/**
+	 * @param id
+	 * @see pet_shop.negocio.ClienteController#descadastrarCliente(long)
+	 */
+	public void descadastrarCliente(long id) {
+		controllerClientes.descadastrarCliente(id);
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 * @see pet_shop.negocio.ClienteController#listarCliente(long)
+	 */
+	public Cliente listarCliente(long id) {
+		return controllerClientes.listarCliente(id);
 	}
 
 	/**
@@ -196,19 +213,27 @@ public class SistemaFachada {
 
 	/**
 	 * @param f
-	 * @see pet_shop.negocio.FuncionarioController#cadastrar(pet_shop.negocio.beans.Funcionario)
+	 * @see pet_shop.negocio.FuncionarioController#cadastrarFuncionario(pet_shop.negocio.beans.Funcionario)
 	 */
-	public void cadastrar(Funcionario f) {
-		controllerFuncionario.cadastrar(f);
+	public void cadastrarFuncionario(Funcionario f) {
+		controllerFuncionario.cadastrarFuncionario(f);
+	}
+
+	/**
+	 * @param id
+	 * @see pet_shop.negocio.FuncionarioController#descadastrarFuncionario(long)
+	 */
+	public void descadastrarFuncionario(long id) {
+		controllerFuncionario.descadastrarFuncionario(id);
 	}
 
 	/**
 	 * @param id
 	 * @return
-	 * @see pet_shop.negocio.FuncionarioController#listar(long)
+	 * @see pet_shop.negocio.FuncionarioController#listarFuncionario(long)
 	 */
-	public Funcionario listar(long id) {
-		return controllerFuncionario.listar(id);
+	public Funcionario listarFuncionario(long id) {
+		return controllerFuncionario.listarFuncionario(id);
 	}
 
 	/**
@@ -230,10 +255,10 @@ public class SistemaFachada {
 
 	/**
 	 * @return
-	 * @see pet_shop.negocio.FuncionarioController#listarTudo()
+	 * @see pet_shop.negocio.FuncionarioController#listarTudoFuncionario()
 	 */
-	public ArrayList<Funcionario> listarTudo() {
-		return controllerFuncionario.listarTudo();
+	public ArrayList<Funcionario> listarTudoFuncionario() {
+		return controllerFuncionario.listarTudoFuncionario();
 	}
 
 	/**
@@ -246,18 +271,27 @@ public class SistemaFachada {
 
 	/**
 	 * @param p
-	 * @see pet_shop.negocio.ProdutosController#cadastrar(pet_shop.negocio.beans.Produto)
+	 * @see pet_shop.negocio.ProdutosController#cadastrarProduto(pet_shop.negocio.beans.Produto)
 	 */
-	public void cadastrar(Produto p) {
-		controllerProdutos.cadastrar(p);
+	public void cadastrarProduto(Produto p) {
+		controllerProdutos.cadastrarProduto(p);
 	}
 
 	/**
 	 * @param id
-	 * @see pet_shop.negocio.ProdutosController#descadastrar(long)
+	 * @see pet_shop.negocio.ProdutosController#descadastrarProduto(long)
 	 */
-	public void descadastrar(long id) {
-		controllerProdutos.descadastrar(id);
+	public void descadastrarProduto(long id) {
+		controllerProdutos.descadastrarProduto(id);
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 * @see pet_shop.negocio.ProdutosController#listarProduto(long)
+	 */
+	public Produto listarProduto(long id) {
+		return controllerProdutos.listarProduto(id);
 	}
 
 	/**
@@ -275,6 +309,14 @@ public class SistemaFachada {
 	 */
 	public void excluirProduto(long id) {
 		controllerProdutos.excluirProduto(id);
+	}
+
+	/**
+	 * @return
+	 * @see pet_shop.negocio.ProdutosController#listarTudoProduto()
+	 */
+	public ArrayList<Produto> listarTudoProduto() {
+		return controllerProdutos.listarTudoProduto();
 	}
 
 	/**
@@ -366,6 +408,8 @@ public class SistemaFachada {
 	public ArrayList<Venda> listarTodasVendas() {
 		return controllerVenda.listarTodasVendas();
 	}
+
+	
 	
 	//controle agendas
 	

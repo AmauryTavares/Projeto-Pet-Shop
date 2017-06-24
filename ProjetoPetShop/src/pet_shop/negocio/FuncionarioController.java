@@ -21,7 +21,7 @@ public class FuncionarioController {
 		return instance;
 	}
 	
-	public void cadastrar(Funcionario f) {
+	public void cadastrarFuncionario(Funcionario f) {
 	    if (f == null) {
 	      //Exceção
 	    } else {
@@ -33,7 +33,7 @@ public class FuncionarioController {
 	    }
 	}
 	
-	public void descadastrar(long id){
+	public void descadastrarFuncionario(long id){
 		Funcionario f = this.repositorioFuncionarios.listarFuncionario(id);
 		if(f != null){
 			this.repositorioFuncionarios.excluirFuncionario(id);
@@ -42,7 +42,7 @@ public class FuncionarioController {
 			System.out.println("Aqui será colocado a exceção");
 	}
 	
-	public Funcionario listar(long id){
+	public Funcionario listarFuncionario(long id){
 		return this.repositorioFuncionarios.listarFuncionario(id);
 	}
 	
@@ -54,7 +54,7 @@ public class FuncionarioController {
 		this.repositorioFuncionarios.excluirFuncionario(id);
 	}
 	
-	public ArrayList<Funcionario> listarTudo(){
+	public ArrayList<Funcionario> listarTudoFuncionario(){
 		return this.repositorioFuncionarios.listarTudo();
 	}
 	

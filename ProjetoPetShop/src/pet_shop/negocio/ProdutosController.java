@@ -22,7 +22,7 @@ public class ProdutosController {
 	}
 	
 	//Cadastro do produto
-	public void cadastrar(Produto p) {
+	public void cadastrarProduto(Produto p) {
 	    if (p == null) {
 	      //Exceção
 	    } else {
@@ -35,7 +35,7 @@ public class ProdutosController {
 	}
 	
 	//Descadastra o produto do id repassado, depois de verificar a existência do produto
-	public void descadastrar(long id){
+	public void descadastrarProduto(long id){
 		Produto p = this.repositorioProdutos.listarProduto(id);
 		if(p != null){
 			this.repositorioProdutos.excluirProduto(id);
@@ -45,7 +45,7 @@ public class ProdutosController {
 	}
 	
 	//Lista produto de acordo com o id repassado
-	public Produto listar(long id){
+	public Produto listarProduto(long id){
 		return this.repositorioProdutos.listarProduto(id);
 	}
 	
@@ -60,7 +60,7 @@ public class ProdutosController {
 	}
 
 	//Listar todos os produtos
-	public ArrayList<Produto> listarTudo(){
+	public ArrayList<Produto> listarTudoProduto(){
 		return this.repositorioProdutos.listarTudo();
 	}
 	

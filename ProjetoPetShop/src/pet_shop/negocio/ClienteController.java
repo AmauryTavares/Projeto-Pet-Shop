@@ -21,7 +21,7 @@ public class ClienteController {
 		return instance;
 	}
 	
-	public void cadastrar(Cliente c) {
+	public void cadastrarCliente(Cliente c) {
 	    if (c == null) {
 	      //Exceção
 	    } else {
@@ -33,7 +33,7 @@ public class ClienteController {
 	    }
 	}
 	
-	public void descadastrar(long id){
+	public void descadastrarCliente(long id){
 		Cliente c = this.repositorioClientes.listarCliente(id);
 		
 		if(c != null ){
@@ -46,7 +46,7 @@ public class ClienteController {
 			System.out.println("Aqui será colocado a exceção");
 	}
 	
-	public Cliente listar(long id){
+	public Cliente listarCliente(long id){
 		return this.repositorioClientes.listarCliente(id);
 	}
 	
