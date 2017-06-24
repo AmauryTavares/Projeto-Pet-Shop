@@ -70,4 +70,22 @@ public class ServicoDAO {
 		}
 		return verificar;
 	}
+public boolean existe(long id) {
+		
+		boolean existe = false;
+		int i = 0;
+		
+		while((!existe) && (i < this.repositorioServico.size())) {
+			
+			if(id == this.repositorioServico.get(i).getId()) {
+				existe = true;
+			} else {
+				i++;
+			}
+			
+		}
+		
+		return existe;
+		
+	}
 }
