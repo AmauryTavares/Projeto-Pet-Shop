@@ -2,6 +2,7 @@ package pet_shop.DAO;
 
 import java.util.ArrayList;
 
+import pet_shop.negocio.beans.Servico;
 import pet_shop.negocio.beans.Venda;
 
 public class VendaDAO {
@@ -43,8 +44,36 @@ public class VendaDAO {
 				achou = true;
 			}
 		}
+	}	
+	public boolean existe(Venda venda) {
+		boolean verificar = false;
+		for (int i = 0; i < this.repositorioVendas.size() && verificar ==false;i++) {
+			if (venda.equals(this.repositorioVendas.get(i))) {
+				verificar = true;
+			}
+		}
+		return verificar;
 	}
-	
+	public boolean existe(long id) {
+		
+		boolean existe = false;
+		int i = 0;
+		
+		while((!existe) && (i < this.repositorioVendas.size())) {
+			
+			if(id == this.repositorioVendas.get(i).getId()) {
+				existe = true;
+			} 
+			else 
+			{
+				i++;
+			}
+			
+		}
+		
+		return existe;
+		
+	}
 	public Venda listarVenda(long id) {
 		boolean achou = false;
 		Venda busca = null;
