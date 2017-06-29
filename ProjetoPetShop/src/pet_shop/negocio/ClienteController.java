@@ -1,8 +1,9 @@
 package pet_shop.negocio;
 
+import java.util.ArrayList;
+
 import pet_shop.DAO.ClienteDAO;
 import pet_shop.negocio.beans.Cliente;
-import pet_shop.negocio.beans.Pessoa;
 import pet_shop.negocio.AgendaController;
 
 public class ClienteController {
@@ -27,9 +28,7 @@ public class ClienteController {
 	    } else {
 	      if (!this.existe(c)) {
 	        this.repositorioClientes.cadastrarCliente(c);
-	      } else {
-	    	  System.out.println("Aqui será colocado a exceção");
-	      }
+	      } 
 	    }
 	}
 	
@@ -39,15 +38,17 @@ public class ClienteController {
 		if(c != null ){
 			this.repositorioClientes.excluirCliente(id);
 			for(int i = 0; i < AgendaController.getInstance().listarTodasAgendas().size(); i++){
-				AgendaController.getInstance().deleteAgenda(id);
+				AgendaController.getInstance().deleteAgendaReservada(id);
 			}
 		}
-		else
-			System.out.println("Aqui será colocado a exceção");
 	}
 	
 	public Cliente listarCliente(long id){
 		return this.repositorioClientes.listarCliente(id);
+	}
+	
+	public ArrayList<Cliente> listarTudo() {
+		return this.repositorioClientes.listarTudo();
 	}
 	
 	public boolean existe(Cliente c) {
@@ -58,13 +59,10 @@ public class ClienteController {
 		this.repositorioClientes.excluirCliente(id);
 	}
 	
-	public void AlteraCliente(Cliente novoCliente) {
+	public void AlterarCliente(Cliente novoCliente) {
 		Cliente c = this.repositorioClientes.listarCliente(novoCliente.getId());
 		if( (c != null) && (novoCliente.getNome() != null) && (novoCliente.getCpf()!=null)) {
 			this.repositorioClientes.alterarCliente(novoCliente);
-		}
-		else {
-			System.out.println("Aqui ficará a exceção");
 		}
 	}
 }

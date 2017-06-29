@@ -28,8 +28,7 @@ public class FuncionarioDAO {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioFuncionario.size() && achou == false; i++) {
 			if (this.repositorioFuncionario.get(i).getId() == f.getId()) {
-				this.repositorioFuncionario.remove(i);
-				this.repositorioFuncionario.add(i, f);
+				this.repositorioFuncionario.set(i, f);
 				achou = true;
 			}
 		}

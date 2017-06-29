@@ -28,8 +28,7 @@ public class ClienteDAO {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioCliente.size() && achou == false; i++) {
 			if (this.repositorioCliente.get(i).getId() == c.getId()) {
-				this.repositorioCliente.remove(i);
-				this.repositorioCliente.add(i, c);
+				this.repositorioCliente.set(i, c);
 				achou = true;
 			}
 		}

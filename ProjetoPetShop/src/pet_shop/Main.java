@@ -1,13 +1,16 @@
 package pet_shop;
 
-import pet_shop.gui.TextualUserInterface;
+import java.io.IOException;
+
+import pet_shop.gui.GuiLogin;
+
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
-		TextualUserInterface textUI = new TextualUserInterface();
-		textUI.showUserInterface();
+		GuiLogin guiLogin = new GuiLogin();
+		guiLogin.login();
 
 	}
 

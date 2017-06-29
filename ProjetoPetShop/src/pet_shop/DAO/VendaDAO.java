@@ -29,8 +29,7 @@ public class VendaDAO {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioVendas.size() && achou == false; i++) {
 			if (this.repositorioVendas.get(i).getId() == v.getId()) {
-				this.repositorioVendas.remove(i);
-				this.repositorioVendas.add(i, v);
+				this.repositorioVendas.set(i, v);
 				achou = true;
 			}
 		}

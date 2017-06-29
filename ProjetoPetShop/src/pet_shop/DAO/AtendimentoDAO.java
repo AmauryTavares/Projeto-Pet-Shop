@@ -28,8 +28,7 @@ public class AtendimentoDAO {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioAtendimento.size() && achou == false; i++) {
 			if (this.repositorioAtendimento.get(i).getId() == a.getId()) {
-				this.repositorioAtendimento.remove(i);
-				this.repositorioAtendimento.add(i, a);
+				this.repositorioAtendimento.set(i, a);
 				achou = true;
 			}
 		}

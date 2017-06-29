@@ -28,8 +28,7 @@ public class AgendaDAO {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioAgenda.size() && achou == false; i++) {
 			if (this.repositorioAgenda.get(i).getId() == a.getId()) {
-				this.repositorioAgenda.remove(i);
-				this.repositorioAgenda.add(i, a);
+				this.repositorioAgenda.set(i, a);
 				achou = true;
 			}
 		}
@@ -43,6 +42,10 @@ public class AgendaDAO {
 				achou = true;
 			}
 		}
+	}
+	
+	public void excluirAgendaPorPosicao(int i) { 
+		this.repositorioAgenda.remove(i);
 	}
 	
 	public Agenda listarAgenda(long id) {
@@ -61,7 +64,7 @@ public class AgendaDAO {
 		return this.repositorioAgenda;
 	}
 	
-	public int procurarID(long id) {
+	public int procurarID(long id) { //procura pela reserva do cliente
 		
 		boolean achou = false;
 		int i = 0;
@@ -78,6 +81,37 @@ public class AgendaDAO {
 		
 		return i;
 		
+	}
+	
+	public int procurarIDReservada(long id) { //procura pela reserva do cliente
+		
+		boolean achou = false;
+		int i = 0;
+		
+		while((!achou) && (i < this.repositorioAgenda.size())) {
+			
+			if(this.repositorioAgenda.get(i).getAnimal().getDono().getId() == id) {
+				achou = true;
+			} else {
+				i++;
+			}
+			
+		}
+		
+		return i;
+		
+	}
+	
+	public boolean existeReservada(long id) {
+		
+		boolean existe = false;
+		int indice = procurarIDReservada(id);
+		
+		if(indice != repositorioAgenda.size()) {
+			existe = true;
+		}
+		
+		return existe;
 	}
 	
 	public boolean existe(long id) {

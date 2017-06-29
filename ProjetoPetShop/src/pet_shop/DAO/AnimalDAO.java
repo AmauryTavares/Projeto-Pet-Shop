@@ -28,8 +28,7 @@ public class AnimalDAO {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioAnimal.size() && achou == false; i++) {
 			if (this.repositorioAnimal.get(i).getId() == a.getId()) {
-				this.repositorioAnimal.remove(i);
-				this.repositorioAnimal.add(i, a);
+				this.repositorioAnimal.set(i, a);
 				achou = true;
 			}
 		}

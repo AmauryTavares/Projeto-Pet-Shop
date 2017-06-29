@@ -28,8 +28,7 @@ public class ProdutoDAO {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioProduto.size() && achou == false; i++) {
 			if (this.repositorioProduto.get(i).getId() == p.getId()) {
-				this.repositorioProduto.remove(i);
-				this.repositorioProduto.add(i, p);
+				this.repositorioProduto.set(i, p);
 				achou = true;
 			}
 		}

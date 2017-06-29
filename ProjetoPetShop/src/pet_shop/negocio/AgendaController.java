@@ -63,6 +63,15 @@ public class AgendaController {
 		
 	}
 	
+	public void deleteAgendaReservada(long id) {
+		
+		if(id >= 0 && this.agendaRepository.existeReservada(id)) {
+			int i = this.agendaRepository.procurarIDReservada(id);
+			this.agendaRepository.excluirAgendaPorPosicao(i);
+		}
+		
+	}
+	
 	public ArrayList<Agenda> listarTodasAgendas() {
 		return this.agendaRepository.listarTudo();
 	}

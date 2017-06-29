@@ -1,7 +1,6 @@
 package pet_shop.negocio;
 
 import pet_shop.DAO.FuncionarioDAO;
-import pet_shop.negocio.beans.Pessoa;
 import pet_shop.negocio.beans.Funcionario;
 
 import java.util.ArrayList;
@@ -27,9 +26,7 @@ public class FuncionarioController {
 	    } else {
 	      if (!this.existe(f)) {
 	        this.repositorioFuncionarios.cadastrarFuncionario(f);
-	      } else {
-	    	  System.out.println("Aqui será colocado a exceção");
-	      }
+	      } 
 	    }
 	}
 	
@@ -38,8 +35,6 @@ public class FuncionarioController {
 		if(f != null){
 			this.repositorioFuncionarios.excluirFuncionario(id);
 		}
-		else
-			System.out.println("Aqui será colocado a exceção");
 	}
 	
 	public Funcionario listarFuncionario(long id){
@@ -62,9 +57,6 @@ public class FuncionarioController {
 		Funcionario f = this.repositorioFuncionarios.listarFuncionario(novoFuncionario.getId());
 		if( (f != null) && (novoFuncionario.getNome() != null) && (novoFuncionario.getCpf()!=null)) {
 			this.repositorioFuncionarios.alterarFuncionario(novoFuncionario);
-		}
-		else {
-			System.out.println("Aqui ficará a exceção");
 		}
 	}
 }

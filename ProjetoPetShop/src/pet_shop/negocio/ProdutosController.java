@@ -28,9 +28,7 @@ public class ProdutosController {
 	    } else {
 	      if (!this.existe(p)) {
 	        this.repositorioProdutos.cadastrarProduto(p);
-	      } else {
-	    	  System.out.println("Aqui será colocada a exceção");
-	      }
+	      } 
 	    }
 	}
 	
@@ -40,8 +38,6 @@ public class ProdutosController {
 		if(p != null){
 			this.repositorioProdutos.excluirProduto(id);
 		}
-		else
-			System.out.println("Aqui será colocada a exceção");
 	}
 	
 	//Lista produto de acordo com o id repassado
@@ -68,9 +64,6 @@ public class ProdutosController {
 		Produto p = this.repositorioProdutos.listarProduto(novoProduto.getId());
 		if( (p != null) && (novoProduto.getNome() != null)) {
 			this.repositorioProdutos.alterarProduto(novoProduto);
-		}
-		else {
-			System.out.println("Aqui ficará a exceção");
 		}
 	}
 }

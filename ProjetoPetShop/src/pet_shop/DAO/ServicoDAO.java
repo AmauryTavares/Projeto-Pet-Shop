@@ -28,8 +28,7 @@ public class ServicoDAO {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioServico.size() && achou == false; i++) {
 			if (this.repositorioServico.get(i).getId() == s.getId()) {
-				this.repositorioServico.remove(i);
-				this.repositorioServico.add(i, s);
+				this.repositorioServico.set(i, s);
 				achou = true;
 			}
 		}
