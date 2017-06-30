@@ -117,7 +117,7 @@ public class Venda {
 	}
 	
 	public String toString() {
-		String text = "ID: " + this.id + "\nData: " + this.data + "\n Nome do funcionário: " + this.funcionario.getNome() + "\nProduto(s): ";
+		String text = "\nID: " + this.id + "\nData: " + this.data + "\n Nome do funcionário: " + this.funcionario.getNome() + "\nProduto(s): ";
 		
 		for (int i = 0; i < this.produtos.size(); i++) {
 			text += String.format("\n%20s \t%.2f", this.produtos.get(i).getNome(), this.produtos.get(i).getPreco());

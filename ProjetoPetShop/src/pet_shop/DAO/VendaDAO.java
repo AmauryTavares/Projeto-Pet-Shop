@@ -2,7 +2,6 @@ package pet_shop.DAO;
 
 import java.util.ArrayList;
 
-import pet_shop.negocio.beans.Servico;
 import pet_shop.negocio.beans.Venda;
 
 public class VendaDAO {

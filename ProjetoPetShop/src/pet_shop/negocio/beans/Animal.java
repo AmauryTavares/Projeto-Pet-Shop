@@ -1,6 +1,7 @@
 package pet_shop.negocio.beans;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Animal {
 	
@@ -12,10 +13,10 @@ public class Animal {
 	private double peso;
 	private String especie;
 	private String raca;
-	private LocalDateTime dataNascimento;
+	private LocalDate dataNascimento;
 	
 	public Animal(Pessoa dono, String nome, double peso, String especie, String raca,
-			LocalDateTime dataNascimento) {
+			LocalDate dataNascimento2) {
 		this.id = proximoID;
 		proximoID++;
 		this.dono = dono;
@@ -23,7 +24,7 @@ public class Animal {
 		this.peso = peso;
 		this.especie = especie;
 		this.raca = raca;
-		this.dataNascimento = dataNascimento;
+		this.dataNascimento = dataNascimento2;
 	}
 
 	public long getId() {
@@ -70,17 +71,18 @@ public class Animal {
 		this.raca = raca;
 	}
 
-	public LocalDateTime getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(LocalDateTime dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 	
 	public String toString() {
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		return "ID: " + this.id + "\nNome: " + this.nome + "\nDono: " +this.dono.getNome() + "\nPeso: " + this.peso + "kg \nEspécie: " + this.especie + 
-				"\nRaça: " + this.raca + "\nData de Nascimento: " + this.dataNascimento;
+				"\nRaça: " + this.raca + "\nData de Nascimento: " + this.dataNascimento.format(fmt);
 	}
 
 	@Override

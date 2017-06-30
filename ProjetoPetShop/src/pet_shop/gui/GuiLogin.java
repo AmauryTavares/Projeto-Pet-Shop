@@ -1,6 +1,5 @@
 package pet_shop.gui;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -9,7 +8,7 @@ import pet_shop.negocio.SistemaFachada;
 import pet_shop.negocio.beans.Funcionario;
 
 public class GuiLogin {
-	
+	static Funcionario logado = null;
 	public void login() throws IOException {
 		SistemaFachada fachada = SistemaFachada.getInstance();
 		Scanner scanner = new Scanner(System.in);
@@ -19,7 +18,6 @@ public class GuiLogin {
 		fachada.cadastrarFuncionario(f);
 		
 		boolean login = false;
-		Funcionario logado = null;
 		
 		while (login == false) {
 			System.out.println("#################################################");
@@ -35,7 +33,7 @@ public class GuiLogin {
 			boolean achou = false;
 			
 			for (int i = 0; i < listaFuncionarios.size() && achou == false; i++) {
-				if (loginCampo.equals(listaFuncionarios.get(i).getLogin()) && senhaCampo.equals(listaFuncionarios.get(i).getSenha())) {
+				if (loginCampo.equalsIgnoreCase(listaFuncionarios.get(i).getLogin()) && senhaCampo.equals(listaFuncionarios.get(i).getSenha())) {
 					logado = listaFuncionarios.get(i);
 					login = true;
 					achou = true;
@@ -55,5 +53,4 @@ public class GuiLogin {
 		
 		scanner.close();
 	}
-	
 }

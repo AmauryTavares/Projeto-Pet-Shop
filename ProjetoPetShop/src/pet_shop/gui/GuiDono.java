@@ -2,6 +2,7 @@ package pet_shop.gui;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,6 +13,7 @@ import pet_shop.negocio.beans.Cliente;
 import pet_shop.negocio.beans.Funcionario;
 import pet_shop.negocio.beans.Produto;
 import pet_shop.negocio.beans.Servico;
+import pet_shop.negocio.beans.Venda;
 
 public class GuiDono {
 	SistemaFachada fachada = SistemaFachada.getInstance();
@@ -130,9 +132,38 @@ public class GuiDono {
 					break;
 					
 				case 4: 
-					
-					
-					break;
+					sairLoop = false;
+					while (sairLoop == false) { // switch do submenu animais
+						subMenuAnimais();
+						System.out.print("\nSelecione sua opção: ");
+						opcao = scanner.nextInt();
+						switch (opcao) {
+							case 1:
+								cadastrarAnimal(scanner);
+								break;
+								
+							case 2:
+								alterarAnimal(scanner);
+								break;
+								
+							case 3:
+								excluirAnimal(scanner);
+								break;
+								
+							case 4:
+								listarTodosAnimais();
+								break;
+								
+							case 5:
+								sairLoop = true;
+								break;
+								
+							default: 
+								System.out.println("\nOpção inexistente, tente novamente!\n");
+								break;
+						}
+					}
+					break;	
 					
 				case 5:
 					
@@ -178,7 +209,8 @@ public class GuiDono {
 						opcao = scanner.nextInt();
 						switch (opcao) {
 							case 1:
-								cadastrarAtendimento(scanner);
+								ArrayList<Atendimento> listaAtendimentos = new ArrayList<>();
+								cadastrarAtendimento(scanner, listaAtendimentos);
 								break;
 								
 							case 2:
@@ -205,7 +237,34 @@ public class GuiDono {
 					break;
 					
 				case 7:
-					
+					sairLoop = false;
+					while (sairLoop == false) { // switch do submenu vendas
+						subMenuVendas();
+						System.out.print("\nSelecione sua opção: ");
+						opcao = scanner.nextInt();
+						switch (opcao) {
+							case 1:
+								ArrayList<Atendimento> arrayListVazia = new ArrayList<>();
+								realizarVenda(scanner, arrayListVazia);
+								break;
+								
+							case 2:
+								excluirVenda(scanner);
+								break;
+								
+							case 3:
+								listarTodasVendas();
+								break;
+							
+							case 4:
+								sairLoop = true;
+								break;
+								
+							default: 
+								System.out.println("\nOpção inexistente, tente novamente!\n");
+								break;
+						}
+					}
 					break;
 					
 				case 8:
@@ -293,6 +352,27 @@ public class GuiDono {
 		System.out.println("3. Excluir");
 		System.out.println("4. Listar Todos");
 		System.out.println("5. Voltar");
+	}
+	
+	private void subMenuAnimais() {
+		System.out.println("#################################################");
+		System.out.println("\t     Gerenciamento de Animais");
+		System.out.println("#################################################\n");
+		System.out.println("1. Cadastrar");
+		System.out.println("2. Alterar");
+		System.out.println("3. Excluir");
+		System.out.println("4. Listar Todos");
+		System.out.println("5. Voltar");
+	}
+	
+	private void subMenuVendas() {
+		System.out.println("#################################################");
+		System.out.println("\t     Gerenciamento de Vendas");
+		System.out.println("#################################################\n");
+		System.out.println("1. Realizar");
+		System.out.println("2. Excluir");
+		System.out.println("3. Listar Todos");
+		System.out.println("4. Voltar");
 	}
 	
 	private void cadastrarCliente(Scanner scanner) {
@@ -1304,7 +1384,7 @@ public class GuiDono {
 		
 	}
 	
-	private void cadastrarAtendimento(Scanner scanner) {
+	private void cadastrarAtendimento(Scanner scanner, ArrayList<Atendimento> listaAtendimentos) {
 		
 		System.out.println("#################################################");
 		System.out.println("\tCadastro de Atendimentos\t 0 - voltar");
@@ -1433,8 +1513,24 @@ public class GuiDono {
 		if(voltar == false) {
 			Atendimento a = new Atendimento(animal, funcionario, servico, data, diagnostico);
 			fachada.saveAtendimento(a);
+			listaAtendimentos.add(a); //****//
 			System.out.println("\nAtendimento Cadastrado com sucesso!\n");
 		}
+		
+		boolean loop = false; //****//
+		while (loop == false) {
+			System.out.println("\nDeseja adicionar mais um atendimento? (S/N): "); // confimação
+			String verificar = null;
+			verificar = scanner.nextLine();
+			if (verificar.charAt(0) == 'S' || verificar.charAt(0) == 's') { // deleta e sai do laço
+				cadastrarAtendimento(scanner, listaAtendimentos);
+				loop = true;
+			} else if (verificar.charAt(0) == 'N' || verificar.charAt(0) == 'n'){ // apenas sai do laço
+				loop = true;
+			}
+		}	
+		
+		realizarVenda(scanner, listaAtendimentos);
 		
 	}
 	
@@ -1696,4 +1792,390 @@ public class GuiDono {
 		
 	}
 	
+	private void cadastrarAnimal(Scanner scanner) {
+		System.out.println("#################################################");
+		System.out.println("\tCadastro de Animal\t 0 - voltar");
+		System.out.println("#################################################\n");
+		
+		boolean voltar = false;
+		boolean sairLoop = false;
+		String nome = null, especie = null, raca = null, data = null;
+		double peso = 0;
+		LocalDate dataNascimento = null;
+		
+		ArrayList<Cliente> lista = fachada.listarTudo();
+		Cliente dono = null;
+		
+		
+		while (sairLoop == false) {  
+			for (Cliente c : lista) {  // lista todos os clientes do repositorio
+				System.out.println(c);
+			}
+			
+			System.out.print("\nDigite o id do cliente: ");
+			long id = scanner.nextInt();
+			scanner.nextLine();
+			
+			dono = fachada.listarCliente(id);
+			
+			if (id == 0) { // verifica se a opção voltar foi acionada
+				voltar = true;
+				sairLoop = true;
+			} else if (dono != null) { // verifica se o cliente retornado existe
+				sairLoop = true;								
+			} else {
+				System.out.println("\nID inexistente, tente novamente!\n");
+			}
+		}
+		
+		
+		if (voltar == false) {
+			System.out.print("Nome: ");
+			nome = scanner.nextLine();
+			if (nome.equals("0")) {
+				voltar = true;
+			}
+		}
+		
+		if (voltar == false) {
+			System.out.print("Peso: ");
+			peso = scanner.nextDouble();
+			if (peso == 0) {
+				voltar = true;
+			}
+		}
+		
+		if (voltar == false) {
+			System.out.print("Espécie: ");
+			scanner.nextLine();
+			especie = scanner.nextLine();
+			if (especie.equals("0")) {
+				voltar = true;
+			}
+		}
+		
+		if (voltar == false) {
+			System.out.print("Raça: ");
+			raca = scanner.nextLine();
+			if (raca.equals("0")) {
+				voltar = true;
+			}
+		}
+		
+		if (voltar == false) {
+			System.out.print("Data de nascimento(Ex: DD/MM/AAAA): ");
+			data = scanner.nextLine();
+			DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			dataNascimento = LocalDate.parse(data, formato);
+			if (data.equals("0")) {
+				voltar = true;
+			}
+		}
+
+		if (voltar == false) {
+			Animal a = new Animal(dono, nome, peso, especie, raca, dataNascimento);
+			fachada.saveAnimal(a);
+			System.out.println("\nAnimal Cadastrado com sucesso!\n");
+		}
+	}
+	
+	private void alterarAnimal(Scanner scanner) {
+		System.out.println("#################################################");
+		System.out.println("\tAlteração de Animal\t 0 - voltar");
+		System.out.println("#################################################\n");
+		
+		ArrayList<Cliente> lista = fachada.listarTudo();
+		ArrayList<Animal> listaAnimal = fachada.listarTodosAnimais();
+		
+		Animal alterarAnimal = null;
+		boolean sairLoop = false;
+		boolean voltar = false;
+		boolean loop = false;
+		
+		while (sairLoop == false) {  
+			for (Animal a : listaAnimal) {  // lista todos os animais do repositorio
+				System.out.println(a);
+			}
+			
+			System.out.print("\nDigite o id do animal: ");
+			long id = scanner.nextInt();
+			scanner.nextLine();
+			
+			alterarAnimal = fachada.findAnimal(id);  
+			
+			if (id == 0) { // verifica se a opção voltar foi acionada
+				voltar = true;
+				sairLoop = true;
+			} else if (alterarAnimal != null) { // verifica se o animal retornado existe
+				sairLoop = true;
+			} else {
+				System.out.println("\nID inexistente, tente novamente!\n");
+			}
+		}
+		
+		System.out.println("\n* Pressione 'Enter' para prosseguir um campo sem altera-lo *\n");
+		
+		
+		while (loop == false) {  
+			Cliente dono = null;
+			for (Cliente c : lista) {  // lista todos os clientes do repositorio
+				System.out.println(c);
+			}
+			
+			System.out.println("\nDono Atual: " + alterarAnimal.getDono().getNome());
+			System.out.print("\nDigite o id do cliente: ");
+			String texto = scanner.nextLine();
+			
+			if (!texto.equals("")) {
+				dono = fachada.listarCliente(Long.parseLong(texto));
+			}
+				
+			if (texto.equals('0')) { // verifica se a opção voltar foi acionada
+				voltar = true;
+				loop = true;
+			} else if (texto.equals("")) {
+				loop = true;
+			} else if (dono != null) { // verifica se o cliente retornado existe
+				alterarAnimal.setDono(dono);
+				loop = true;								
+			} else {
+				System.out.println("\nID inexistente, tente novamente!\n");
+			}
+		}
+		
+		String texto = null;
+		
+		if (voltar == false) {
+			System.out.println("Nome atual: " + alterarAnimal.getNome()); // Imprime o nome atual
+			System.out.print("Novo nome: ");
+			texto = scanner.nextLine();
+			
+			if (texto.equals("0")) {
+				voltar = true;
+			} else if (!texto.equals("")) {
+				alterarAnimal.setNome(texto);
+			}
+		}
+		
+		
+		if (voltar == false) {
+			System.out.println("Peso atual: " + alterarAnimal.getPeso()); // Imprime o peso atual
+			System.out.print("Novo peso: ");
+			texto = scanner.nextLine();
+
+			if (texto.equals("0")) {
+				voltar = true;
+			} else if (!texto.equals("")) {
+				alterarAnimal.setPeso(Double.parseDouble(texto.replace(',', '.')));
+			}
+		}
+		
+		if (voltar == false) {
+			System.out.println("Espécie atual: " + alterarAnimal.getEspecie()); // Imprime a especie atual
+			System.out.print("Nova espécie: ");
+			texto = scanner.nextLine();
+			
+			if (texto.equals("0")) {
+				voltar = true;
+			} else if (!texto.equals("")) {
+				alterarAnimal.setEspecie(texto);
+			}
+		}
+		
+		if (voltar == false) {
+			System.out.println("Raça atual: " + alterarAnimal.getRaca()); // Imprime a raça atual
+			System.out.print("Novo raça: ");
+			texto = scanner.nextLine();
+			
+			if (texto.equals("0")) {
+				voltar = true;
+			} else if (!texto.equals("")) {
+				alterarAnimal.setRaca(texto);
+			}
+		}
+		
+		if (voltar == false) {
+			DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			System.out.println("Data de nascimento atual: " + alterarAnimal.getDataNascimento().format(fmt)); // Imprime a data de nascimento atual
+			System.out.print("Novo data de nascimento(Ex: dd/mm/aaaa): ");
+			texto = scanner.nextLine();
+			
+			if (texto.equals("0")) {
+				voltar = true;
+			} else if (!texto.equals("")) {
+				DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				alterarAnimal.setDataNascimento(LocalDate.parse(texto, formato));
+			}
+		}
+
+		if (voltar == false) {
+			fachada.updateAnimal(alterarAnimal);
+			System.out.println("\nAnimal Alterado com sucesso!\n");
+		}	
+		
+	}
+	
+	private void excluirAnimal(Scanner scanner) {
+		System.out.println("#################################################");
+		System.out.println("\t\tExcluir Animal\t 0 - voltar");
+		System.out.println("#################################################\n");
+		
+		ArrayList<Animal> lista = fachada.listarTodosAnimais();
+		Animal excluirAnimal = null;
+		boolean sairLoop = false;
+		
+		while (sairLoop == false) {  
+			for (Animal a : lista) {  // lista todos os animais do repositorio
+				System.out.println(a);
+			}
+			
+			System.out.print("\nDigite o id do animal: ");
+			long id = scanner.nextInt();
+			scanner.nextLine();
+			
+			excluirAnimal = fachada.findAnimal(id);
+			
+			if (id == 0) { // verifica se a opção voltar foi acionada
+				sairLoop = true;
+			} else if (excluirAnimal != null) { // verifica se o animal retornado existe
+				boolean loop = false;
+				while (loop == false) {
+					System.out.println("\nConfimar (S/N): "); // confimação do delete
+					String verificar = null;
+					verificar = scanner.nextLine();
+					if (verificar.equals("s") || verificar.equals("S")) { // deleta e sai do laço
+						fachada.deleteAnimal(id);
+						System.out.println("\nAnimal excluído com sucesso!\n");
+						loop = true;
+						sairLoop = true;
+					} else if (verificar.equals("n") || verificar.equals("N")){ // apenas sai do laço
+						loop = true;
+					}
+				}					
+			} else {
+				System.out.println("\nID inexistente, tente novamente!\n");
+			}
+		}
+	}
+	
+	private void listarTodosAnimais() throws IOException {
+		System.out.println("#################################################");
+		System.out.println("\t\tListar Animais ");
+		System.out.println("#################################################\n");
+		
+		ArrayList<Animal> lista = fachada.listarTodosAnimais();
+		
+		for (Animal a : lista) {  // lista todos os animais do repositorio
+			System.out.println(a);
+		}
+		
+		System.out.println("Pressione enter para continuar...");
+		System.in.read();
+	}
+	
+	
+	private void realizarVenda(Scanner scanner, ArrayList<Atendimento> listaAtendimentos) {
+		System.out.println("#################################################");
+		System.out.println("\t          Venda\t 0 - voltar");
+		System.out.println("#################################################\n");
+		
+		boolean voltar = false;
+		boolean sairLoop = false;
+		
+		ArrayList<Produto> lista = fachada.listarTudoProduto();
+		Produto produto = null;
+		ArrayList<Produto> listaProdutos = new ArrayList<>();
+		
+		while (sairLoop == false) {  
+			for (Produto p : lista) {  // lista todos os produtos do repositorio
+				System.out.println(p);
+			}
+			System.out.println("\n* Digite '-1' para avançar * \n");
+			System.out.print("\nDigite o id do produto: ");
+			long id = scanner.nextInt();
+			System.out.print("\nDigite a quantidade do produto: ");
+			long qtd = scanner.nextInt();
+			scanner.nextLine();
+			
+			produto = fachada.listarProduto(id);
+			
+			if (id == 0) { // verifica se a opção voltar foi acionada
+				voltar = true;
+				sairLoop = true;
+			} if (id == -1) {
+				sairLoop = true;
+			} else if (produto != null && qtd > 0 && qtd < produto.getQtdEstoque()) { // verifica se o produto retornado existe
+					listaProdutos.add(produto);
+					System.out.println("\nProduto adicionado!\n");
+			} else {
+				System.out.println("\nID inexistente ou estoque insuficiente, tente novamente!\n");
+			}
+		}
+		
+
+		if (voltar == false) {
+			Venda venda = new Venda(GuiLogin.logado, listaAtendimentos, listaProdutos,  LocalDate.now());
+			fachada.saveVenda(venda);
+			System.out.println(venda);
+			System.out.println("\nVenda Realizada com sucesso!\n");
+		}
+	}
+	
+	private void listarTodasVendas() throws IOException {
+		System.out.println("#################################################");
+		System.out.println("\t\tListar Vendas ");
+		System.out.println("#################################################\n");
+		
+		ArrayList<Venda> lista = fachada.listarTodasVendas();
+		
+		for (Venda v : lista) {  // lista todas as vendas do repositorio
+			System.out.println(v);
+		}
+		
+		System.out.println("Pressione enter para continuar...");
+		System.in.read();
+	}
+	
+	private void excluirVenda(Scanner scanner) {
+		System.out.println("#################################################");
+		System.out.println("\t\tExcluir Venda\t 0 - voltar");
+		System.out.println("#################################################\n");
+		
+		ArrayList<Venda> lista = fachada.listarTodasVendas();
+		Venda excluirVenda = null;
+		boolean sairLoop = false;
+		
+		while (sairLoop == false) {  
+			for (Venda v : lista) {  // lista todos os animais do repositorio
+				System.out.println(v);
+			}
+			
+			System.out.print("\nDigite o id da venda: ");
+			long id = scanner.nextInt();
+			scanner.nextLine();
+			
+			excluirVenda = fachada.findVenda(id);
+			
+			if (id == 0) { // verifica se a opção voltar foi acionada
+				sairLoop = true;
+			} else if (excluirVenda != null) { // verifica se a venda retornado existe
+				boolean loop = false;
+				while (loop == false) {
+					System.out.println("\nConfimar (S/N): "); // confimação do delete
+					String verificar = null;
+					verificar = scanner.nextLine();
+					if (verificar.equals("s") || verificar.equals("S")) { // deleta e sai do laço
+						fachada.deleteVenda(id);
+						System.out.println("\nVenda excluído com sucesso!\n");
+						loop = true;
+						sairLoop = true;
+					} else if (verificar.equals("n") || verificar.equals("N")){ // apenas sai do laço
+						loop = true;
+					}
+				}					
+			} else {
+				System.out.println("\nID inexistente, tente novamente!\n");
+			}
+		}
+	}
 }

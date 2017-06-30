@@ -2,10 +2,7 @@ package pet_shop.negocio;
 
 import java.util.ArrayList;
 
-import pet_shop.DAO.ServicoDAO;
-
 import pet_shop.DAO.VendaDAO;
-import pet_shop.negocio.beans.Servico;
 import pet_shop.negocio.beans.Venda;
 
 public class VendaController 
