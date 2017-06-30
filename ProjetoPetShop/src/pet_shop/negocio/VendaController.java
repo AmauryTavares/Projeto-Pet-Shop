@@ -34,7 +34,7 @@ public class VendaController
 		}
 		
 	}
-	public void updateServico(Venda venda) 
+	public void updateVenda(Venda venda) 
 	{
 		if(venda != null) 
 		{
