@@ -206,8 +206,8 @@ public class SistemaFachada {
 		controllerVenda.saveVenda(venda);
 	}
 
-	public void updateServico(Venda venda) {
-		controllerVenda.updateServico(venda);
+	public void updateVenda(Venda venda) {
+		controllerVenda.updateVenda(venda);
 	}
 
 	public void deleteVenda(long id) {

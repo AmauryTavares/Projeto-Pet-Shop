@@ -1,5 +1,6 @@
 package pet_shop.gui;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -51,5 +52,8 @@ public class GuiLogin {
 			GuiDono guiDono = new GuiDono();
 			guiDono.InicioSistema();
 		}
+		
+		scanner.close();
 	}
+	
 }
