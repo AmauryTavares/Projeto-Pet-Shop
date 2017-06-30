@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import pet_shop.negocio.SistemaFachada;
+import pet_shop.negocio.beans.Agenda;
 import pet_shop.negocio.beans.Animal;
 import pet_shop.negocio.beans.Atendimento;
 import pet_shop.negocio.beans.Cliente;
@@ -269,6 +270,37 @@ public class GuiDono {
 					
 				case 8:
 					
+					sairLoop = false;
+					while (sairLoop == false) { // switch do submenu de agendas
+						subMenuAgenda();
+						System.out.print("\nSelecione sua opção: ");
+						opcao = scanner.nextInt();
+						switch (opcao) {
+							case 1:
+								cadastrarAgenda(scanner);
+								break;
+								
+							case 2:
+								alterarAgenda(scanner);
+								break;
+								
+							case 3:
+								excluirAgenda(scanner);
+								break;
+								
+							case 4:
+								listarTodasAgendas();
+								break;
+								
+							case 5:
+								sairLoop = true;
+								break;
+								
+							default: 
+								System.out.println("\nOpção inexistente, tente novamente!\n");
+								break;
+						}
+					}
 					break;
 					
 				case 9: 
@@ -373,6 +405,17 @@ public class GuiDono {
 		System.out.println("2. Excluir");
 		System.out.println("3. Listar Todos");
 		System.out.println("4. Voltar");
+	}
+	
+	private void subMenuAgenda() {
+		System.out.println("#################################################");
+		System.out.println("\t     Gerenciamento de Agendas");
+		System.out.println("#################################################\n");
+		System.out.println("1. Cadastrar");
+		System.out.println("2. Alterar");
+		System.out.println("3. Excluir");
+		System.out.println("4. Listar Todas");
+		System.out.println("5. Voltar");
 	}
 	
 	private void cadastrarCliente(Scanner scanner) {
@@ -1499,7 +1542,7 @@ public class GuiDono {
 			if (ano == 0) {
 				voltar = true;
 			}
-			data = LocalDate.of(dia, mes, ano);
+			data = LocalDate.of(ano, mes, dia);
 		}
 		
 		if (voltar == false) {
@@ -1522,7 +1565,7 @@ public class GuiDono {
 			System.out.println("\nDeseja adicionar mais um atendimento? (S/N): "); // confimação
 			String verificar = null;
 			verificar = scanner.nextLine();
-			if (verificar.charAt(0) == 'S' || verificar.charAt(0) == 's') { // deleta e sai do laço
+			if (verificar.charAt(0) == 'S' || verificar.charAt(0) == 's') { 
 				cadastrarAtendimento(scanner, listaAtendimentos);
 				loop = true;
 			} else if (verificar.charAt(0) == 'N' || verificar.charAt(0) == 'n'){ // apenas sai do laço
@@ -1550,7 +1593,7 @@ public class GuiDono {
 				System.out.println(a);
 			}
 			
-			System.out.println("\nDigite o id do cliente: ");
+			System.out.println("\nDigite o id do atendimento: ");
 			long id = scanner.nextInt();
 			
 			alterarAtendimento = fachada.findAtendimento(id);
@@ -1558,7 +1601,7 @@ public class GuiDono {
 			if (id == 0) { // verifica se a opção voltar foi acionada
 				voltar = true;
 				sairLoop = true;
-			} else if (alterarAtendimento != null) { // verifica se o cliente retornado existe
+			} else if (alterarAtendimento != null) { // verifica se o atendimento retornado existe
 				sairLoop = true;
 			} else {
 				System.out.println("\nID inexistente, tente novamente!\n");
@@ -1698,7 +1741,7 @@ public class GuiDono {
 				if (ano == 0) {
 					voltar = true;
 				}
-				data = LocalDate.of(dia, mes, ano);
+				data = LocalDate.of(ano, mes, dia);
 			}
 			
 			if((!day.equals("")) && (!month.equals("")) && (!year.equals(""))) {
@@ -2073,7 +2116,6 @@ public class GuiDono {
 		System.in.read();
 	}
 	
-	
 	private void realizarVenda(Scanner scanner, ArrayList<Atendimento> listaAtendimentos) {
 		System.out.println("#################################################");
 		System.out.println("\t          Venda\t 0 - voltar");
@@ -2178,4 +2220,338 @@ public class GuiDono {
 			}
 		}
 	}
+	
+	private void cadastrarAgenda(Scanner scanner) {
+		
+		System.out.println("#################################################");
+		System.out.println("\tCadastro de Agendas\t 0 - voltar");
+		System.out.println("#################################################\n");
+		
+		boolean voltar = false;
+		
+		Animal animal = null;
+		LocalDate data = null;
+		int dia = 0, mes = 0, ano = 0;
+		ArrayList<Servico> listaServicoAgendado = new ArrayList<>();
+		Servico servico = null;
+		
+		if(voltar == false) {
+			ArrayList<Animal> listaAnimal = fachada.listarTodosAnimais();
+			boolean sairLoop = false;
+			
+			while (sairLoop == false) {  
+				for (Animal a : listaAnimal) {  // lista todos os animais do repositorio
+					System.out.println(a);
+				}
+				
+				System.out.println("\nDigite o id do animal: ");
+				long id = scanner.nextInt();
+				
+				animal = fachada.findAnimal(id);
+				
+				if (id == 0) { // verifica se a opção voltar foi acionada
+					voltar = true;
+					sairLoop = true;
+				} else if (animal != null) { // verifica se o animal retornado existe
+					sairLoop = true;
+				} else {
+					System.out.println("\nID inexistente, tente novamente!\n");
+				}
+			}
+		}
+		
+		if (voltar == false) {
+			System.out.print("Dia: ");
+			dia = scanner.nextInt();
+			scanner.nextLine();
+			if (dia == 0) {
+				voltar = true;
+			}
+		}
+		
+		if (voltar == false) {
+			System.out.print("Mês: ");
+			mes = scanner.nextInt();
+			scanner.nextLine();
+			if (mes == 0) {
+				voltar = true;
+			}
+		}
+		
+		if (voltar == false) {
+			System.out.print("Ano: ");
+			ano = scanner.nextInt();
+			scanner.nextLine();
+			if (ano == 0) {
+				voltar = true;
+			}
+			data = LocalDate.of(ano, mes, dia);
+		}
+		
+		if(voltar == false) {
+			ArrayList<Servico> listaServico = fachada.listarTodosServicos();
+			boolean sairLoop = false;
+			
+			while (sairLoop == false) {  
+				for (Servico s : listaServico) {  // lista todos os servicos do repositorio
+					System.out.println(s);
+				}
+				
+				System.out.println("\nDigite o id do serviço: ");
+				long id = scanner.nextInt();
+				
+				servico = fachada.findServico(id);
+				
+				if (id == 0) { // verifica se a opção voltar foi acionada
+					voltar = true;
+					sairLoop = true;
+				} else if (servico != null) { // verifica se o serviço retornado existe
+					listaServicoAgendado.add(servico);
+					
+					System.out.println("\nDeseja adicionar mais um serviço? (S/N): "); // confimação
+					String verificar = null;
+					verificar = scanner.nextLine();
+					if (verificar.charAt(0) == 'S' || verificar.charAt(0) == 's') { 
+						System.out.println();
+					} else if (verificar.charAt(0) == 'N' || verificar.charAt(0) == 'n'){ // apenas sai do laço
+						sairLoop = true;
+					}
+					
+				} else {
+					System.out.println("\nID inexistente ou serviço nao necessita de uma consulta, tente novamente!\n");
+				}
+				
+				
+			}
+		}
+		
+		if(voltar == false) {
+			Agenda a = new Agenda(animal, data, listaServicoAgendado);
+			fachada.saveAgenda(a);
+			System.out.println("\nAgenda Cadastrada com sucesso!\n");
+		}
+		
+	}
+	
+	private void alterarAgenda(Scanner scanner) {
+		
+		System.out.println("#################################################");
+		System.out.println("\tAlteração de Agenda\t 0 - voltar");
+		System.out.println("#################################################\n");
+		
+		ArrayList<Agenda> lista = fachada.listarTodasAgendas();
+		Agenda alterarAgenda = null;
+		boolean sairLoop = false;
+		boolean voltar = false;
+		
+		while (sairLoop == false) {  
+			for (Agenda a : lista) {  // lista todos as agendas do repositorio
+				System.out.println(a);
+			}
+			
+			System.out.println("\nDigite o id da agenda: ");
+			long id = scanner.nextInt();
+			
+			alterarAgenda = fachada.findAgenda(id);
+			
+			if (id == 0) { // verifica se a opção voltar foi acionada
+				voltar = true;
+				sairLoop = true;
+			} else if (alterarAgenda != null) { // verifica se a agenda retornado existe
+				sairLoop = true;
+			} else {
+				System.out.println("\nID inexistente, tente novamente!\n");
+			}
+		}
+		
+		System.out.println("\n* Pressione 'Enter' para prosseguir um campo sem altera-lo *\n");
+		
+		Animal animal = null;
+		LocalDate data = null;
+		int dia = 0, mes = 0, ano = 0;
+		ArrayList<Servico> listaServicoAgendado = new ArrayList<>();
+		Servico servico = null;
+		
+		if (voltar == false) {
+			System.out.println("Animal atual: " + alterarAgenda.getAnimal()); // Imprime o nome atual
+			System.out.println("Novo animal: ");
+			
+			ArrayList<Animal> listaAnimal = fachada.listarTodosAnimais();
+			sairLoop = false;
+			
+			while (sairLoop == false) {  
+				for (Animal a : listaAnimal) {  // lista todos os animais do repositorio
+					System.out.println(a);
+				}
+				
+				System.out.println("\nDigite o id do animal: ");
+				String identificador = scanner.nextLine();
+				long id = Long.parseLong(identificador);
+				
+				animal = fachada.findAnimal(id);
+				
+				if (id == 0) { // verifica se a opção voltar foi acionada
+					voltar = true;
+					sairLoop = true;
+				} else if ((animal != null) && (!identificador.equals(""))) { // verifica se o animal retornado existe
+					alterarAgenda.setAnimal(animal);
+					sairLoop = true;
+				} else {
+					System.out.println("\nID inexistente, tente novamente!\n");
+				}
+			}
+		}
+		
+		if (voltar == false) {
+			System.out.println("Data atual: " + alterarAgenda.getDataMarcada()); // Imprime a data atual
+			System.out.println("Nova Data: ");
+			
+			String day = null, month = null, year = null;
+			
+			if (voltar == false) {
+				System.out.print("Dia: ");
+				day = scanner.nextLine();
+				dia = Integer.parseInt(day);
+				if (dia == 0) {
+					voltar = true;
+				}
+			}
+			
+			if (voltar == false) {
+				System.out.print("Mês: ");
+				month = scanner.nextLine();
+				mes = Integer.parseInt(month);
+				if (mes == 0) {
+					voltar = true;
+				}
+			}
+			
+			if (voltar == false) {
+				System.out.print("Ano: ");
+				year = scanner.nextLine();
+				ano = Integer.parseInt(year);
+				if (ano == 0) {
+					voltar = true;
+				}
+				data = LocalDate.of(ano, mes, dia);
+			}
+			
+			if((!day.equals("")) && (!month.equals("")) && (!year.equals(""))) {
+				alterarAgenda.setDataMarcada(data);
+			}
+			
+		}
+		
+		if(voltar == false) {
+			System.out.println("Serviços atuais: " + alterarAgenda.getServicos());
+			System.out.println("Novos serviços: ");
+			
+			ArrayList<Servico> listaServico = fachada.listarTodosServicos();
+			sairLoop = false;
+			
+			while (sairLoop == false) {  
+				for (Servico s : listaServico) {  // lista todos os servicos do repositorio
+					System.out.println(s);
+				}
+				
+				System.out.println("\nDigite o id do serviço: ");
+				long id = scanner.nextInt();
+				
+				servico = fachada.findServico(id);
+				
+				if (id == 0) { // verifica se a opção voltar foi acionada
+					voltar = true;
+					sairLoop = true;
+				} else if (servico != null) { // verifica se o serviço retornado existe
+					listaServicoAgendado.add(servico);
+					
+					System.out.println("\nDeseja adicionar mais um serviço? (S/N): "); // confimação
+					String verificar = null;
+					verificar = scanner.nextLine();
+					if (verificar.charAt(0) == 'S' || verificar.charAt(0) == 's') { 
+						System.out.println();
+					} else if (verificar.charAt(0) == 'N' || verificar.charAt(0) == 'n'){ // apenas sai do laço
+						sairLoop = true;
+					}
+					
+				} else {
+					System.out.println("\nID inexistente ou serviço nao necessita de uma consulta, tente novamente!\n");
+				}
+			}			
+		}
+		
+		if(voltar == false) {
+			alterarAgenda.setServicos(listaServicoAgendado);
+			fachada.updateAgenda(alterarAgenda);
+			System.out.println("\nAnimal Alterado com sucesso!\n");
+		}
+		
+	}
+	
+	private void excluirAgenda(Scanner scanner) {
+		
+		System.out.println("#################################################");
+		System.out.println("\t\tExcluir Agenda\t 0 - voltar");
+		System.out.println("#################################################\n");
+		
+		ArrayList<Agenda> lista = fachada.listarTodasAgendas();
+		Agenda excluirAgenda = null;
+		boolean sairLoop = false;
+		
+		while (sairLoop == false) {  
+			
+			for (Agenda a : lista) {  // lista todos as agendas do repositorio
+				System.out.println(a);
+			}
+			
+			System.out.println("\nDigite o id da agenda: ");
+			long id = scanner.nextInt();
+			scanner.nextLine();
+			
+			excluirAgenda = fachada.findAgenda(id);
+			
+			if (id == 0) { // verifica se a opção voltar foi acionada
+				sairLoop = true;
+			} else if (excluirAgenda != null) { // verifica se o atendimento retornado existe
+				
+				boolean loop = false;
+				while (loop == false) {
+					System.out.println("\nConfimar (S/N): "); // confimação do delete
+					String verificar = null;
+					verificar = scanner.nextLine();
+					if (verificar.charAt(0) == 'S' || verificar.charAt(0) == 's') { // deleta e sai do laço
+						fachada.deleteAgenda(id);
+						System.out.println("\nAgenda excluída com sucesso!\n");
+						loop = true;
+						sairLoop = true;
+					} else if (verificar.charAt(0) == 'N' || verificar.charAt(0) == 'n'){ // apenas sai do laço
+						loop = true;
+					}
+				}					
+			
+			} else {
+				System.out.println("\nID inexistente, tente novamente!\n");
+			}
+		
+		}
+		
+	}
+	
+	private void listarTodasAgendas() throws IOException {
+		
+		System.out.println("#################################################");
+		System.out.println("\t\tListar Agendas ");
+		System.out.println("#################################################\n");
+		
+		ArrayList<Agenda> lista = fachada.listarTodasAgendas();
+		
+		for (Agenda a : lista) {  // lista todos as agendas do repositorio
+			System.out.println(a);
+		}
+		
+		System.out.println("Pressione enter para continuar...");
+		System.in.read();
+		
+	}
+	
 }
