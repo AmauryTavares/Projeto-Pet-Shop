@@ -24,11 +24,16 @@ public class AnimalDAO {
 		this.repositorioAnimal.add(a);
 	}
 	
-	public void alterarAnimal(Animal a) {
+	public void alterarAnimal(Animal a, long id) {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioAnimal.size() && achou == false; i++) {
-			if (this.repositorioAnimal.get(i).getId() == a.getId()) {
-				this.repositorioAnimal.set(i, a);
+			if (this.repositorioAnimal.get(i).getId() == id) {
+				this.repositorioAnimal.get(i).setDataNascimento(a.getDataNascimento());
+				this.repositorioAnimal.get(i).setDono(a.getDono());
+				this.repositorioAnimal.get(i).setEspecie(a.getEspecie());
+				this.repositorioAnimal.get(i).setNome(a.getNome());
+				this.repositorioAnimal.get(i).setPeso(a.getPeso());
+				this.repositorioAnimal.get(i).setRaca(a.getRaca());
 				achou = true;
 			}
 		}

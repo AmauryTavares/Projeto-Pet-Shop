@@ -1,6 +1,7 @@
 package pet_shop.negocio.beans;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Venda {
@@ -117,19 +118,20 @@ public class Venda {
 	}
 	
 	public String toString() {
-		String text = "\nID: " + this.id + "\nData: " + this.data + "\n Nome do funcionário: " + this.funcionario.getNome() + "\nProduto(s): ";
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String text = "\nID: " + this.id + "\nData: " + this.data.format(fmt) + "\nNome do funcionário: " + this.funcionario.getNome() + "\nProduto(s): ";
 		
 		for (int i = 0; i < this.produtos.size(); i++) {
-			text += String.format("\n%20s \t%.2f", this.produtos.get(i).getNome(), this.produtos.get(i).getPreco());
+			text += String.format("\n%20s \tR$%.2f", this.produtos.get(i).getNome(), this.produtos.get(i).getPreco());
 		}
 		
 		text += "\nServiço(s): ";
 		
 		for (int i = 0; i < this.atendimentos.size(); i++) {
-			text += String.format("\n%20s \t%.2f", this.atendimentos.get(i).getServico().getNome(), this.atendimentos.get(i).getServico().getPreco());
+			text += String.format("\n%20s \tR$%.2f", this.atendimentos.get(i).getServico().getNome(), this.atendimentos.get(i).getServico().getPreco());
 		}
 		
-		text += "\n\nValor Total: " + String.format("%.2f", this.valorTotal);
+		text += "\n\nValor Total: R$" + String.format("%.2f", this.valorTotal);
 		
 		return text;
 	}

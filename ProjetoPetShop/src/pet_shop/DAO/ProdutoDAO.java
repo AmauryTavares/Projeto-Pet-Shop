@@ -24,11 +24,13 @@ public class ProdutoDAO {
 		this.repositorioProduto.add(p);
 	}
 	
-	public void alterarProduto(Produto p) {
+	public void alterarProduto(Produto p, long id) {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioProduto.size() && achou == false; i++) {
-			if (this.repositorioProduto.get(i).getId() == p.getId()) {
-				this.repositorioProduto.set(i, p);
+			if (this.repositorioProduto.get(i).getId() == id) {
+				this.repositorioProduto.get(i).setNome(p.getNome());
+				this.repositorioProduto.get(i).setPreco(p.getPreco());
+				this.repositorioProduto.get(i).setQtdEstoque(p.getQtdEstoque());
 				achou = true;
 			}
 		}

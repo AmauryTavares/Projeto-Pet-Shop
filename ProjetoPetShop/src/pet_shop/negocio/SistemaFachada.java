@@ -46,8 +46,8 @@ public class SistemaFachada {
 		return controleAgendas.findAgenda(id);
 	}
 
-	public void updateAgenda(Agenda newAgenda) {
-		controleAgendas.updateAgenda(newAgenda);
+	public void updateAgenda(Agenda newAgenda, long id) {
+		controleAgendas.updateAgenda(newAgenda, id);
 	}
 
 	public void deleteAgenda(long id) {
@@ -62,8 +62,8 @@ public class SistemaFachada {
 		controleAnimais.saveAnimal(animal);
 	}
 
-	public void updateAnimal(Animal animal) {
-		controleAnimais.updateAnimal(animal);
+	public void updateAnimal(Animal animal, long id) {
+		controleAnimais.updateAnimal(animal, id);
 	}
 
 	public void deleteAnimal(long id) {
@@ -82,8 +82,8 @@ public class SistemaFachada {
 		controleAtendimentos.saveAtendimento(atendimento);
 	}
 
-	public void updateAtendimento(Atendimento atendimento) {
-		controleAtendimentos.updateAtendimento(atendimento);
+	public void updateAtendimento(Atendimento atendimento, long id) {
+		controleAtendimentos.updateAtendimento(atendimento, id);
 	}
 
 	public void deleteAtendimento(long id) {
@@ -122,8 +122,8 @@ public class SistemaFachada {
 		controllerClientes.excluirCliente(id);
 	}
 
-	public void AlterarCliente(Cliente novoCliente) {
-		controllerClientes.AlterarCliente(novoCliente);
+	public void AlterarCliente(Cliente novoCliente, long id) {
+		controllerClientes.AlterarCliente(novoCliente, id);
 	}
 
 	public void cadastrarFuncionario(Funcionario f) {
@@ -150,8 +150,8 @@ public class SistemaFachada {
 		return controllerFuncionario.listarTudoFuncionario();
 	}
 
-	public void AlteraFuncionario(Funcionario novoFuncionario) {
-		controllerFuncionario.AlteraFuncionario(novoFuncionario);
+	public void AlteraFuncionario(Funcionario novoFuncionario, long id) {
+		controllerFuncionario.AlteraFuncionario(novoFuncionario, id);
 	}
 
 	public void cadastrarProduto(Produto p) {
@@ -178,16 +178,16 @@ public class SistemaFachada {
 		return controllerProdutos.listarTudoProduto();
 	}
 
-	public void AlteraProduto(Produto novoProduto) {
-		controllerProdutos.AlteraProduto(novoProduto);
+	public void AlteraProduto(Produto novoProduto, long id) {
+		controllerProdutos.AlteraProduto(novoProduto, id);
 	}
 
 	public void saveServico(Servico servico) {
 		controllerServico.saveServico(servico);
 	}
 
-	public void updateServico(Servico servico) {
-		controllerServico.updateServico(servico);
+	public void updateServico(Servico servico, long id) {
+		controllerServico.updateServico(servico, id);
 	}
 
 	public void deleteServico(long id) {
@@ -206,8 +206,8 @@ public class SistemaFachada {
 		controllerVenda.saveVenda(venda);
 	}
 
-	public void updateVenda(Venda venda) {
-		controllerVenda.updateVenda(venda);
+	public void updateVenda(Venda venda, long id) {
+		controllerVenda.updateVenda(venda, id);
 	}
 
 	public void deleteVenda(long id) {

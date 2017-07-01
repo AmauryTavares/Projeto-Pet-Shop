@@ -60,10 +60,10 @@ public class ProdutosController {
 		return this.repositorioProdutos.listarTudo();
 	}
 	
-	public void AlteraProduto(Produto novoProduto) {
-		Produto p = this.repositorioProdutos.listarProduto(novoProduto.getId());
+	public void AlteraProduto(Produto novoProduto, long id) {
+		Produto p = this.repositorioProdutos.listarProduto(id);
 		if( (p != null) && (novoProduto.getNome() != null)) {
-			this.repositorioProdutos.alterarProduto(novoProduto);
+			this.repositorioProdutos.alterarProduto(novoProduto, id);
 		}
 	}
 }

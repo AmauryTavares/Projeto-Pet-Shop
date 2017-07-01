@@ -24,11 +24,21 @@ public class FuncionarioDAO {
 		this.repositorioFuncionario.add(f);
 	}
 	
-	public void alterarFuncionario(Funcionario f) {
+	public void alterarFuncionario(Funcionario f, long id) {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioFuncionario.size() && achou == false; i++) {
-			if (this.repositorioFuncionario.get(i).getId() == f.getId()) {
-				this.repositorioFuncionario.set(i, f);
+			if (this.repositorioFuncionario.get(i).getId() == id) {
+				this.repositorioFuncionario.get(i).setBairro(f.getBairro());
+				this.repositorioFuncionario.get(i).setCargo(f.getCargo());
+				this.repositorioFuncionario.get(i).setCpf(f.getCpf());
+				this.repositorioFuncionario.get(i).setEmail(f.getEmail());
+				this.repositorioFuncionario.get(i).setLogin(f.getLogin());
+				this.repositorioFuncionario.get(i).setNome(f.getNome());
+				this.repositorioFuncionario.get(i).setNumCasa(f.getNumCasa());
+				this.repositorioFuncionario.get(i).setRua(f.getRua());
+				this.repositorioFuncionario.get(i).setSalario(f.getSalario());
+				this.repositorioFuncionario.get(i).setSenha(f.getSenha());
+				this.repositorioFuncionario.get(i).setTelefone(f.getTelefone());
 				achou = true;
 			}
 		}

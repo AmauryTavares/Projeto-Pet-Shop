@@ -26,22 +26,22 @@ public class ServicoContoller
 	public void saveServico(Servico servico) {
 		
 		if( (servico != null) && (!this.servicoRepository.existe(servico)) && (servico.getNome() != null) 
-				&& (servico.getPreco() > 0) && (servico.isConsulta() != true)) {
+				&& (servico.getPreco() > 0)) {
 			
 			this.servicoRepository.cadastrarServico(servico);
 		}
 		
 	}
 	
-	public void updateServico(Servico servico) {
+	public void updateServico(Servico servico, long id) {
 		
 		if(servico != null) {
-			Servico a = this.servicoRepository.listarServico(servico.getId());
+			Servico a = this.servicoRepository.listarServico(id);
 			
 			if( (a != null) && (!this.servicoRepository.existe(servico)) && (servico.getNome() != null) 
-					&& (servico.getPreco() > 0) && (servico.isConsulta() != true)) {
+					&& (servico.getPreco() > 0)) {
 				
-				this.servicoRepository.alterarServico(servico);
+				this.servicoRepository.alterarServico(servico, id);
 			}
 		}
 		

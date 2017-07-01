@@ -53,10 +53,10 @@ public class FuncionarioController {
 		return this.repositorioFuncionarios.listarTudo();
 	}
 	
-	public void AlteraFuncionario(Funcionario novoFuncionario) {
-		Funcionario f = this.repositorioFuncionarios.listarFuncionario(novoFuncionario.getId());
+	public void AlteraFuncionario(Funcionario novoFuncionario, long id) {
+		Funcionario f = this.repositorioFuncionarios.listarFuncionario(id);
 		if( (f != null) && (novoFuncionario.getNome() != null) && (novoFuncionario.getCpf()!=null)) {
-			this.repositorioFuncionarios.alterarFuncionario(novoFuncionario);
+			this.repositorioFuncionarios.alterarFuncionario(novoFuncionario, id);
 		}
 	}
 }

@@ -24,11 +24,15 @@ public class VendaDAO {
 		this.repositorioVendas.add(v);
 	}
 	
-	public void alterarVenda(Venda v) {
+	public void alterarVenda(Venda v, long id) {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioVendas.size() && achou == false; i++) {
-			if (this.repositorioVendas.get(i).getId() == v.getId()) {
-				this.repositorioVendas.set(i, v);
+			if (this.repositorioVendas.get(i).getId() == id) {
+				this.repositorioVendas.get(i).setAtendimentos(v.getAtendimentos());
+				this.repositorioVendas.get(i).setData(v.getData());
+				this.repositorioVendas.get(i).setFuncionario(v.getFuncionario());
+				this.repositorioVendas.get(i).setProdutos(v.getProdutos());
+				this.repositorioVendas.get(i).setValorTotal(v.getValorTotal());
 				achou = true;
 			}
 		}
@@ -38,7 +42,7 @@ public class VendaDAO {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioVendas.size() && achou == false; i++) {
 			if (this.repositorioVendas.get(i).getId() == id) {
-				this.repositorioVendas.get(i);
+				this.repositorioVendas.remove(i);
 				achou = true;
 			}
 		}

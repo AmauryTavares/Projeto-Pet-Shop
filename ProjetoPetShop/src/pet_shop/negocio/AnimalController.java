@@ -27,22 +27,22 @@ public class AnimalController {
 		
 		if( (animal != null) && (!this.animalrepository.existe(animal)) && (animal.getDono() != null) 
 				&& (animal.getDataNascimento() != null) && (animal.getEspecie() != null) 
-				&& (animal.getNome() != null) && (animal.getPeso() < 0) && (animal.getRaca() != null) ) {
+				&& (animal.getNome() != null) && (animal.getPeso() > 0) && (animal.getRaca() != null) ) {
 			
 			this.animalrepository.cadastrarAnimal(animal);
 		}
 		
 	}
 	
-	public void updateAnimal(Animal animal) {
+	public void updateAnimal(Animal animal, long id) {
 		
 		if(animal != null) {
-			Animal a = this.animalrepository.listarAnimal(animal.getId());
+			Animal a = this.animalrepository.listarAnimal(id);
 			
 			if( (a != null) && (animal.getDataNascimento() != null) && (animal.getDono() != null) && (animal.getEspecie() != null) 
-					&& (animal.getNome() != null) && (animal.getPeso() < 0) && (animal.getRaca() != null)) {
+					&& (animal.getNome() != null) && (animal.getPeso() > 0) && (animal.getRaca() != null)) {
 				
-				this.animalrepository.alterarAnimal(animal);
+				this.animalrepository.alterarAnimal(animal, id);
 			}
 		}
 		

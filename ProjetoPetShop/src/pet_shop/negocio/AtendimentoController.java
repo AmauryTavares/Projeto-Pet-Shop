@@ -33,15 +33,15 @@ public class AtendimentoController {
 		
 	}
 	
-	public void updateAtendimento(Atendimento atendimento) {
+	public void updateAtendimento(Atendimento atendimento, long id) {
 		
 		if(atendimento != null) {
-			Atendimento a = this.atendimentoRepository.listarAtendimento(atendimento.getId());
+			Atendimento a = this.atendimentoRepository.listarAtendimento(id);
 			
 			if( (a != null) && (atendimento.getAnimal() != null)  && (atendimento.getData() != null) 
 					&& (atendimento.getFuncionario() != null) && (atendimento.getObservacao() != null) ) {
 				
-				this.atendimentoRepository.alterarAtendimento(atendimento);
+				this.atendimentoRepository.alterarAtendimento(atendimento, id);
 			}
 		}
 		

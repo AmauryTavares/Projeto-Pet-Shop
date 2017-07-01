@@ -31,21 +31,21 @@ public class VendaController
 		}
 		
 	}
-	public void updateVenda(Venda venda) 
+	public void updateVenda(Venda venda, long id) 
 	{
 		if(venda != null) 
 		{
-			Venda a = this.vendaRepository.listarVenda(venda.getId());			
+			Venda a = this.vendaRepository.listarVenda(id);			
 			if( (a != null) && (!this.vendaRepository.existe(venda))) 
 			{
-				this.vendaRepository.alterarVenda(venda);
+				this.vendaRepository.alterarVenda(venda, id);
 			}
 		}
 		
 	}
 	public void deleteVenda(long id) 
 	{
-	if(id >= 0 && this.vendaRepository.existe(id)) 
+	if(id > 0 && this.vendaRepository.existe(id)) 
 	{
 		this.vendaRepository.excluirVenda(id);
 	}

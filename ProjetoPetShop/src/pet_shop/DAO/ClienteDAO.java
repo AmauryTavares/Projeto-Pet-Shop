@@ -24,11 +24,17 @@ public class ClienteDAO {
 		this.repositorioCliente.add(c);
 	}
 	
-	public void alterarCliente(Cliente c) {
+	public void alterarCliente(Cliente c, long id) {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioCliente.size() && achou == false; i++) {
-			if (this.repositorioCliente.get(i).getId() == c.getId()) {
-				this.repositorioCliente.set(i, c);
+			if (this.repositorioCliente.get(i).getId() == id) {
+				this.repositorioCliente.get(i).setBairro(c.getBairro());
+				this.repositorioCliente.get(i).setCpf(c.getCpf());
+				this.repositorioCliente.get(i).setEmail(c.getEmail());	
+				this.repositorioCliente.get(i).setNome(c.getNome());
+				this.repositorioCliente.get(i).setNumCasa(c.getNumCasa());
+				this.repositorioCliente.get(i).setRua(c.getRua());
+				this.repositorioCliente.get(i).setTelefone(c.getTelefone());
 				achou = true;
 			}
 		}

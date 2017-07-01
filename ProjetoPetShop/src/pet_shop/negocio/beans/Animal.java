@@ -81,7 +81,7 @@ public class Animal {
 	
 	public String toString() {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		return "ID: " + this.id + "\nNome: " + this.nome + "\nDono: " +this.dono.getNome() + "\nPeso: " + this.peso + "kg \nEspécie: " + this.especie + 
+		return "ID: " + this.id + "\nNome: " + this.nome + "\nDono: " +this.dono.getNome() + "\nPeso: " + String.format("%.2f", this.peso) + " kg \nEspécie: " + this.especie + 
 				"\nRaça: " + this.raca + "\nData de Nascimento: " + this.dataNascimento.format(fmt);
 	}
 

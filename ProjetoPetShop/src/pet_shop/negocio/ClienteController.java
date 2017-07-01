@@ -59,10 +59,10 @@ public class ClienteController {
 		this.repositorioClientes.excluirCliente(id);
 	}
 	
-	public void AlterarCliente(Cliente novoCliente) {
-		Cliente c = this.repositorioClientes.listarCliente(novoCliente.getId());
+	public void AlterarCliente(Cliente novoCliente, long id) {
+		Cliente c = this.repositorioClientes.listarCliente(id);
 		if( (c != null) && (novoCliente.getNome() != null) && (novoCliente.getCpf()!=null)) {
-			this.repositorioClientes.alterarCliente(novoCliente);
+			this.repositorioClientes.alterarCliente(novoCliente, id);
 		}
 	}
 }

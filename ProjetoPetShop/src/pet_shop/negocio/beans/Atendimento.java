@@ -1,6 +1,7 @@
 package pet_shop.negocio.beans;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Atendimento {
 
@@ -68,8 +69,9 @@ public class Atendimento {
 	}
 	
 	public String toString() {
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		return "\nID: " + this.id + "\nNome do animal: " + this.animal.getNome() + "\nNome do funcionário: " + this.funcionario.getNome() 
-		+ "\n" + this.servico + "\nData: " + this.data + "\nObservação: " + this.diagnostico;
+		+ "\nServiços: \n" + this.servico + "\nData: " + this.data.format(fmt) + "\nObservação: " + this.diagnostico;
 	}
 
 	@Override

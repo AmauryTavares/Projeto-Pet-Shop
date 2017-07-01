@@ -24,11 +24,13 @@ public class ServicoDAO {
 		this.repositorioServico.add(s);
 	}
 	
-	public void alterarServico(Servico s) {
+	public void alterarServico(Servico s, long id) {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioServico.size() && achou == false; i++) {
-			if (this.repositorioServico.get(i).getId() == s.getId()) {
-				this.repositorioServico.set(i, s);
+			if (this.repositorioServico.get(i).getId() == id) {
+				this.repositorioServico.get(i).setNome(s.getNome());
+				this.repositorioServico.get(i).setPreco(s.getPreco());
+				this.repositorioServico.get(i).setConsulta(s.isConsulta());
 				achou = true;
 			}
 		}

@@ -24,11 +24,15 @@ public class AtendimentoDAO {
 		this.repositorioAtendimento.add(a);
 	}
 	
-	public void alterarAtendimento(Atendimento a) {
+	public void alterarAtendimento(Atendimento a, long id) {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioAtendimento.size() && achou == false; i++) {
-			if (this.repositorioAtendimento.get(i).getId() == a.getId()) {
-				this.repositorioAtendimento.set(i, a);
+			if (this.repositorioAtendimento.get(i).getId() == id) {
+				this.repositorioAtendimento.get(i).setAnimal(a.getAnimal());
+				this.repositorioAtendimento.get(i).setData(a.getData());
+				this.repositorioAtendimento.get(i).setFuncionario(a.getFuncionario());
+				this.repositorioAtendimento.get(i).setObservacao(a.getObservacao());
+				this.repositorioAtendimento.get(i).setServico(a.getServico());
 				achou = true;
 			}
 		}

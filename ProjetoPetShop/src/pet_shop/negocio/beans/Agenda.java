@@ -1,6 +1,7 @@
 package pet_shop.negocio.beans;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Agenda {
@@ -66,10 +67,11 @@ public class Agenda {
 	}
 	
 	public String toString() {
-		String text = "\nID: " + this.id + "\nNome do animal: " + this.animal.getNome() + "\nData: " + this.dataMarcada + "\nServiço(s): ";
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String text = "\nID: " + this.id + "\nData: " + this.dataMarcada.format(fmt) + "\nServiço(s): ";
 		
 		for (int i = 0; i < this.servicos.size(); i++) {
-			text += String.format("\n%20s \t%.2f", this.servicos.get(i).getNome(), this.servicos.get(i).getPreco());
+			text += String.format("\n%15s \t%20s \tR$%.2f",this.animal.getNome() , this.servicos.get(i).getNome(), this.servicos.get(i).getPreco());
 		}
 
 		return text;

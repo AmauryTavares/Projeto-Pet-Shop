@@ -40,7 +40,7 @@ public class Produto {
 	}
 	
 	public String toString() {
-		return "ID: " + this.id + "\nNome do produto: " + this.nome + "\nPreço: R$" + String.format("%.2f", this.preco) + "\nEstoque: " + this.qtdEstoque;
+		return "ID: " + this.id + "\nNome do produto: " + this.nome + "\nPreço: R$" + String.format("%.2f", this.preco) + "\nQuantidade: " + this.qtdEstoque + " u/kg";
 	}
 
 	@Override

@@ -24,11 +24,13 @@ public class AgendaDAO {
 		this.repositorioAgenda.add(a);
 	}
 	
-	public void alterarAgenda(Agenda a) {
+	public void alterarAgenda(Agenda a, long id) {
 		boolean achou = false;
 		for (int i = 0; i < this.repositorioAgenda.size() && achou == false; i++) {
-			if (this.repositorioAgenda.get(i).getId() == a.getId()) {
-				this.repositorioAgenda.set(i, a);
+			if (this.repositorioAgenda.get(i).getId() == id) {
+				this.repositorioAgenda.get(i).setAnimal(a.getAnimal());
+				this.repositorioAgenda.get(i).setDataMarcada(a.getDataMarcada());
+				this.repositorioAgenda.get(i).setServicos(a.getServicos());
 				achou = true;
 			}
 		}
