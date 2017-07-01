@@ -281,12 +281,14 @@ public class GuiDono {
 					switch (opcao) {
 					case 1:
 						ArrayList<Servico> listaServicoAgendadoVazia = new ArrayList<>();
-						cadastrarAgenda(scanner, listaServicoAgendadoVazia);
+						boolean inicio = true;
+						cadastrarAgenda(scanner, listaServicoAgendadoVazia, inicio);
 						break;
 
 					case 2:
 						ArrayList<Servico> listaServicoAgendado = new ArrayList<>();
-						alterarAgenda(scanner, listaServicoAgendado);
+						boolean inicio2 = true;
+						alterarAgenda(scanner, listaServicoAgendado, inicio2);
 						break;
 
 					case 3:
@@ -321,7 +323,7 @@ public class GuiDono {
 		scanner.close();
 	}
 
-	private void menu() {
+	protected void menu() {
 		System.out.println("#################################################");
 		System.out.println("\t\tPainel Inicial");
 		System.out.println("#################################################\n");
@@ -336,7 +338,7 @@ public class GuiDono {
 		System.out.println("9. Sair");
 	}
 
-	private void subMenuCliente() {
+	protected void subMenuCliente() {
 		System.out.println("#################################################");
 		System.out.println("\t     Gerenciamento de Clientes");
 		System.out.println("#################################################\n");
@@ -347,7 +349,7 @@ public class GuiDono {
 		System.out.println("5. Voltar");
 	}
 
-	private void subMenuServicos() {
+	protected void subMenuServicos() {
 		System.out.println("#################################################");
 		System.out.println("\t     Gerenciamento de Serviços");
 		System.out.println("#################################################\n");
@@ -358,7 +360,7 @@ public class GuiDono {
 		System.out.println("5. Voltar");
 	}
 
-	private void subMenuProdutos() {
+	protected void subMenuProdutos() {
 		System.out.println("#################################################");
 		System.out.println("\t     Gerenciamento de Produtos");
 		System.out.println("#################################################\n");
@@ -369,7 +371,7 @@ public class GuiDono {
 		System.out.println("5. Voltar");
 	}
 
-	private void subMenuFuncionarios() {
+	protected void subMenuFuncionarios() {
 		System.out.println("#################################################");
 		System.out.println("\t     Gerenciamento de Funcionários");
 		System.out.println("#################################################\n");
@@ -380,7 +382,7 @@ public class GuiDono {
 		System.out.println("5. Voltar");
 	}
 
-	private void subMenuAtendimentos() {
+	protected void subMenuAtendimentos() {
 		System.out.println("#################################################");
 		System.out.println("\t     Gerenciamento de Atendimentos");
 		System.out.println("#################################################\n");
@@ -391,7 +393,7 @@ public class GuiDono {
 		System.out.println("5. Voltar");
 	}
 
-	private void subMenuAnimais() {
+	public void subMenuAnimais() {
 		System.out.println("#################################################");
 		System.out.println("\t     Gerenciamento de Animais");
 		System.out.println("#################################################\n");
@@ -402,7 +404,7 @@ public class GuiDono {
 		System.out.println("5. Voltar");
 	}
 
-	private void subMenuVendas() {
+	protected void subMenuVendas() {
 		System.out.println("#################################################");
 		System.out.println("\t     Gerenciamento de Vendas");
 		System.out.println("#################################################\n");
@@ -412,7 +414,7 @@ public class GuiDono {
 		System.out.println("4. Voltar");
 	}
 
-	private void subMenuAgenda() {
+	protected void subMenuAgenda() {
 		System.out.println("#################################################");
 		System.out.println("\t     Gerenciamento de Agendas");
 		System.out.println("#################################################\n");
@@ -423,7 +425,7 @@ public class GuiDono {
 		System.out.println("5. Voltar");
 	}
 
-	private void cadastrarCliente(Scanner scanner) {
+	protected void cadastrarCliente(Scanner scanner) {
 		System.out.println("#################################################");
 		System.out.println("\tCadastro de Cliente\t 0 - voltar");
 		System.out.println("#################################################\n");
@@ -495,7 +497,7 @@ public class GuiDono {
 		}
 	}
 
-	private void alterarCliente(Scanner scanner) {
+	protected void alterarCliente(Scanner scanner) {
 		System.out.println("#################################################");
 		System.out.println("\tAlteração de Cliente\t 0 - voltar");
 		System.out.println("#################################################\n");
@@ -514,6 +516,7 @@ public class GuiDono {
 		String telefone = null;
 
 		while (sairLoop == false) {
+			System.out.println("\n* Clientes *\n");
 			for (Cliente c : lista) { // lista todos os clientes do repositorio
 				System.out.println(c + "\n");
 			}
@@ -665,7 +668,7 @@ public class GuiDono {
 
 	}
 
-	private void excluirCliente(Scanner scanner) {
+	protected void excluirCliente(Scanner scanner) {
 		System.out.println("#################################################");
 		System.out.println("\t\tExcluir Cliente\t 0 - voltar");
 		System.out.println("#################################################\n");
@@ -675,6 +678,7 @@ public class GuiDono {
 		boolean sairLoop = false;
 
 		while (sairLoop == false) {
+			System.out.println("\n* Clientes *\n");
 			for (Cliente c : lista) { // lista todos os clientes do repositorio
 				System.out.println(c + "\n");
 			}
@@ -717,7 +721,7 @@ public class GuiDono {
 		}
 	}
 
-	private void listarTodosClientes() throws IOException {
+	protected void listarTodosClientes() throws IOException {
 		System.out.println("#################################################");
 		System.out.println("\t\tListar Clientes ");
 		System.out.println("#################################################\n");
@@ -732,7 +736,7 @@ public class GuiDono {
 		System.in.read();
 	}
 
-	private void cadastrarServico(Scanner scanner) {
+	protected void cadastrarServico(Scanner scanner) {
 
 		System.out.println("#################################################");
 		System.out.println("\tCadastro de Serviços\t 0 - voltar");
@@ -797,7 +801,7 @@ public class GuiDono {
 
 	}
 
-	private void alterarServico(Scanner scanner) {
+	protected void alterarServico(Scanner scanner) {
 
 		System.out.println("#################################################");
 		System.out.println("\tAlteração de Serviço\t 0 - voltar");
@@ -813,6 +817,7 @@ public class GuiDono {
 		Servico servicoAlterado = null;
 
 		while (sairLoop == false) {
+			System.out.println("\n* Serviços *\n");
 			for (Servico s : lista) { // lista todos os serviços do repositorio
 				System.out.println(s + "\n");
 			}
@@ -922,7 +927,7 @@ public class GuiDono {
 
 	}
 
-	private void excluirServico(Scanner scanner) {
+	protected void excluirServico(Scanner scanner) {
 
 		System.out.println("#################################################");
 		System.out.println("\t\tExcluir Serviço\t 0 - voltar");
@@ -933,6 +938,7 @@ public class GuiDono {
 		boolean sairLoop = false;
 
 		while (sairLoop == false) {
+			System.out.println("\n* Serviços *\n");
 			for (Servico s : lista) { // lista todos os serviços do repositorio
 				System.out.println(s + "\n");
 			}
@@ -979,14 +985,14 @@ public class GuiDono {
 
 	}
 
-	private void listarTodosServicos() throws IOException {
+	protected void listarTodosServicos() throws IOException {
 
 		System.out.println("#################################################");
 		System.out.println("\t\tListar Serviços ");
 		System.out.println("#################################################\n");
 
 		ArrayList<Servico> lista = fachada.listarTodosServicos();
-
+		
 		for (Servico s : lista) { // lista todos os servicos do repositorio
 			System.out.println(s + "\n");
 		}
@@ -996,7 +1002,7 @@ public class GuiDono {
 
 	}
 
-	private void cadastrarProduto(Scanner scanner) {
+	protected void cadastrarProduto(Scanner scanner) {
 
 		System.out.println("#################################################");
 		System.out.println("\tCadastro de Produtos\t 0 - voltar");
@@ -1042,7 +1048,7 @@ public class GuiDono {
 
 	}
 
-	private void alterarProduto(Scanner scanner) {
+	protected void alterarProduto(Scanner scanner) {
 
 		System.out.println("#################################################");
 		System.out.println("\tAlteração de Produto\t 0 - voltar");
@@ -1058,6 +1064,7 @@ public class GuiDono {
 		Produto produtoAlterado = null;
 
 		while (sairLoop == false) {
+			System.out.println("\n* Produtos *\n");
 			for (Produto p : lista) { // lista todos os produtos do repositorio
 				System.out.println(p + "\n");
 			}
@@ -1143,7 +1150,7 @@ public class GuiDono {
 
 	}
 
-	private void excluirProduto(Scanner scanner) {
+	protected void excluirProduto(Scanner scanner) {
 
 		System.out.println("#################################################");
 		System.out.println("\t\tExcluir Produto\t 0 - voltar");
@@ -1154,6 +1161,7 @@ public class GuiDono {
 		boolean sairLoop = false;
 
 		while (sairLoop == false) {
+			System.out.println("\n* Produtos *\n");
 			for (Produto p : lista) { // lista todos os produtos do repositorio
 				System.out.println(p + "\n");
 			}
@@ -1200,7 +1208,7 @@ public class GuiDono {
 
 	}
 
-	private void listarTodosProdutos() throws IOException {
+	protected void listarTodosProdutos() throws IOException {
 
 		System.out.println("#################################################");
 		System.out.println("\t\tListar Produtos ");
@@ -1217,7 +1225,7 @@ public class GuiDono {
 
 	}
 
-	private void cadastrarFuncionario(Scanner scanner) {
+	protected void cadastrarFuncionario(Scanner scanner) {
 
 		System.out.println("#################################################");
 		System.out.println("\tCadastro de Funcionário\t 0 - voltar");
@@ -1327,7 +1335,7 @@ public class GuiDono {
 
 	}
 
-	private void alterarFuncionario(Scanner scanner) { /// *****////
+	protected void alterarFuncionario(Scanner scanner) { /// *****////
 
 		System.out.println("#################################################");
 		System.out.println("\tAlteração de Funcionário\t 0 - voltar");
@@ -1351,6 +1359,7 @@ public class GuiDono {
 		Funcionario funcionarioAlterado = null;
 
 		while (sairLoop == false) {
+			System.out.println("\n* Funcionários *\n");
 			for (Funcionario f : lista) { // lista todos os funcionarios do
 											// repositorio
 				System.out.println(f + "\n");
@@ -1569,7 +1578,7 @@ public class GuiDono {
 
 	}
 
-	private void excluirFuncionario(Scanner scanner) {
+	protected void excluirFuncionario(Scanner scanner) {
 
 		System.out.println("#################################################");
 		System.out.println("\t\tExcluir Funcionário\t 0 - voltar");
@@ -1580,7 +1589,7 @@ public class GuiDono {
 		boolean sairLoop = false;
 
 		while (sairLoop == false) {
-
+			System.out.println("\n* Funcionários *\n");
 			for (Funcionario f : lista) { // lista todos os funcionarios do
 											// repositorio
 				System.out.println(f + "\n");
@@ -1629,7 +1638,7 @@ public class GuiDono {
 
 	}
 
-	private void listarTodosFuncionarios() throws IOException {
+	protected void listarTodosFuncionarios() throws IOException {
 
 		System.out.println("#################################################");
 		System.out.println("\t\tListar Funcionários ");
@@ -1647,7 +1656,7 @@ public class GuiDono {
 
 	}
 
-	private void cadastrarAtendimento(Scanner scanner, ArrayList<Atendimento> listaAtendimentos) {
+	protected void cadastrarAtendimento(Scanner scanner, ArrayList<Atendimento> listaAtendimentos) {
 
 		System.out.println("#################################################");
 		System.out.println("\tCadastro de Atendimentos\t 0 - voltar");
@@ -1666,6 +1675,7 @@ public class GuiDono {
 			boolean sairLoop = false;
 
 			while (sairLoop == false) {
+				System.out.println("\n* Animais *\n");
 				for (Animal a : listaAnimal) { // lista todos os animais do
 												// repositorio
 					System.out.println(a + "\n");
@@ -1693,6 +1703,7 @@ public class GuiDono {
 			boolean sairLoop = false;
 
 			while (sairLoop == false) {
+				System.out.println("\n* Funcionários *\n");
 				for (Funcionario f : listaFuncionario) { // lista todos os
 															// funcionarios do
 															// repositorio
@@ -1721,6 +1732,7 @@ public class GuiDono {
 			boolean sairLoop = false;
 
 			while (sairLoop == false) {
+				System.out.println("\n* Serviços *\n");
 				for (Servico s : listaServico) { // lista todos os servicos do
 													// repositorio
 					System.out.println(s + "\n");
@@ -1785,7 +1797,7 @@ public class GuiDono {
 		}
 	}
 
-	private void alterarAtendimento(Scanner scanner) {
+	protected void alterarAtendimento(Scanner scanner) {
 
 		System.out.println("#################################################");
 		System.out.println("\tAlteração de Atendimento\t 0 - voltar");
@@ -1803,6 +1815,7 @@ public class GuiDono {
 		Atendimento atendimentoAlterado = null;
 
 		while (sairLoop == false) {
+			System.out.println("\n* Atendimentos *\n");
 			for (Atendimento a : lista) { // lista todos os atendimentos do
 											// repositorio
 				System.out.println(a + "\n");
@@ -1851,6 +1864,7 @@ public class GuiDono {
 			sairLoop = false;
 
 			while (sairLoop == false) {
+				System.out.println("\n* Animais *\n");
 				for (Animal a : listaAnimal) { // lista todos os animais do
 												// repositorio
 					System.out.println(a + "\n");
@@ -1895,6 +1909,7 @@ public class GuiDono {
 			sairLoop = false;
 
 			while (sairLoop == false) {
+				System.out.println("\n* Funcionários *\n");
 				for (Funcionario f : listaFuncionario) { // lista todos os
 															// funcionarios do
 															// repositorio
@@ -1941,6 +1956,7 @@ public class GuiDono {
 			sairLoop = false;
 
 			while (sairLoop == false) {
+				System.out.println("\n* Serviços *\n");
 				for (Servico s : listaServico) { // lista todos os servicos do
 													// repositorio
 					System.out.println(s + "\n");
@@ -2026,7 +2042,7 @@ public class GuiDono {
 
 	}
 
-	private void excluirAtendimento(Scanner scanner) {
+	protected void excluirAtendimento(Scanner scanner) {
 
 		System.out.println("#################################################");
 		System.out.println("\t\tExcluir Atendimento\t 0 - voltar");
@@ -2037,7 +2053,7 @@ public class GuiDono {
 		boolean sairLoop = false;
 
 		while (sairLoop == false) {
-
+			System.out.println("\n* Atendimentos *\n");
 			for (Atendimento a : lista) { // lista todos os atendimentos do
 											// repositorio
 				System.out.println(a + "\n");
@@ -2086,7 +2102,7 @@ public class GuiDono {
 
 	}
 
-	private void listarTodosAtendimentos() throws IOException {
+	protected void listarTodosAtendimentos() throws IOException {
 
 		System.out.println("#################################################");
 		System.out.println("\t\tListar Atendimentos ");
@@ -2104,7 +2120,7 @@ public class GuiDono {
 
 	}
 
-	private void cadastrarAnimal(Scanner scanner) {
+	protected void cadastrarAnimal(Scanner scanner) {
 		System.out.println("#################################################");
 		System.out.println("\tCadastro de Animal\t 0 - voltar");
 		System.out.println("#################################################\n");
@@ -2119,6 +2135,7 @@ public class GuiDono {
 		Cliente dono = null;
 
 		while (sairLoop == false) {
+			System.out.println("\n* Clientes *\n");
 			for (Cliente c : lista) { // lista todos os clientes do repositorio
 				System.out.println(c + "\n");
 			}
@@ -2189,7 +2206,7 @@ public class GuiDono {
 		}
 	}
 
-	private void alterarAnimal(Scanner scanner) {
+	protected void alterarAnimal(Scanner scanner) {
 		System.out.println("#################################################");
 		System.out.println("\tAlteração de Animal\t 0 - voltar");
 		System.out.println("#################################################\n");
@@ -2210,6 +2227,7 @@ public class GuiDono {
 		Animal animalAlterado = null;
 
 		while (sairLoop == false) {
+			System.out.println("\n* Animais *\n");
 			for (Animal a : listaAnimal) { // lista todos os animais do
 											// repositorio
 				System.out.println(a + "\n");
@@ -2244,6 +2262,7 @@ public class GuiDono {
 
 		while (loop == false) {
 			Cliente dono = null;
+			System.out.println("\n* Clientes *\n");
 			for (Cliente c : lista) { // lista todos os clientes do repositorio
 				System.out.println(c + "\n");
 			}
@@ -2360,7 +2379,7 @@ public class GuiDono {
 
 	}
 
-	private void excluirAnimal(Scanner scanner) {
+	protected void excluirAnimal(Scanner scanner) {
 		System.out.println("#################################################");
 		System.out.println("\t\tExcluir Animal\t 0 - voltar");
 		System.out.println("#################################################\n");
@@ -2370,6 +2389,7 @@ public class GuiDono {
 		boolean sairLoop = false;
 
 		while (sairLoop == false) {
+			System.out.println("\n* Animais *\n");
 			for (Animal a : lista) { // lista todos os animais do repositorio
 				System.out.println(a + "\n");
 			}
@@ -2412,7 +2432,7 @@ public class GuiDono {
 		}
 	}
 
-	private void listarTodosAnimais() throws IOException {
+	protected void listarTodosAnimais() throws IOException {
 		System.out.println("#################################################");
 		System.out.println("\t\tListar Animais ");
 		System.out.println("#################################################\n");
@@ -2427,7 +2447,7 @@ public class GuiDono {
 		System.in.read();
 	}
 
-	private void realizarVenda(Scanner scanner, ArrayList<Atendimento> listaAtendimentos) {
+	protected void realizarVenda(Scanner scanner, ArrayList<Atendimento> listaAtendimentos) {
 		System.out.println("#################################################");
 		System.out.println("\t          Venda\t 0 - voltar");
 		System.out.println("#################################################\n");
@@ -2441,6 +2461,7 @@ public class GuiDono {
 		double qtd = 0;
 
 		while (sairLoop == false) {
+			System.out.println("\n* Produtos *\n");
 			for (Produto p : lista) { // lista todos os produtos do repositorio
 				System.out.println(p + "\n");
 			}
@@ -2489,7 +2510,7 @@ public class GuiDono {
 		}
 	}
 
-	private void listarTodasVendas() throws IOException {
+	protected void listarTodasVendas() throws IOException {
 		System.out.println("#################################################");
 		System.out.println("\t\tListar Vendas ");
 		System.out.println("#################################################\n");
@@ -2504,7 +2525,7 @@ public class GuiDono {
 		System.in.read();
 	}
 
-	private void excluirVenda(Scanner scanner) {
+	protected void excluirVenda(Scanner scanner) {
 		System.out.println("#################################################");
 		System.out.println("\t\tExcluir Venda\t 0 - voltar");
 		System.out.println("#################################################\n");
@@ -2514,6 +2535,7 @@ public class GuiDono {
 		boolean sairLoop = false;
 
 		while (sairLoop == false) {
+			System.out.println("\n* Vendas *\n");
 			for (Venda v : lista) { // lista todos os animais do repositorio
 				System.out.println(v + "\n");
 			}
@@ -2556,23 +2578,29 @@ public class GuiDono {
 		}
 	}
 
-	private void cadastrarAgenda(Scanner scanner, ArrayList<Servico> listaServicoAgendado) {
+	protected void cadastrarAgenda(Scanner scanner, ArrayList<Servico> listaServicoAgendado, boolean inicio) {
 
-		System.out.println("#################################################");
-		System.out.println("\tCadastro de Agendas\t 0 - voltar");
-		System.out.println("#################################################\n");
+		if (inicio) {
+			System.out.println("#################################################");
+			System.out.println("\tCadastro de Agendas\t 0 - voltar");
+			System.out.println("#################################################\n");
+		}
 
 		boolean voltar = false;
 
 		Animal animal = null;
 		LocalDate data = null;
 		Servico servico = null;
+		boolean dataAtivada = false; // Faz com que a data só seja ativada no
+										// processo principal
 
-		if (voltar == false) {
+		if (voltar == false && inicio) {
+			dataAtivada = true;
 			ArrayList<Animal> listaAnimal = fachada.listarTodosAnimais();
 			boolean sairLoop = false;
 
 			while (sairLoop == false) {
+				System.out.println("\n* Animais *\n");
 				for (Animal a : listaAnimal) { // lista todos os animais do
 												// repositorio
 					System.out.println(a + "\n");
@@ -2588,7 +2616,7 @@ public class GuiDono {
 					voltar = true;
 					sairLoop = true;
 				} else if (animal != null) { // verifica se o animal retornado
-												// existe
+					inicio = false; // existe
 					sairLoop = true;
 				} else {
 					System.out.println("\nID inexistente, tente novamente!\n");
@@ -2601,7 +2629,7 @@ public class GuiDono {
 			boolean sairLoop = false;
 
 			while (sairLoop == false) {
-				System.out.println();
+				System.out.println("\n* Serviços *\n");
 				for (Servico s : listaServico) { // lista todos os servicos do
 													// repositorio
 					System.out.println(s + "\n");
@@ -2622,31 +2650,24 @@ public class GuiDono {
 
 					boolean loop = false;
 					while (loop == false) {
-						System.out.println("\nDeseja adicionar mais um serviço? (S/N): "); 										
+						System.out.println("\nDeseja adicionar mais um serviço? (S/N): ");
 						String verificar = scanner.nextLine();
-						if (verificar.charAt(0) == 'S' || verificar.charAt(0) == 's') { 															
-							cadastrarAgenda(scanner, listaServicoAgendado);
+						if (verificar.charAt(0) == 'S' || verificar.charAt(0) == 's') {
+							cadastrarAgenda(scanner, listaServicoAgendado, inicio); // inicio
+																					// indica
+																					// se
+																					// é
+																					// o
+																					// primeiro
+																					// processo
+																					// de
+																					// cadastro
 							loop = true;
 							sairLoop = true;
-						} else if (verificar.charAt(0) == 'N' || verificar.charAt(0) == 'n') { 
-							
-							if (voltar == false) {
-								System.out.print("Data (Ex DD/MM/AAAA): ");
-								String dataModif = scanner.nextLine();
-								if (dataModif.equals("0")) {
-									voltar = true;
-								} else if (!dataModif.equals("")) {
-									DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-									data = LocalDate.parse(dataModif, fmt);
-								}
-							}
-							
-							Agenda a = new Agenda(animal, data, listaServicoAgendado);
-							fachada.saveAgenda(a);
-							System.out.println("\nAgenda Cadastrada com sucesso!\n");
+						} else if (verificar.charAt(0) == 'N' || verificar.charAt(0) == 'n') {
 							sairLoop = true;
-							loop = true;	
-						}																			
+							loop = true;
+						}
 					}
 				} else {
 					System.out.println("\nID inexistente ou serviço nao necessita de uma consulta, tente novamente!\n");
@@ -2655,13 +2676,32 @@ public class GuiDono {
 			}
 		}
 
+		if (voltar == false && dataAtivada == true) {
+			System.out.print("Data (Ex DD/MM/AAAA): ");
+			String dataModif = scanner.nextLine();
+			if (dataModif.equals("0")) {
+				voltar = true;
+			} else if (!dataModif.equals("")) {
+				DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				data = LocalDate.parse(dataModif, fmt);
+			}
+		}
+
+		if (voltar == false && dataAtivada == true) {
+			Agenda a = new Agenda(animal, data, listaServicoAgendado);
+			fachada.saveAgenda(a);
+			System.out.println("\nAgenda Cadastrada com sucesso!\n");
+		}
+
 	}
 
-	private void alterarAgenda(Scanner scanner, ArrayList<Servico> listaServicoAgendado) {
+	protected void alterarAgenda(Scanner scanner, ArrayList<Servico> listaServicoAgendado, boolean inicio) {
 
-		System.out.println("#################################################");
-		System.out.println("\tAlteração de Agenda\t 0 - voltar");
-		System.out.println("#################################################\n");
+		if (inicio) {
+			System.out.println("#################################################");
+			System.out.println("\tAlteração de Agenda\t 0 - voltar");
+			System.out.println("#################################################\n");
+		}
 
 		ArrayList<Agenda> lista = fachada.listarTodasAgendas();
 		Agenda alterarAgenda = null;
@@ -2671,14 +2711,18 @@ public class GuiDono {
 		LocalDate dataMarcadaAlt = null;
 		ArrayList<Servico> servicosAlt = null;
 		Agenda agendaAlterado = null;
+		boolean processoPrincipal = false; // ativa a opção de data e lista somente no processo principal
 
-		while (sairLoop == false) {
+		while (sairLoop == false && inicio) {
+			processoPrincipal = true;
+			System.out.println("\n* Agendas *\n");
 			for (Agenda a : lista) { // lista todos as agendas do repositorio
 				System.out.println(a + "\n");
 			}
 
 			System.out.println("\nDigite o id da agenda: ");
 			long id = scanner.nextInt();
+			scanner.nextLine();
 
 			alterarAgenda = fachada.findAgenda(id);
 
@@ -2701,12 +2745,10 @@ public class GuiDono {
 		}
 
 		Animal animal = null;
-		LocalDate data = null;
-		int dia = 0, mes = 0, ano = 0;
 		Servico servico = null;
 
-		if (voltar == false) {
-			System.out.println("Animal atual: " + alterarAgenda.getAnimal()); // Imprime
+		if (voltar == false && inicio) {
+			System.out.println("Animal atual: \n" + alterarAgenda.getAnimal()); // Imprime
 																				// o
 																				// nome
 																				// atual
@@ -2716,6 +2758,7 @@ public class GuiDono {
 			sairLoop = false;
 
 			while (sairLoop == false) {
+				System.out.println("\n* Animais *\n");
 				for (Animal a : listaAnimal) { // lista todos os animais do
 												// repositorio
 					System.out.println(a + "\n");
@@ -2723,19 +2766,20 @@ public class GuiDono {
 
 				System.out.println("\nDigite o id do animal: ");
 				String identificador = scanner.nextLine();
-				long id = Long.parseLong(identificador);
+				long id = -1;
+				if (!identificador.equals("")) {
+					id = Long.parseLong(identificador);
+				}
 
 				animal = fachada.findAnimal(id);
 
 				if (id == 0) { // verifica se a opção voltar foi acionada
 					voltar = true;
 					sairLoop = true;
+				} else if (identificador.equals("")) {
+					sairLoop = true;
 				} else if ((animal != null) && (!identificador.equals(""))) { // verifica
-																				// se
-																				// o
-																				// animal
-																				// retornado
-																				// existe
+					inicio = false;
 					animalAlt = animal;
 					sairLoop = true;
 				} else {
@@ -2745,95 +2789,73 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			System.out.println("Data atual: " + alterarAgenda.getDataMarcada()); // Imprime
-																					// a
-																					// data
-																					// atual
-			System.out.println("Nova Data: ");
-
-			String day = null, month = null, year = null;
-
-			if (voltar == false) {
-				System.out.print("Dia: ");
-				day = scanner.nextLine();
-				dia = Integer.parseInt(day);
-				if (dia == 0) {
-					voltar = true;
-				}
+			System.out.println("Serviços atuais: ");
+			for (int i = 0; i < alterarAgenda.getServicos().size(); i++) {
+				System.out.printf("%20s \t R$%.2f \n", alterarAgenda.getServicos().get(i).getNome(), alterarAgenda.getServicos().get(i).getPreco());
 			}
-
-			if (voltar == false) {
-				System.out.print("Mês: ");
-				month = scanner.nextLine();
-				mes = Integer.parseInt(month);
-				if (mes == 0) {
-					voltar = true;
-				}
-			}
-
-			if (voltar == false) {
-				System.out.print("Ano: ");
-				year = scanner.nextLine();
-				ano = Integer.parseInt(year);
-				if (ano == 0) {
-					voltar = true;
-				}
-				data = LocalDate.of(ano, mes, dia);
-			}
-
-			if ((!day.equals("")) && (!month.equals("")) && (!year.equals(""))) {
-				dataMarcadaAlt = data;
-			}
-
-		}
-
-		if (voltar == false) {
-			System.out.println("Serviços atuais: " + alterarAgenda.getServicos());
 			System.out.println("Novos serviços: ");
 
 			ArrayList<Servico> listaServico = fachada.listarTodosServicos();
 			sairLoop = false;
 
 			while (sairLoop == false) {
+				System.out.println();
+				System.out.println("\n* Serviços *\n");
 				for (Servico s : listaServico) { // lista todos os servicos do
 													// repositorio
-					System.out.println(s);
+					System.out.println(s + "\n");
 				}
-				System.out.println("\n* Digite '-1' para avançar * \n");
+
 				System.out.println("\nDigite o id do serviço: ");
 				long id = scanner.nextInt();
+				scanner.nextLine();
 
 				servico = fachada.findServico(id);
 
 				if (id == 0) { // verifica se a opção voltar foi acionada
 					voltar = true;
 					sairLoop = true;
-				} else if (id == -1) {
-					sairLoop = true;
 				} else if (servico != null) { // verifica se o serviço retornado
 												// existe
 					listaServicoAgendado.add(servico);
 
-					System.out.println("\nDeseja adicionar mais um serviço? (S/N): "); // confimação
-					String verificar = null;
-					verificar = scanner.nextLine();
-					if (verificar.charAt(0) == 'S' || verificar.charAt(0) == 's') {
-						alterarAgenda(scanner, listaServicoAgendado);
-					} else if (verificar.charAt(0) == 'N' || verificar.charAt(0) == 'n') { // apenas
-																							// sai
-																							// do
-																							// laço
-						servicosAlt = listaServicoAgendado;
-						sairLoop = true;
+					boolean loop = false;
+					while (loop == false) {
+						System.out.println("\nDeseja adicionar mais um serviço? (S/N): ");
+						String verificar = scanner.nextLine();
+						if (verificar.charAt(0) == 'S' || verificar.charAt(0) == 's') {
+							cadastrarAgenda(scanner, listaServicoAgendado, inicio); // inicio se é o processo principal
+							if (processoPrincipal) {
+								servicosAlt = listaServicoAgendado;
+							}
+							loop = true;
+							sairLoop = true;
+						} else if (verificar.charAt(0) == 'N' || verificar.charAt(0) == 'n') {
+							sairLoop = true;
+							loop = true;
+						}
 					}
-
 				} else {
 					System.out.println("\nID inexistente ou serviço nao necessita de uma consulta, tente novamente!\n");
 				}
+
 			}
 		}
 
-		if (voltar == false) {
+		if (voltar == false && processoPrincipal) {
+			DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			System.out.println("Data atual: " + alterarAgenda.getDataMarcada().format(fmt));
+			System.out.print("Nova data (Ex DD/MM/AAAA): ");
+			String dataModif = scanner.nextLine();
+			if (dataModif.equals("0")) {
+				voltar = true;
+			} else if (!dataModif.equals("")) {
+				
+				dataMarcadaAlt = LocalDate.parse(dataModif, fmt);
+			}
+		}
+		
+		if (voltar == false && processoPrincipal) {
 			agendaAlterado = new Agenda(animalAlt, dataMarcadaAlt, servicosAlt);
 			fachada.updateAgenda(agendaAlterado, alterarAgenda.getId());
 			agendaAlterado = null;
@@ -2843,7 +2865,7 @@ public class GuiDono {
 
 	}
 
-	private void excluirAgenda(Scanner scanner) {
+	protected void excluirAgenda(Scanner scanner) {
 
 		System.out.println("#################################################");
 		System.out.println("\t\tExcluir Agenda\t 0 - voltar");
@@ -2854,7 +2876,7 @@ public class GuiDono {
 		boolean sairLoop = false;
 
 		while (sairLoop == false) {
-
+			System.out.println("\n* Agendas *\n");
 			for (Agenda a : lista) { // lista todos as agendas do repositorio
 				System.out.println(a + "\n");
 			}
@@ -2901,7 +2923,7 @@ public class GuiDono {
 
 	}
 
-	private void listarTodasAgendas() throws IOException {
+	protected void listarTodasAgendas() throws IOException {
 
 		System.out.println("#################################################");
 		System.out.println("\t\tListar Agendas ");

@@ -68,10 +68,10 @@ public class Agenda {
 	
 	public String toString() {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		String text = "\nID: " + this.id + "\nData: " + this.dataMarcada.format(fmt) + "\nServiço(s): ";
+		String text = "\nID: " + this.id + "\nData: " + this.dataMarcada.format(fmt) + "\nNome do animal: " + this.animal.getNome() + "\nServiço(s): ";
 		
 		for (int i = 0; i < this.servicos.size(); i++) {
-			text += String.format("\n%15s \t%20s \tR$%.2f",this.animal.getNome() , this.servicos.get(i).getNome(), this.servicos.get(i).getPreco());
+			text += String.format("\n%20s \tR$%.2f", this.servicos.get(i).getNome(), this.servicos.get(i).getPreco());
 		}
 
 		return text;

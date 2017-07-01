@@ -140,6 +140,12 @@ public class GuiLogin {
 		if (logado.getCargo().equals("Dono")) {
 			GuiDono guiDono = new GuiDono();
 			guiDono.InicioSistema();
+		} else if (logado.getCargo().equals("Médico")) {
+			GuiMedico guiMedico = new GuiMedico();
+			guiMedico.InicioSistema();
+		} else if (logado.getCargo().equals("Balconista")) {
+			GuiBalconista guiBalconista = new GuiBalconista();
+			guiBalconista.InicioSistema();
 		}
 		
 		scanner.close();
