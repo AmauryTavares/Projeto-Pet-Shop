@@ -1,16 +1,13 @@
 package pet_shop.DAO;
 
-import java.util.ArrayList;
-
 import pet_shop.negocio.beans.Produto;
 
-public class ProdutoDAO {
+public class ProdutoDAO extends RepositorioAbstrato<Produto>{
 
-	private ArrayList<Produto> repositorioProduto;
 	private static ProdutoDAO instance;
 	
 	private ProdutoDAO() {
-		this.repositorioProduto = new ArrayList<>();
+		super();
 	}
 	
 	public static ProdutoDAO getInstance() {
@@ -20,55 +17,16 @@ public class ProdutoDAO {
 		return instance;
 	}
 	
-	public void cadastrarProduto(Produto p) {
-		this.repositorioProduto.add(p);
-	}
-	
-	public void alterarProduto(Produto p, long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioProduto.size() && achou == false; i++) {
-			if (this.repositorioProduto.get(i).getId() == id) {
-				this.repositorioProduto.get(i).setNome(p.getNome());
-				this.repositorioProduto.get(i).setPreco(p.getPreco());
-				this.repositorioProduto.get(i).setQtdEstoque(p.getQtdEstoque());
-				achou = true;
-			}
-		}
-	}
-	
-	public void excluirProduto(long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioProduto.size() && achou == false; i++) {
-			if (this.repositorioProduto.get(i).getId() == id) {
-				this.repositorioProduto.remove(i);
-				achou = true;
-			}
-		}
-	}
-	
 	public Produto listarProduto(long id) {
 		boolean achou = false;
 		Produto busca = null;
-		for (int i = 0; i < this.repositorioProduto.size() && achou == false; i++) {
-			if (this.repositorioProduto.get(i).getId() == id) {
-				busca = this.repositorioProduto.get(i);
+		for (int i = 0; i < this.elements.size() && achou == false; i++) {
+			if (this.elements.get(i).getId() == id) {
+				busca = this.elements.get(i);
 				achou = true;
 			}
 		}
 		return busca;
 	}
 	
-	public ArrayList<Produto> listarTudo() {
-		return this.repositorioProduto;
-	}
-	
-	public boolean existe(Produto p) {
-		boolean verificar = false;
-		for (int i = 0; i < this.repositorioProduto.size() && verificar == false; i++) {
-			if (p.equals(this.repositorioProduto.get(i))) {
-				verificar = true;
-			}
-		}
-		return verificar;
-	}
 }

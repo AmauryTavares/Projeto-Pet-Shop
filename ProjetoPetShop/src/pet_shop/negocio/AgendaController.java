@@ -25,10 +25,10 @@ public class AgendaController {
 	//Controle dos métodos do repositório
 	public void saveAgenda(Agenda agenda) {
 		
-		if( (agenda != null) && (!agendaRepository.existe(agenda.getId())) && (agenda.getAnimal() != null) 
+		if( (agenda != null) && (!this.agendaRepository.existe(agenda)) && (agenda.getAnimal() != null) 
 				&& (agenda.getDataMarcada() != null) && (agenda.getServicos() != null) ) {
 			
-			this.agendaRepository.cadastrarAgenda(agenda);
+			this.agendaRepository.cadastrar(agenda);
 		}
 		
 	}
