@@ -2,15 +2,16 @@ package pet_shop.DAO;
 
 import java.util.ArrayList;
 
+import pet_shop.DAO.IRepositorios.IRepositorioVenda;
 import pet_shop.negocio.beans.Venda;
 
-public class VendaDAO {
-
-	private ArrayList<Venda> repositorioVendas;
+public class VendaDAO implements IRepositorioVenda {
+	
+	private ArrayList<Venda> repositorioVenda;
 	private static VendaDAO instance;
 	
 	private VendaDAO() {
-		this.repositorioVendas = new ArrayList<>();
+		this.repositorioVenda = new ArrayList<>();
 	}
 	
 	public static VendaDAO getInstance() {
@@ -19,76 +20,80 @@ public class VendaDAO {
 		}
 		return instance;
 	}
-	
-	public void cadastrarVenda(Venda v) {
-		this.repositorioVendas.add(v);
+
+	@Override
+	public void cadastrar(Venda v) {
+		this.repositorioVenda.add(v);
 	}
-	
-	public void alterarVenda(Venda v, long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioVendas.size() && achou == false; i++) {
-			if (this.repositorioVendas.get(i).getId() == id) {
-				this.repositorioVendas.get(i).setAtendimentos(v.getAtendimentos());
-				this.repositorioVendas.get(i).setData(v.getData());
-				this.repositorioVendas.get(i).setFuncionario(v.getFuncionario());
-				this.repositorioVendas.get(i).setProdutos(v.getProdutos());
-				this.repositorioVendas.get(i).setValorTotal(v.getValorTotal());
-				achou = true;
-			}
+
+	@Override
+	public void excluir(long id) {
+		int indice = procurarID(id);
+		if(indice != this.repositorioVenda.size()) {
+			this.repositorioVenda.remove(indice);
 		}
 	}
-	
-	public void excluirVenda(long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioVendas.size() && achou == false; i++) {
-			if (this.repositorioVendas.get(i).getId() == id) {
-				this.repositorioVendas.remove(i);
-				achou = true;
-			}
-		}
-	}	
-	public boolean existe(Venda venda) {
-		boolean verificar = false;
-		for (int i = 0; i < this.repositorioVendas.size() && verificar ==false;i++) {
-			if (venda.equals(this.repositorioVendas.get(i))) {
-				verificar = true;
-			}
-		}
-		return verificar;
-	}
-	public boolean existe(long id) {
+
+	@Override
+	public Venda procurar(long id) {
+		Venda busca = null;
 		
-		boolean existe = false;
+		int indice = procurarID(id);
+		if(indice != this.repositorioVenda.size()) {
+			busca = this.repositorioVenda.get(indice);
+		}
+		
+		return busca;
+	}
+
+	@Override
+	public void alterar(Venda newVenda, long id) {
+		int indice = procurarID(id);
+		if(indice != this.repositorioVenda.size()) {
+			this.repositorioVenda.remove(indice);
+			this.repositorioVenda.add(indice, newVenda);
+		}
+	}
+
+	@Override
+	public ArrayList<Venda> listarTudo() {
+		return this.repositorioVenda;
+	}
+	
+	public int procurarID(long id) { //procura pela reserva do cliente
+		
+		boolean achou = false;
 		int i = 0;
 		
-		while((!existe) && (i < this.repositorioVendas.size())) {
+		while((!achou) && (i < this.repositorioVenda.size())) {
 			
-			if(id == this.repositorioVendas.get(i).getId()) {
-				existe = true;
-			} 
-			else 
-			{
+			if(this.repositorioVenda.get(i).getId() == id) {
+				achou = true;
+			} else {
 				i++;
 			}
 			
 		}
 		
-		return existe;
+		return i;
 		
 	}
-	public Venda listarVenda(long id) {
-		boolean achou = false;
-		Venda busca = null;
-		for (int i = 0; i < this.repositorioVendas.size() && achou == false; i++) {
-			if (this.repositorioVendas.get(i).getId() == id) {
-				busca = this.repositorioVendas.get(i);
-				achou = true;
-			}
+
+	@Override
+	public boolean existe(Venda v) {
+		return this.repositorioVenda.contains(v);
+	}
+
+	@Override
+	public boolean existe(long id) {
+		boolean existe = false;
+		int i = procurarID(id);
+		
+		if(i != this.repositorioVenda.size()) {
+			existe = true;
 		}
-		return busca;
+		
+		return existe;
 	}
-	
-	public ArrayList<Venda> listarTudo() {
-		return this.repositorioVendas;
-	}
+
 }

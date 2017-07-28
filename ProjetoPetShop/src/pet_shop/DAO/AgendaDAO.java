@@ -1,11 +1,11 @@
 package pet_shop.DAO;
 
 import java.util.ArrayList;
-
+import pet_shop.DAO.IRepositorios.IRepositorioAgenda;
 import pet_shop.negocio.beans.Agenda;
 
-public class AgendaDAO {
-
+public class AgendaDAO implements IRepositorioAgenda {
+	
 	private ArrayList<Agenda> repositorioAgenda;
 	private static AgendaDAO instance;
 	
@@ -20,48 +20,41 @@ public class AgendaDAO {
 		return instance;
 	}
 	
-	public void cadastrarAgenda(Agenda a) {
-		this.repositorioAgenda.add(a);
+	@Override
+	public void cadastrar(Agenda a) {
+		this.repositorioAgenda.add(a);		
 	}
-	
-	public void alterarAgenda(Agenda a, long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioAgenda.size() && achou == false; i++) {
-			if (this.repositorioAgenda.get(i).getId() == id) {
-				this.repositorioAgenda.get(i).setAnimal(a.getAnimal());
-				this.repositorioAgenda.get(i).setDataMarcada(a.getDataMarcada());
-				this.repositorioAgenda.get(i).setServicos(a.getServicos());
-				achou = true;
-			}
+
+	@Override
+	public void excluir(long id) {
+		int indice = procurarID(id);
+		if(indice != this.repositorioAgenda.size()) {
+			this.repositorioAgenda.remove(indice);
 		}
 	}
-	
-	public void excluirAgenda(long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioAgenda.size() && achou == false; i++) {
-			if (this.repositorioAgenda.get(i).getId() == id) {
-				this.repositorioAgenda.remove(i);
-				achou = true;
-			}
-		}
-	}
-	
-	public void excluirAgendaPorPosicao(int i) { 
-		this.repositorioAgenda.remove(i);
-	}
-	
-	public Agenda listarAgenda(long id) {
-		boolean achou = false;
+
+	@Override
+	public Agenda procurar(long id) {
 		Agenda busca = null;
-		for (int i = 0; i < this.repositorioAgenda.size() && achou == false; i++) {
-			if (this.repositorioAgenda.get(i).getId() == id) {
-				busca = this.repositorioAgenda.get(i);
-				achou = true;
-			}
+		
+		int indice = procurarID(id);
+		if(indice != this.repositorioAgenda.size()) {
+			busca = this.repositorioAgenda.get(indice);
 		}
+		
 		return busca;
 	}
-	
+
+	@Override
+	public void alterar(Agenda newAgenda, long id) {
+		int indice = procurarID(id);
+		if(indice != this.repositorioAgenda.size()) {
+			this.repositorioAgenda.remove(indice);
+			this.repositorioAgenda.add(indice, newAgenda);
+		}
+	}
+
+	@Override
 	public ArrayList<Agenda> listarTudo() {
 		return this.repositorioAgenda;
 	}
@@ -85,6 +78,7 @@ public class AgendaDAO {
 		
 	}
 	
+	@Override
 	public int procurarIDReservada(long id) { //procura pela reserva do cliente
 		
 		boolean achou = false;
@@ -92,7 +86,7 @@ public class AgendaDAO {
 		
 		while((!achou) && (i < this.repositorioAgenda.size())) {
 			
-			if(this.repositorioAgenda.get(i).getAnimal().getDono().getId() == id) {
+			if(this.repositorioAgenda.get(i).getAnimal().getDono().getId()== id) {
 				achou = true;
 			} else {
 				i++;
@@ -104,24 +98,35 @@ public class AgendaDAO {
 		
 	}
 	
+	@Override
+	public void excluirAgendaPorPosicao(int i) {
+		this.repositorioAgenda.remove(i);
+	}
+	
+	@Override
 	public boolean existeReservada(long id) {
 		
 		boolean existe = false;
 		int indice = procurarIDReservada(id);
 		
-		if(indice != repositorioAgenda.size()) {
+		if(indice != this.repositorioAgenda.size()) {
 			existe = true;
 		}
 		
 		return existe;
 	}
-	
+
+	@Override
+	public boolean existe(Agenda a) {
+		return this.repositorioAgenda.contains(a);
+	}
+
+	@Override
 	public boolean existe(long id) {
-		
 		boolean existe = false;
-		int indice = procurarID(id);
+		int i = procurarID(id);
 		
-		if(indice != repositorioAgenda.size()) {
+		if(i != this.repositorioAgenda.size()) {
 			existe = true;
 		}
 		

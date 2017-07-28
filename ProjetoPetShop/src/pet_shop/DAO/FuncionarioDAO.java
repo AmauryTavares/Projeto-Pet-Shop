@@ -2,10 +2,11 @@ package pet_shop.DAO;
 
 import java.util.ArrayList;
 
+import pet_shop.DAO.IRepositorios.IRepositorioFuncionario;
 import pet_shop.negocio.beans.Funcionario;
 
-public class FuncionarioDAO {
-
+public class FuncionarioDAO implements IRepositorioFuncionario {
+	
 	private ArrayList<Funcionario> repositorioFuncionario;
 	private static FuncionarioDAO instance;
 	
@@ -20,63 +21,79 @@ public class FuncionarioDAO {
 		return instance;
 	}
 	
-	public void cadastrarFuncionario(Funcionario f) {
+	@Override
+	public void cadastrar(Funcionario f) {
 		this.repositorioFuncionario.add(f);
 	}
-	
-	public void alterarFuncionario(Funcionario f, long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioFuncionario.size() && achou == false; i++) {
-			if (this.repositorioFuncionario.get(i).getId() == id) {
-				this.repositorioFuncionario.get(i).setBairro(f.getBairro());
-				this.repositorioFuncionario.get(i).setCargo(f.getCargo());
-				this.repositorioFuncionario.get(i).setCpf(f.getCpf());
-				this.repositorioFuncionario.get(i).setEmail(f.getEmail());
-				this.repositorioFuncionario.get(i).setLogin(f.getLogin());
-				this.repositorioFuncionario.get(i).setNome(f.getNome());
-				this.repositorioFuncionario.get(i).setNumCasa(f.getNumCasa());
-				this.repositorioFuncionario.get(i).setRua(f.getRua());
-				this.repositorioFuncionario.get(i).setSalario(f.getSalario());
-				this.repositorioFuncionario.get(i).setSenha(f.getSenha());
-				this.repositorioFuncionario.get(i).setTelefone(f.getTelefone());
-				achou = true;
-			}
+
+	@Override
+	public void excluir(long id) {
+		int indice = procurarID(id);
+		if(indice != this.repositorioFuncionario.size()) {
+			this.repositorioFuncionario.remove(indice);
 		}
 	}
-	
-	public void excluirFuncionario(long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioFuncionario.size() && achou == false; i++) {
-			if (this.repositorioFuncionario.get(i).getId() == id) {
-				this.repositorioFuncionario.remove(i);
-				achou = true;
-			}
-		}
-	}
-	
-	public Funcionario listarFuncionario(long id) {
-		boolean achou = false;
+
+	@Override
+	public Funcionario procurar(long id) {
 		Funcionario busca = null;
-		for (int i = 0; i < this.repositorioFuncionario.size() && achou == false; i++) {
-			if (this.repositorioFuncionario.get(i).getId() == id) {
-				busca = this.repositorioFuncionario.get(i);
-				achou = true;
-			}
+		
+		int indice = procurarID(id);
+		if(indice != this.repositorioFuncionario.size()) {
+			busca = this.repositorioFuncionario.get(indice);
 		}
+		
 		return busca;
 	}
-	
+
+	@Override
+	public void alterar(Funcionario newFuncionario, long id) {
+		int indice = procurarID(id);
+		if(indice != this.repositorioFuncionario.size()) {
+			this.repositorioFuncionario.remove(indice);
+			this.repositorioFuncionario.add(indice, newFuncionario);
+		}
+	}
+
+	@Override
 	public ArrayList<Funcionario> listarTudo() {
 		return this.repositorioFuncionario;
 	}
 	
-	public boolean existe(Funcionario f) {
-		boolean verificar = false;
-		for (int i = 0; i < this.repositorioFuncionario.size() && verificar == false; i++) {
-			if (f.equals(this.repositorioFuncionario.get(i))) {
-				verificar = true;
+	public int procurarID(long id) { //procura pela reserva do cliente
+		
+		boolean achou = false;
+		int i = 0;
+		
+		while((!achou) && (i < this.repositorioFuncionario.size())) {
+			
+			if(this.repositorioFuncionario.get(i).getId() == id) {
+				achou = true;
+			} else {
+				i++;
 			}
+			
 		}
-		return verificar;
+		
+		return i;
+		
 	}
+
+	@Override
+	public boolean existe(Funcionario f) {
+		return this.repositorioFuncionario.contains(f);
+	}
+
+	@Override
+	public boolean existe(long id) {
+		boolean existe = false;
+		int i = procurarID(id);
+		
+		if(i != this.repositorioFuncionario.size()) {
+			existe = true;
+		}
+		
+		return existe;
+	}
+
 }

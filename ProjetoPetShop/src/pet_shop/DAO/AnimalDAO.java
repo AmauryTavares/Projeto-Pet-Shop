@@ -2,10 +2,11 @@ package pet_shop.DAO;
 
 import java.util.ArrayList;
 
+import pet_shop.DAO.IRepositorios.IRepositorioAnimal;
 import pet_shop.negocio.beans.Animal;
 
-public class AnimalDAO {
-
+public class AnimalDAO implements IRepositorioAnimal{
+	
 	private ArrayList<Animal> repositorioAnimal;
 	private static AnimalDAO instance;
 	
@@ -20,75 +21,76 @@ public class AnimalDAO {
 		return instance;
 	}
 	
-	public void cadastrarAnimal(Animal a) {
+	@Override
+	public void cadastrar(Animal a) {
 		this.repositorioAnimal.add(a);
 	}
-	
-	public void alterarAnimal(Animal a, long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioAnimal.size() && achou == false; i++) {
-			if (this.repositorioAnimal.get(i).getId() == id) {
-				this.repositorioAnimal.get(i).setDataNascimento(a.getDataNascimento());
-				this.repositorioAnimal.get(i).setDono(a.getDono());
-				this.repositorioAnimal.get(i).setEspecie(a.getEspecie());
-				this.repositorioAnimal.get(i).setNome(a.getNome());
-				this.repositorioAnimal.get(i).setPeso(a.getPeso());
-				this.repositorioAnimal.get(i).setRaca(a.getRaca());
-				achou = true;
-			}
+
+	@Override
+	public void excluir(long id) {
+		int indice = procurarID(id);
+		if(indice != this.repositorioAnimal.size()) {
+			this.repositorioAnimal.remove(indice);
 		}
 	}
-	
-	public void excluirAnimal(long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioAnimal.size() && achou == false; i++) {
-			if (this.repositorioAnimal.get(i).getId() == id) {
-				this.repositorioAnimal.remove(i);
-				achou = true;
-			}
-		}
-	}
-	
-	public Animal listarAnimal(long id) {
-		boolean achou = false;
+
+	@Override
+	public Animal procurar(long id) {
 		Animal busca = null;
-		for (int i = 0; i < this.repositorioAnimal.size() && achou == false; i++) {
-			if (this.repositorioAnimal.get(i).getId() == id) {
-				busca = this.repositorioAnimal.get(i);
-				achou = true;
-			}
+		
+		int indice = procurarID(id);
+		if(indice != this.repositorioAnimal.size()) {
+			busca = this.repositorioAnimal.get(indice);
 		}
+		
 		return busca;
 	}
-	
+
+	@Override
+	public void alterar(Animal newAnimal, long id) {
+		int indice = procurarID(id);
+		if(indice != this.repositorioAnimal.size()) {
+			this.repositorioAnimal.remove(indice);
+			this.repositorioAnimal.add(indice, newAnimal);
+		}		
+	}
+
+	@Override
 	public ArrayList<Animal> listarTudo() {
 		return this.repositorioAnimal;
 	}
 	
-	//método existe em overloading
-	public boolean existe(Animal a) {
-		boolean verificar = false;
-		for (int i = 0; i < this.repositorioAnimal.size() && verificar == false; i++) {
-			if (a.equals(this.repositorioAnimal.get(i))) {
-				verificar = true;
-			}
-		}
-		return verificar;
-	}
-	
-	public boolean existe(long id) {
+	public int procurarID(long id) { //procura pela reserva do cliente
 		
-		boolean existe = false;
+		boolean achou = false;
 		int i = 0;
 		
-		while((!existe) && (i < this.repositorioAnimal.size())) {
+		while((!achou) && (i < this.repositorioAnimal.size())) {
 			
-			if(id == this.repositorioAnimal.get(i).getId()) {
-				existe = true;
+			if(this.repositorioAnimal.get(i).getId() == id) {
+				achou = true;
 			} else {
 				i++;
 			}
-				
+			
+		}
+		
+		return i;
+		
+	}
+
+	@Override
+	public boolean existe(Animal a) {
+		return this.repositorioAnimal.contains(a);
+	}
+
+	@Override
+	public boolean existe(long id) {
+		boolean existe = false;
+		int i = procurarID(id);
+		
+		if(i != this.repositorioAnimal.size()) {
+			existe = true;
 		}
 		
 		return existe;

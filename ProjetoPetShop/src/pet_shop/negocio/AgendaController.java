@@ -3,11 +3,12 @@ package pet_shop.negocio;
 import java.util.ArrayList;
 
 import pet_shop.DAO.AgendaDAO;
+import pet_shop.DAO.IRepositorios.IRepositorioAgenda;
 import pet_shop.negocio.beans.Agenda;
 
 public class AgendaController {
 	
-	private AgendaDAO agendaRepository;
+	private IRepositorioAgenda agendaRepository;
 	private static AgendaController instance;
 	
 	//Singleton
@@ -25,17 +26,17 @@ public class AgendaController {
 	//Controle dos métodos do repositório
 	public void saveAgenda(Agenda agenda) {
 		
-		if( (agenda != null) && (!agendaRepository.existe(agenda.getId())) && (agenda.getAnimal() != null) 
+		if( (agenda != null) && (!this.agendaRepository.existe(agenda)) && (agenda.getAnimal() != null) 
 				&& (agenda.getDataMarcada() != null) && (agenda.getServicos() != null) ) {
 			
-			this.agendaRepository.cadastrarAgenda(agenda);
+			this.agendaRepository.cadastrar(agenda);
 		}
 		
 	}
 	
 	public Agenda findAgenda(long id) {
 		if(id >= 0 && this.agendaRepository.existe(id)) {
-			return this.agendaRepository.listarAgenda(id);
+			return this.agendaRepository.procurar(id);
 		} else {
 			return null;
 		}
@@ -44,12 +45,12 @@ public class AgendaController {
 	public void updateAgenda(Agenda newAgenda ,long id) {
 		
 		if (newAgenda != null) {			
-			Agenda a = this.agendaRepository.listarAgenda(id);
+			Agenda a = this.agendaRepository.procurar(id);
 			
 			if( (a != null) && (newAgenda.getAnimal() != null) 
 					&& (newAgenda.getDataMarcada() != null) && (newAgenda.getServicos() != null) ) {
 				
-				this.agendaRepository.alterarAgenda(newAgenda, id);
+				this.agendaRepository.alterar(newAgenda, id);
 			}			
 		}
 				
@@ -58,7 +59,7 @@ public class AgendaController {
 	public void deleteAgenda(long id) {
 		
 		if(id >= 0 && this.agendaRepository.existe(id)) {
-			this.agendaRepository.excluirAgenda(id);
+			this.agendaRepository.excluir(id);
 		}
 		
 	}

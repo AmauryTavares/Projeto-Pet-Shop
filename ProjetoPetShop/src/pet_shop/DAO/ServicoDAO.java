@@ -2,10 +2,11 @@ package pet_shop.DAO;
 
 import java.util.ArrayList;
 
+import pet_shop.DAO.IRepositorios.IRepositorioServico;
 import pet_shop.negocio.beans.Servico;
 
-public class ServicoDAO {
-
+public class ServicoDAO implements IRepositorioServico {
+	
 	private ArrayList<Servico> repositorioServico;
 	private static ServicoDAO instance;
 	
@@ -19,74 +20,80 @@ public class ServicoDAO {
 		}
 		return instance;
 	}
-	
-	public void cadastrarServico(Servico s) {
+
+	@Override
+	public void cadastrar(Servico s) {
 		this.repositorioServico.add(s);
 	}
-	
-	public void alterarServico(Servico s, long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioServico.size() && achou == false; i++) {
-			if (this.repositorioServico.get(i).getId() == id) {
-				this.repositorioServico.get(i).setNome(s.getNome());
-				this.repositorioServico.get(i).setPreco(s.getPreco());
-				this.repositorioServico.get(i).setConsulta(s.isConsulta());
-				achou = true;
-			}
+
+	@Override
+	public void excluir(long id) {
+		int indice = procurarID(id);
+		if(indice != this.repositorioServico.size()) {
+			this.repositorioServico.remove(indice);
 		}
 	}
-	
-	public void excluirServico(long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioServico.size() && achou == false; i++) {
-			if (this.repositorioServico.get(i).getId() == id) {
-				this.repositorioServico.remove(i);
-				achou = true;
-			}
-		}
-	}
-	
-	public Servico listarServico(long id) {
-		boolean achou = false;
+
+	@Override
+	public Servico procurar(long id) {
 		Servico busca = null;
-		for (int i = 0; i < this.repositorioServico.size() && achou == false; i++) {
-			if (this.repositorioServico.get(i).getId() == id) {
-				busca = this.repositorioServico.get(i);
-				achou = true;
-			}
+		
+		int indice = procurarID(id);
+		if(indice != this.repositorioServico.size()) {
+			busca = this.repositorioServico.get(indice);
 		}
+		
 		return busca;
 	}
-	
+
+	@Override
+	public void alterar(Servico newServico, long id) {
+		int indice = procurarID(id);
+		if(indice != this.repositorioServico.size()) {
+			this.repositorioServico.remove(indice);
+			this.repositorioServico.add(indice, newServico);
+		}
+	}
+
+	@Override
 	public ArrayList<Servico> listarTudo() {
 		return this.repositorioServico;
 	}
 	
-	public boolean existe(Servico s) {
-		boolean verificar = false;
-		for (int i = 0; i < this.repositorioServico.size() && verificar ==false;i++) {
-			if (s.equals(this.repositorioServico.get(i))) {
-				verificar = true;
-			}
-		}
-		return verificar;
-	}
-public boolean existe(long id) {
+	public int procurarID(long id) { //procura pela reserva do cliente
 		
-		boolean existe = false;
+		boolean achou = false;
 		int i = 0;
 		
-		while((!existe) && (i < this.repositorioServico.size())) {
+		while((!achou) && (i < this.repositorioServico.size())) {
 			
-			if(id == this.repositorioServico.get(i).getId()) {
-				existe = true;
+			if(this.repositorioServico.get(i).getId() == id) {
+				achou = true;
 			} else {
 				i++;
 			}
 			
 		}
 		
-		return existe;
+		return i;
 		
 	}
+
+	@Override
+	public boolean existe(Servico s) {
+		return this.repositorioServico.contains(s);
+	}
+
+	@Override
+	public boolean existe(long id) {
+		boolean existe = false;
+		int i = procurarID(id);
+		
+		if(i != this.repositorioServico.size()) {
+			existe = true;
+		}
+		
+		return existe;
+	}
+	
 }

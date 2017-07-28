@@ -3,11 +3,12 @@ package pet_shop.negocio;
 import java.util.ArrayList;
 
 import pet_shop.DAO.AtendimentoDAO;
+import pet_shop.DAO.IRepositorios.IRepositorioAtendimento;
 import pet_shop.negocio.beans.Atendimento;
 
 public class AtendimentoController {
 	
-	private AtendimentoDAO atendimentoRepository;
+	private IRepositorioAtendimento atendimentoRepository;
 	private static AtendimentoController instance;
 	
 	//Singleton
@@ -28,7 +29,7 @@ public class AtendimentoController {
 				&& (atendimento.getData() != null) && (atendimento.getFuncionario() != null) 
 				&& (atendimento.getObservacao() != null) ) {
 			
-			this.atendimentoRepository.cadastrarAtendimento(atendimento);
+			this.atendimentoRepository.cadastrar(atendimento);
 		}
 		
 	}
@@ -36,12 +37,12 @@ public class AtendimentoController {
 	public void updateAtendimento(Atendimento atendimento, long id) {
 		
 		if(atendimento != null) {
-			Atendimento a = this.atendimentoRepository.listarAtendimento(id);
+			Atendimento a = this.atendimentoRepository.procurar(id);
 			
 			if( (a != null) && (atendimento.getAnimal() != null)  && (atendimento.getData() != null) 
 					&& (atendimento.getFuncionario() != null) && (atendimento.getObservacao() != null) ) {
 				
-				this.atendimentoRepository.alterarAtendimento(atendimento, id);
+				this.atendimentoRepository.alterar(atendimento, id);
 			}
 		}
 		
@@ -50,7 +51,7 @@ public class AtendimentoController {
 	public void deleteAtendimento(long id) {
 		
 		if(id >= 0 && this.atendimentoRepository.existe(id)) {
-			this.atendimentoRepository.excluirAtendimento(id);
+			this.atendimentoRepository.excluir(id);
 		}
 		
 	}
@@ -58,7 +59,7 @@ public class AtendimentoController {
 	public Atendimento findAtendimento(long id) {
 		
 		if(id >= 0 && this.atendimentoRepository.existe(id)) {
-			return this.atendimentoRepository.listarAtendimento(id);
+			return this.atendimentoRepository.procurar(id);
 		} else {
 			return null;
 		}

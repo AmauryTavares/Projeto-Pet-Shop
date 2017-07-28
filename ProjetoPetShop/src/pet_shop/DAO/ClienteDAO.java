@@ -2,10 +2,11 @@ package pet_shop.DAO;
 
 import java.util.ArrayList;
 
+import pet_shop.DAO.IRepositorios.IRepositorioCliente;
 import pet_shop.negocio.beans.Cliente;
 
-public class ClienteDAO {
-
+public class ClienteDAO implements IRepositorioCliente {
+	
 	private ArrayList<Cliente> repositorioCliente;
 	private static ClienteDAO instance;
 	
@@ -19,60 +20,80 @@ public class ClienteDAO {
 		}
 		return instance;
 	}
-	
-	public void cadastrarCliente(Cliente c) {
+
+	@Override
+	public void cadastrar(Cliente c) {
 		this.repositorioCliente.add(c);
 	}
-	
-	public void alterarCliente(Cliente c, long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioCliente.size() && achou == false; i++) {
-			if (this.repositorioCliente.get(i).getId() == id) {
-				this.repositorioCliente.get(i).setBairro(c.getBairro());
-				this.repositorioCliente.get(i).setCpf(c.getCpf());
-				this.repositorioCliente.get(i).setEmail(c.getEmail());	
-				this.repositorioCliente.get(i).setNome(c.getNome());
-				this.repositorioCliente.get(i).setNumCasa(c.getNumCasa());
-				this.repositorioCliente.get(i).setRua(c.getRua());
-				this.repositorioCliente.get(i).setTelefone(c.getTelefone());
-				achou = true;
-			}
+
+	@Override
+	public void excluir(long id) {
+		int indice = procurarID(id);
+		if(indice != this.repositorioCliente.size()) {
+			this.repositorioCliente.remove(indice);
 		}
 	}
-	
-	public void excluirCliente(long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.repositorioCliente.size() && achou == false; i++) {
-			if (this.repositorioCliente.get(i).getId() == id) {
-				this.repositorioCliente.remove(i);
-				achou = true;
-			}
-		}
-	}
-	
-	public Cliente listarCliente(long id) {
-		boolean achou = false;
+
+	@Override
+	public Cliente procurar(long id) {
 		Cliente busca = null;
-		for (int i = 0; i < this.repositorioCliente.size() && achou == false; i++) {
-			if (this.repositorioCliente.get(i).getId() == id) {
-				busca = this.repositorioCliente.get(i);
-				achou = true;
-			}
+		
+		int indice = procurarID(id);
+		if(indice != this.repositorioCliente.size()) {
+			busca = this.repositorioCliente.get(indice);
 		}
+		
 		return busca;
 	}
-	
+
+	@Override
+	public void alterar(Cliente newCliente, long id) {
+		int indice = procurarID(id);
+		if(indice != this.repositorioCliente.size()) {
+			this.repositorioCliente.remove(indice);
+			this.repositorioCliente.add(indice, newCliente);
+		}
+	}
+
+	@Override
 	public ArrayList<Cliente> listarTudo() {
 		return this.repositorioCliente;
 	}
 	
-	public boolean existe(Cliente c) {
-		boolean verificar = false;
-		for (int i = 0; i < this.repositorioCliente.size() && verificar == false; i++) {
-			if (c.equals(this.repositorioCliente.get(i))) {
-				verificar = true;
+	public int procurarID(long id) { //procura pela reserva do cliente
+		
+		boolean achou = false;
+		int i = 0;
+		
+		while((!achou) && (i < this.repositorioCliente.size())) {
+			
+			if(this.repositorioCliente.get(i).getId() == id) {
+				achou = true;
+			} else {
+				i++;
 			}
+			
 		}
-		return verificar;
+		
+		return i;
+		
 	}
+
+	@Override
+	public boolean existe(Cliente c) {
+		return this.repositorioCliente.contains(c);
+	}
+
+	@Override
+	public boolean existe(long id) {
+		boolean existe = false;
+		int i = procurarID(id);
+		
+		if(i != this.repositorioCliente.size()) {
+			existe = true;
+		}
+		
+		return existe;
+	}
+	
 }

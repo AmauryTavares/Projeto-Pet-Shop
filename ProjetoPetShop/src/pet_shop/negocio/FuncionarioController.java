@@ -1,12 +1,13 @@
 package pet_shop.negocio;
 
 import pet_shop.DAO.FuncionarioDAO;
+import pet_shop.DAO.IRepositorios.IRepositorioFuncionario;
 import pet_shop.negocio.beans.Funcionario;
 
 import java.util.ArrayList;
 
 public class FuncionarioController {
-	private FuncionarioDAO repositorioFuncionarios;
+	private IRepositorioFuncionario repositorioFuncionarios;
 	private static FuncionarioController instance;
 	
 	private FuncionarioController() {
@@ -25,20 +26,20 @@ public class FuncionarioController {
 	      //Exceção
 	    } else {
 	      if (!this.existe(f)) {
-	        this.repositorioFuncionarios.cadastrarFuncionario(f);
+	        this.repositorioFuncionarios.cadastrar(f);
 	      } 
 	    }
 	}
 	
 	public void descadastrarFuncionario(long id){
-		Funcionario f = this.repositorioFuncionarios.listarFuncionario(id);
+		Funcionario f = this.repositorioFuncionarios.procurar(id);
 		if(f != null){
-			this.repositorioFuncionarios.excluirFuncionario(id);
+			this.repositorioFuncionarios.excluir(id);
 		}
 	}
 	
 	public Funcionario listarFuncionario(long id){
-		return this.repositorioFuncionarios.listarFuncionario(id);
+		return this.repositorioFuncionarios.procurar(id);
 	}
 	
 	public boolean existe(Funcionario f) {
@@ -46,7 +47,7 @@ public class FuncionarioController {
 	}
 	
 	public void excluirFuncionario(long id){
-		this.repositorioFuncionarios.excluirFuncionario(id);
+		this.repositorioFuncionarios.excluir(id);
 	}
 	
 	public ArrayList<Funcionario> listarTudoFuncionario(){
@@ -54,9 +55,9 @@ public class FuncionarioController {
 	}
 	
 	public void AlteraFuncionario(Funcionario novoFuncionario, long id) {
-		Funcionario f = this.repositorioFuncionarios.listarFuncionario(id);
+		Funcionario f = this.repositorioFuncionarios.procurar(id);
 		if( (f != null) && (novoFuncionario.getNome() != null) && (novoFuncionario.getCpf()!=null)) {
-			this.repositorioFuncionarios.alterarFuncionario(novoFuncionario, id);
+			this.repositorioFuncionarios.alterar(novoFuncionario, id);
 		}
 	}
 }
