@@ -3,11 +3,12 @@ package pet_shop.negocio;
 import java.util.ArrayList;
 
 import pet_shop.DAO.VendaDAO;
+import pet_shop.DAO.IRepositorios.IRepositorioVenda;
 import pet_shop.negocio.beans.Venda;
 
 public class VendaController 
 {
-	private VendaDAO vendaRepository;
+	private IRepositorioVenda vendaRepository;
 	private static VendaController instance;
 	
 	//Singleton
@@ -27,7 +28,7 @@ public class VendaController
 		&& (venda.getFuncionario() != null) && (venda.getData() != null) && (venda.getAtendimentos() != null) 
 		&& (venda.getProdutos() != null)) 
 		{			
-			this.vendaRepository.cadastrarVenda(venda);
+			this.vendaRepository.cadastrar(venda);
 		}
 		
 	}
@@ -35,10 +36,10 @@ public class VendaController
 	{
 		if(venda != null) 
 		{
-			Venda a = this.vendaRepository.listarVenda(id);			
+			Venda a = this.vendaRepository.procurar(id);			
 			if( (a != null) && (!this.vendaRepository.existe(venda))) 
 			{
-				this.vendaRepository.alterarVenda(venda, id);
+				this.vendaRepository.alterar(venda, id);
 			}
 		}
 		
@@ -47,7 +48,7 @@ public class VendaController
 	{
 	if(id > 0 && this.vendaRepository.existe(id)) 
 	{
-		this.vendaRepository.excluirVenda(id);
+		this.vendaRepository.excluir(id);
 	}
 	
 	}
@@ -55,7 +56,7 @@ public class VendaController
 	{
 		if(id >= 0 && this.vendaRepository.existe(id)) 
 		{
-			return this.vendaRepository.listarVenda(id);
+			return this.vendaRepository.procurar(id);
 		} else 
 		{
 			return null;

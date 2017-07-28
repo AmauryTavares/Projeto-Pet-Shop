@@ -3,12 +3,13 @@ package pet_shop.negocio;
 import java.util.ArrayList;
 
 import pet_shop.DAO.ServicoDAO;
+import pet_shop.DAO.IRepositorios.IRepositorioServico;
 import pet_shop.negocio.beans.Servico;
 
 public class ServicoContoller 
 {
 
-	private ServicoDAO servicoRepository;
+	private IRepositorioServico servicoRepository;
 	private static ServicoContoller instance;
 	
 	//Singleton
@@ -28,7 +29,7 @@ public class ServicoContoller
 		if( (servico != null) && (!this.servicoRepository.existe(servico)) && (servico.getNome() != null) 
 				&& (servico.getPreco() > 0)) {
 			
-			this.servicoRepository.cadastrarServico(servico);
+			this.servicoRepository.cadastrar(servico);
 		}
 		
 	}
@@ -36,12 +37,12 @@ public class ServicoContoller
 	public void updateServico(Servico servico, long id) {
 		
 		if(servico != null) {
-			Servico a = this.servicoRepository.listarServico(id);
+			Servico a = this.servicoRepository.procurar(id);
 			
 			if( (a != null) && (!this.servicoRepository.existe(servico)) && (servico.getNome() != null) 
 					&& (servico.getPreco() > 0)) {
 				
-				this.servicoRepository.alterarServico(servico, id);
+				this.servicoRepository.alterar(servico, id);
 			}
 		}
 		
@@ -49,7 +50,7 @@ public class ServicoContoller
 	public void deleteServico(long id) {
 		
 		if(id >= 0 && this.servicoRepository.existe(id)) {
-			this.servicoRepository.excluirServico(id);
+			this.servicoRepository.excluir(id);
 		}
 		
 	}
@@ -58,7 +59,7 @@ public class ServicoContoller
 		
 		if(id >= 0 && this.servicoRepository.existe(id)) 
 		{
-			return this.servicoRepository.listarServico(id);
+			return this.servicoRepository.procurar(id);
 			
 		}
 		else 

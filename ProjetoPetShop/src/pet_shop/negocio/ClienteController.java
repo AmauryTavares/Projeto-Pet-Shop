@@ -27,16 +27,16 @@ public class ClienteController {
 	      //Exceção
 	    } else {
 	      if (!this.existe(c)) {
-	        this.repositorioClientes.cadastrarCliente(c);
+	        this.repositorioClientes.cadastrar(c);
 	      } 
 	    }
 	}
 	
 	public void descadastrarCliente(long id){
-		Cliente c = this.repositorioClientes.listarCliente(id);
+		Cliente c = this.repositorioClientes.procurar(id);
 		
 		if(c != null ){
-			this.repositorioClientes.excluirCliente(id);
+			this.repositorioClientes.excluir(id);
 			for(int i = 0; i < AgendaController.getInstance().listarTodasAgendas().size(); i++){
 				AgendaController.getInstance().deleteAgendaReservada(id);
 			}
@@ -44,7 +44,7 @@ public class ClienteController {
 	}
 	
 	public Cliente listarCliente(long id){
-		return this.repositorioClientes.listarCliente(id);
+		return this.repositorioClientes.procurar(id);
 	}
 	
 	public ArrayList<Cliente> listarTudo() {
@@ -56,13 +56,13 @@ public class ClienteController {
 	}
 	
 	public void excluirCliente(long id){
-		this.repositorioClientes.excluirCliente(id);
+		this.repositorioClientes.excluir(id);
 	}
 	
 	public void AlterarCliente(Cliente novoCliente, long id) {
-		Cliente c = this.repositorioClientes.listarCliente(id);
+		Cliente c = this.repositorioClientes.procurar(id);
 		if( (c != null) && (novoCliente.getNome() != null) && (novoCliente.getCpf()!=null)) {
-			this.repositorioClientes.alterarCliente(novoCliente, id);
+			this.repositorioClientes.alterar(novoCliente, id);
 		}
 	}
 }

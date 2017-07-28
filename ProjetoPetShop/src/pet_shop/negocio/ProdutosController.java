@@ -3,11 +3,12 @@ package pet_shop.negocio;
 import java.util.ArrayList;
 
 import pet_shop.DAO.ProdutoDAO;
+import pet_shop.DAO.IRepositorios.IRepositorioProduto;
 import pet_shop.negocio.beans.Produto;
 
 public class ProdutosController {
 	
-	private ProdutoDAO repositorioProdutos;
+	private IRepositorioProduto repositorioProdutos;
 	private static ProdutosController instance;
 	
 	private ProdutosController() {
@@ -27,22 +28,22 @@ public class ProdutosController {
 	      //Exceção
 	    } else {
 	      if (!this.existe(p)) {
-	        this.repositorioProdutos.cadastrarProduto(p);
+	        this.repositorioProdutos.cadastrar(p);
 	      } 
 	    }
 	}
 	
 	//Descadastra o produto do id repassado, depois de verificar a existência do produto
 	public void descadastrarProduto(long id){
-		Produto p = this.repositorioProdutos.listarProduto(id);
+		Produto p = this.repositorioProdutos.procurar(id);
 		if(p != null){
-			this.repositorioProdutos.excluirProduto(id);
+			this.repositorioProdutos.excluir(id);
 		}
 	}
 	
 	//Lista produto de acordo com o id repassado
 	public Produto listarProduto(long id){
-		return this.repositorioProdutos.listarProduto(id);
+		return this.repositorioProdutos.procurar(id);
 	}
 	
 	//Verifica se o produto existe
@@ -52,7 +53,7 @@ public class ProdutosController {
 	
 	//Exclui o produto de acordo com o id repassado
 	public void excluirProduto(long id){
-		this.repositorioProdutos.excluirProduto(id);
+		this.repositorioProdutos.excluir(id);
 	}
 
 	//Listar todos os produtos
@@ -61,9 +62,9 @@ public class ProdutosController {
 	}
 	
 	public void AlteraProduto(Produto novoProduto, long id) {
-		Produto p = this.repositorioProdutos.listarProduto(id);
+		Produto p = this.repositorioProdutos.procurar(id);
 		if( (p != null) && (novoProduto.getNome() != null)) {
-			this.repositorioProdutos.alterarProduto(novoProduto, id);
+			this.repositorioProdutos.alterar(novoProduto, id);
 		}
 	}
 }
