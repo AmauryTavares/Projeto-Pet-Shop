@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import pet_shop.negocio.IFachada;
 import pet_shop.negocio.SistemaFachada;
 import pet_shop.negocio.beans.Agenda;
 import pet_shop.negocio.beans.Animal;
@@ -19,7 +20,7 @@ import pet_shop.negocio.beans.Venda;
 public class GuiLogin {
 	static Funcionario logado = null;
 	public void login() throws IOException {
-		SistemaFachada fachada = SistemaFachada.getInstance();
+		IFachada fachada = SistemaFachada.getInstance();
 		Scanner scanner = new Scanner(System.in);
 		
 		//Pré-cadastramento de funcionário, cliente, animal, serviço, produto, atendimento, venda.

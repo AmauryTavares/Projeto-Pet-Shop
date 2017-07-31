@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import pet_shop.negocio.IFachada;
 import pet_shop.negocio.SistemaFachada;
 import pet_shop.negocio.beans.Agenda;
 import pet_shop.negocio.beans.Animal;
@@ -18,7 +19,7 @@ import pet_shop.negocio.beans.Servico;
 import pet_shop.negocio.beans.Venda;
 
 public class GuiDono {
-	SistemaFachada fachada = SistemaFachada.getInstance();
+	IFachada fachada = SistemaFachada.getInstance();
 
 	public void InicioSistema() throws IOException {
 		System.out.println("\n* Bem vindo, " + GuiLogin.logado.getNome() + "! *\n");
