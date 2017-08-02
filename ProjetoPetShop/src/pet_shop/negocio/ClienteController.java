@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import pet_shop.DAO.ClienteDAO;
 import pet_shop.negocio.beans.Cliente;
-import pet_shop.negocio.AgendaController;
+import pet_shop.negocio.ConsultaController;
 
 public class ClienteController {
 	
@@ -37,8 +37,8 @@ public class ClienteController {
 		
 		if(c != null ){
 			this.repositorioClientes.excluir(id);
-			for(int i = 0; i < AgendaController.getInstance().listarTodasAgendas().size(); i++){
-				AgendaController.getInstance().deleteAgendaReservada(id);
+			for(int i = 0; i < ConsultaController.getInstance().listarTodasAgendas().size(); i++){
+				ConsultaController.getInstance().deleteAgendaReservada(id);
 			}
 		}
 	}
@@ -59,7 +59,7 @@ public class ClienteController {
 		this.repositorioClientes.excluir(id);
 	}
 	
-	public void AlterarCliente(Cliente novoCliente, long id) {
+	public void alterarCliente(Cliente novoCliente, long id) {
 		Cliente c = this.repositorioClientes.procurar(id);
 		if( (c != null) && (novoCliente.getNome() != null) && (novoCliente.getCpf()!=null)) {
 			this.repositorioClientes.alterar(novoCliente, id);

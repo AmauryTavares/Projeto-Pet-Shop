@@ -7,7 +7,7 @@ import pet_shop.negocio.beans.*;
 
 public class SistemaFachada implements IFachada {
 	
-	private AgendaController controleAgendas;
+	private ConsultaController controleAgendas;
 	private AnimalController controleAnimais;
 	private AtendimentoController controleAtendimentos;
 	private ClienteController controllerClientes;
@@ -21,7 +21,7 @@ public class SistemaFachada implements IFachada {
 	//Singleton
 	private SistemaFachada() {
 		
-		this.controleAgendas = AgendaController.getInstance();
+		this.controleAgendas = ConsultaController.getInstance();
 		this.controleAnimais = AnimalController.getInstance();
 		this.controleAtendimentos = AtendimentoController.getInstance();
 		this.controllerClientes = ClienteController.getInstance();
@@ -39,17 +39,17 @@ public class SistemaFachada implements IFachada {
 	}
 	
 	@Override
-	public void saveAgenda(Agenda agenda) {
+	public void saveAgenda(Consulta agenda) {
 		controleAgendas.saveAgenda(agenda);
 	}
 
 	@Override
-	public Agenda findAgenda(long id) {
+	public Consulta findAgenda(long id) {
 		return controleAgendas.findAgenda(id);
 	}
 
 	@Override
-	public void updateAgenda(Agenda newAgenda, long id) {
+	public void updateAgenda(Consulta newAgenda, long id) {
 		controleAgendas.updateAgenda(newAgenda, id);
 	}
 
@@ -59,7 +59,7 @@ public class SistemaFachada implements IFachada {
 	}
 
 	@Override
-	public ArrayList<Agenda> listarTodasAgendas() {
+	public ArrayList<Consulta> listarTodasAgendas() {
 		return controleAgendas.listarTodasAgendas();
 	}
 
@@ -144,8 +144,8 @@ public class SistemaFachada implements IFachada {
 	}
 
 	@Override
-	public void AlterarCliente(Cliente novoCliente, long id) {
-		controllerClientes.AlterarCliente(novoCliente, id);
+	public void alterarCliente(Cliente novoCliente, long id) {
+		controllerClientes.alterarCliente(novoCliente, id);
 	}
 
 	@Override
@@ -179,8 +179,8 @@ public class SistemaFachada implements IFachada {
 	}
 
 	@Override
-	public void AlteraFuncionario(Funcionario novoFuncionario, long id) {
-		controllerFuncionario.AlteraFuncionario(novoFuncionario, id);
+	public void alteraFuncionario(Funcionario novoFuncionario, long id) {
+		controllerFuncionario.alteraFuncionario(novoFuncionario, id);
 	}
 
 	@Override
@@ -214,8 +214,8 @@ public class SistemaFachada implements IFachada {
 	}
 
 	@Override
-	public void AlteraProduto(Produto novoProduto, long id) {
-		controllerProdutos.AlteraProduto(novoProduto, id);
+	public void alteraProduto(Produto novoProduto, long id) {
+		controllerProdutos.alteraProduto(novoProduto, id);
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package pet_shop.negocio;
 
 import java.util.ArrayList;
 
-import pet_shop.negocio.beans.Agenda;
+import pet_shop.negocio.beans.Consulta;
 import pet_shop.negocio.beans.Animal;
 import pet_shop.negocio.beans.Atendimento;
 import pet_shop.negocio.beans.Cliente;
@@ -13,11 +13,11 @@ import pet_shop.negocio.beans.Venda;
 
 public interface IFachada {
 	
-	public abstract void saveAgenda(Agenda agenda);
-	public abstract Agenda findAgenda(long id);
-	public abstract void updateAgenda(Agenda newAgenda, long id);
+	public abstract void saveAgenda(Consulta agenda);
+	public abstract Consulta findAgenda(long id);
+	public abstract void updateAgenda(Consulta newAgenda, long id);
 	public abstract void deleteAgenda(long id);
-	public abstract ArrayList<Agenda> listarTodasAgendas();
+	public abstract ArrayList<Consulta> listarTodasAgendas();
 	
 	public abstract void saveAnimal(Animal animal);
 	public abstract void updateAnimal(Animal animal, long id);
@@ -37,7 +37,7 @@ public interface IFachada {
 	public abstract ArrayList<Cliente> listarTudo() ;
 	public abstract boolean existe(Cliente c);
 	public abstract void excluirCliente(long id);
-	public abstract void AlterarCliente(Cliente novoCliente, long id);
+	public abstract void alterarCliente(Cliente novoCliente, long id);
 
 	public abstract void cadastrarFuncionario(Funcionario f);
 	public abstract void descadastrarFuncionario(long id);
@@ -45,7 +45,7 @@ public interface IFachada {
 	public abstract boolean existe(Funcionario f);
 	public abstract void excluirFuncionario(long id);
 	public abstract ArrayList<Funcionario> listarTudoFuncionario();
-	public abstract void AlteraFuncionario(Funcionario novoFuncionario, long id);
+	public abstract void alteraFuncionario(Funcionario novoFuncionario, long id);
 
 	public abstract void cadastrarProduto(Produto p);
 	public abstract void descadastrarProduto(long id);
@@ -53,7 +53,7 @@ public interface IFachada {
 	public abstract boolean existe(Produto p);
 	public abstract void excluirProduto(long id);
 	public abstract ArrayList<Produto> listarTudoProduto();
-	public abstract void AlteraProduto(Produto novoProduto, long id);
+	public abstract void alteraProduto(Produto novoProduto, long id);
 
 	public abstract void saveServico(Servico servico);
 	public abstract void updateServico(Servico servico, long id);

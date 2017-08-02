@@ -8,12 +8,12 @@ import java.util.Scanner;
 
 import pet_shop.negocio.IFachada;
 import pet_shop.negocio.SistemaFachada;
-import pet_shop.negocio.beans.Agenda;
+import pet_shop.negocio.beans.Consulta;
+import pet_shop.negocio.beans.Endereco;
 import pet_shop.negocio.beans.Animal;
 import pet_shop.negocio.beans.Atendimento;
 import pet_shop.negocio.beans.Cliente;
 import pet_shop.negocio.beans.Funcionario;
-import pet_shop.negocio.beans.Pessoa;
 import pet_shop.negocio.beans.Produto;
 import pet_shop.negocio.beans.Servico;
 import pet_shop.negocio.beans.Venda;
@@ -432,7 +432,8 @@ public class GuiDono {
 		System.out.println("#################################################\n");
 
 		boolean voltar = false;
-		String nome = null, cpf = null, rua = null, bairro = null, numCasa = null, email = null, telefone = null;
+		String nome = null, cpf = null, rua = null, bairro = null, numCasa = null, complemento = null, email = null, telefone = null;
+		Endereco endereco;
 
 		if (voltar == false) {
 			System.out.print("Nome: ");
@@ -474,6 +475,14 @@ public class GuiDono {
 				voltar = true;
 			}
 		}
+		
+		if (voltar == false) {
+			System.out.print("Complemento: ");
+			complemento = scanner.nextLine();
+			if (numCasa.equals("0")) {
+				voltar = true;
+			}
+		}
 
 		if (voltar == false) {
 			System.out.print("Email: ");
@@ -492,7 +501,8 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			Cliente c = new Cliente(nome, cpf, rua, bairro, numCasa, email, telefone);
+			endereco = new Endereco(rua, numCasa, bairro, complemento);
+			Cliente c = new Cliente(nome, cpf, endereco, email, telefone);
 			fachada.cadastrarCliente(c);
 			System.out.println("\nCliente Cadastrado com sucesso!\n");
 		}
@@ -508,13 +518,8 @@ public class GuiDono {
 		boolean sairLoop = false;
 		boolean voltar = false;
 		Cliente clienteAlterado = null;
-		String nome = null;
-		String cpf = null;
-		String rua = null;
-		String bairro = null;
-		String numCasa = null;
-		String email = null;
-		String telefone = null;
+		String nome = null, cpf = null, rua = null, bairro = null, numCasa = null, complemento = null, email = null, telefone = null;
+		Endereco endereco;
 
 		while (sairLoop == false) {
 			System.out.println("\n* Clientes *\n");
@@ -532,13 +537,7 @@ public class GuiDono {
 				sairLoop = true;
 			} else if (alterarCliente != null) { // verifica se o cliente
 													// retornado existe
-				nome = alterarCliente.getNome();
-				cpf = alterarCliente.getCpf();
-				rua = alterarCliente.getRua();
-				bairro = alterarCliente.getBairro();
-				numCasa = alterarCliente.getNumCasa();
-				email = alterarCliente.getEmail();
-				telefone = alterarCliente.getTelefone();
+				
 				sairLoop = true;
 			} else {
 				System.out.println("\nID inexistente, tente novamente!\n");
@@ -583,10 +582,10 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			System.out.println("Rua atual: " + alterarCliente.getRua()); // Imprime
-																			// o
-																			// rua
-																			// atual
+			System.out.println("Rua atual: " + alterarCliente.getEndereco().getRua()); // Imprime
+																						// a
+																						// rua
+																						// atual
 			System.out.print("Nova rua: ");
 			texto = scanner.nextLine();
 
@@ -598,10 +597,10 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			System.out.println("Bairro atual: " + alterarCliente.getBairro()); // Imprime
-																				// o
-																				// bairro
-																				// atual
+			System.out.println("Bairro atual: " + alterarCliente.getEndereco().getBairro()); // Imprime
+																							// o
+																						   // bairro
+																						  // atual
 			System.out.print("Novo bairro: ");
 			texto = scanner.nextLine();
 
@@ -613,12 +612,12 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			System.out.println("Número da casa atual: " + alterarCliente.getNumCasa()); // Imprime
-																						// o
-																						// número
-																						// da
-																						// casa
-																						// atual
+			System.out.println("Número da casa atual: " + alterarCliente.getEndereco().getNumCasa()); // Imprime
+																									 // o
+																									// número
+																								   // da
+																								  // casa
+																								 // atual
 			System.out.print("Novo número da casa: ");
 			texto = scanner.nextLine();
 
@@ -626,6 +625,21 @@ public class GuiDono {
 				voltar = true;
 			} else if (!texto.equals("")) {
 				numCasa = texto;
+			}
+		}
+		
+		if (voltar == false) {
+			System.out.println("Complemento atual: " + alterarCliente.getEndereco().getComplemento()); // Imprime
+																									  // o
+																									 // complemento
+																									// atual
+			System.out.print("Novo bairro: ");
+			texto = scanner.nextLine();
+
+			if (texto.equals("0")) {
+				voltar = true;
+			} else if (!texto.equals("")) {
+				complemento = texto;
 			}
 		}
 
@@ -660,8 +674,9 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			clienteAlterado = new Cliente(nome, cpf, rua, bairro, numCasa, email, telefone);
-			fachada.AlterarCliente(clienteAlterado, alterarCliente.getId());
+			endereco = new Endereco(rua, numCasa, bairro, complemento);
+			clienteAlterado = new Cliente(nome, cpf, endereco, email, telefone);
+			fachada.alterarCliente(clienteAlterado, alterarCliente.getId());
 			clienteAlterado = null;
 			alterarCliente = null;
 			System.out.println("\nCliente Alterado com sucesso!\n");
@@ -1143,7 +1158,7 @@ public class GuiDono {
 
 		if (voltar == false) {
 			produtoAlterado = new Produto(nome, preco, qtdEstoque);
-			fachada.AlteraProduto(produtoAlterado, alterarProduto.getId());
+			fachada.alteraProduto(produtoAlterado, alterarProduto.getId());
 			produtoAlterado = null;
 			alterarProduto = null;
 			System.out.println("\nProduto Alterado com sucesso!\n");
@@ -1233,9 +1248,10 @@ public class GuiDono {
 		System.out.println("#################################################\n");
 
 		boolean voltar = false;
-		String nome = null, cpf = null, rua = null, bairro = null, numCasa = null, email = null, telefone = null,
+		String nome = null, cpf = null, rua = null, bairro = null, numCasa = null, complemento = null, email = null, telefone = null,
 				login = null, senha = null, cargo = null;
 		double salario = 0;
+		Endereco endereco;
 
 		if (voltar == false) {
 			System.out.print("Nome: ");
@@ -1273,6 +1289,14 @@ public class GuiDono {
 		if (voltar == false) {
 			System.out.print("Número da casa: ");
 			numCasa = scanner.nextLine();
+			if (numCasa.equals("0")) {
+				voltar = true;
+			}
+		}
+		
+		if (voltar == false) {
+			System.out.print("Complemento: ");
+			complemento = scanner.nextLine();
 			if (numCasa.equals("0")) {
 				voltar = true;
 			}
@@ -1328,7 +1352,8 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			Funcionario f = new Funcionario(nome, cpf, rua, bairro, numCasa, email, telefone, login, senha, salario,
+			endereco = new Endereco(rua, numCasa, bairro, complemento);
+			Funcionario f = new Funcionario(nome, cpf, endereco, email, telefone, login, senha, salario,
 					cargo);
 			fachada.cadastrarFuncionario(f);
 			System.out.println("\nFuncionário Cadastrado com sucesso!\n");
@@ -1346,17 +1371,12 @@ public class GuiDono {
 		Funcionario alterarFuncionario = null;
 		boolean sairLoop = false;
 		boolean voltar = false;
-		String nome = null;
-		String cpf = null;
-		String rua = null;
-		String bairro = null;
-		String numCasa = null;
-		String email = null;
-		String telefone = null;
-		String login = null;
-		String senha = null;
+		
+		String nome = null, cpf = null, rua = null, bairro = null, numCasa = null, complemento = null, email = null, telefone = null,
+				login = null, senha = null, cargo = null;
 		double salario = 0;
-		String cargo = null;
+		Endereco endereco;
+		
 		Funcionario funcionarioAlterado = null;
 
 		while (sairLoop == false) {
@@ -1377,17 +1397,7 @@ public class GuiDono {
 			} else if (alterarFuncionario != null) { // verifica se o
 														// funcionario retornado
 														// existe
-				nome = alterarFuncionario.getNome();
-				cpf = alterarFuncionario.getCpf();
-				rua = alterarFuncionario.getRua();
-				bairro = alterarFuncionario.getBairro();
-				numCasa = alterarFuncionario.getNumCasa();
-				email = alterarFuncionario.getEmail();
-				telefone = alterarFuncionario.getEmail();
-				login = alterarFuncionario.getLogin();
-				senha = alterarFuncionario.getSenha();
-				salario = alterarFuncionario.getSalario();
-				cargo = alterarFuncionario.getCargo();
+				
 				sairLoop = true;
 			} else {
 				System.out.println("\nID inexistente, tente novamente!\n");
@@ -1432,10 +1442,10 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			System.out.println("Rua atual: " + alterarFuncionario.getRua()); // Imprime
-																				// o
-																				// rua
-																				// atual
+			System.out.println("Rua atual: " + alterarFuncionario.getEndereco().getRua()); // Imprime
+																							// o
+																							// rua
+																							// atual
 			System.out.print("Nova rua: ");
 			texto = scanner.nextLine();
 
@@ -1447,10 +1457,10 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			System.out.println("Bairro atual: " + alterarFuncionario.getBairro()); // Imprime
-																					// o
-																					// bairro
-																					// atual
+			System.out.println("Bairro atual: " + alterarFuncionario.getEndereco().getBairro()); // Imprime
+																								// o
+																								// bairro
+																								// atual
 			System.out.print("Novo bairro: ");
 			texto = scanner.nextLine();
 
@@ -1462,13 +1472,28 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			System.out.println("Número da casa atual: " + alterarFuncionario.getNumCasa()); // Imprime
-																							// o
-																							// número
-																							// da
-																							// casa
-																							// atual
+			System.out.println("Número da casa atual: " + alterarFuncionario.getEndereco().getNumCasa()); // Imprime
+																											// o
+																											// número
+																											// da
+																											// casa
+																											// atual
 			System.out.print("Novo número da casa: ");
+			texto = scanner.nextLine();
+
+			if (texto.equals("0")) {
+				voltar = true;
+			} else if (!texto.equals("")) {
+				numCasa = texto;
+			}
+		}
+		
+		if (voltar == false) {
+			System.out.println("Complemento atual: " + alterarFuncionario.getEndereco().getComplemento()); // Imprime
+																											// o
+																											// complemento
+																											// atual
+			System.out.print("Novo complemento: ");
 			texto = scanner.nextLine();
 
 			if (texto.equals("0")) {
@@ -1569,9 +1594,10 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			funcionarioAlterado = new Funcionario(nome, cpf, rua, bairro, numCasa, email, telefone, login, senha,
+			endereco = new Endereco(rua, numCasa, bairro, complemento);
+			funcionarioAlterado = new Funcionario(nome, cpf, endereco, email, telefone, login, senha,
 					salario, cargo);
-			fachada.AlteraFuncionario(funcionarioAlterado, alterarFuncionario.getId());
+			fachada.alteraFuncionario(funcionarioAlterado, alterarFuncionario.getId());
 			funcionarioAlterado = null;
 			alterarFuncionario = null;
 			System.out.println("\nFuncionário Alterado com sucesso!\n");
@@ -2219,7 +2245,7 @@ public class GuiDono {
 		boolean sairLoop = false;
 		boolean voltar = false;
 		boolean loop = false;
-		Pessoa donoAlt = null;
+		Cliente donoAlt = null;
 		String nome = null;
 		double peso = 0;
 		String especie = null;
@@ -2689,7 +2715,7 @@ public class GuiDono {
 		}
 
 		if (voltar == false && dataAtivada == true) {
-			Agenda a = new Agenda(animal, data, listaServicoAgendado);
+			Consulta a = new Consulta(animal, data, listaServicoAgendado);
 			fachada.saveAgenda(a);
 			System.out.println("\nAgenda Cadastrada com sucesso!\n");
 		}
@@ -2704,20 +2730,20 @@ public class GuiDono {
 			System.out.println("#################################################\n");
 		}
 
-		ArrayList<Agenda> lista = fachada.listarTodasAgendas();
-		Agenda alterarAgenda = null;
+		ArrayList<Consulta> lista = fachada.listarTodasAgendas();
+		Consulta alterarAgenda = null;
 		boolean sairLoop = false;
 		boolean voltar = false;
 		Animal animalAlt = null;
 		LocalDate dataMarcadaAlt = null;
 		ArrayList<Servico> servicosAlt = null;
-		Agenda agendaAlterado = null;
+		Consulta agendaAlterado = null;
 		boolean processoPrincipal = false; // ativa a opção de data e lista somente no processo principal
 
 		while (sairLoop == false && inicio) {
 			processoPrincipal = true;
 			System.out.println("\n* Agendas *\n");
-			for (Agenda a : lista) { // lista todos as agendas do repositorio
+			for (Consulta a : lista) { // lista todos as agendas do repositorio
 				System.out.println(a + "\n");
 			}
 
@@ -2857,7 +2883,7 @@ public class GuiDono {
 		}
 		
 		if (voltar == false && processoPrincipal) {
-			agendaAlterado = new Agenda(animalAlt, dataMarcadaAlt, servicosAlt);
+			agendaAlterado = new Consulta(animalAlt, dataMarcadaAlt, servicosAlt);
 			fachada.updateAgenda(agendaAlterado, alterarAgenda.getId());
 			agendaAlterado = null;
 			alterarAgenda = null;
@@ -2872,13 +2898,13 @@ public class GuiDono {
 		System.out.println("\t\tExcluir Agenda\t 0 - voltar");
 		System.out.println("#################################################\n");
 
-		ArrayList<Agenda> lista = fachada.listarTodasAgendas();
-		Agenda excluirAgenda = null;
+		ArrayList<Consulta> lista = fachada.listarTodasAgendas();
+		Consulta excluirAgenda = null;
 		boolean sairLoop = false;
 
 		while (sairLoop == false) {
 			System.out.println("\n* Agendas *\n");
-			for (Agenda a : lista) { // lista todos as agendas do repositorio
+			for (Consulta a : lista) { // lista todos as agendas do repositorio
 				System.out.println(a + "\n");
 			}
 
@@ -2930,9 +2956,9 @@ public class GuiDono {
 		System.out.println("\t\tListar Agendas ");
 		System.out.println("#################################################\n");
 
-		ArrayList<Agenda> lista = fachada.listarTodasAgendas();
+		ArrayList<Consulta> lista = fachada.listarTodasAgendas();
 
-		for (Agenda a : lista) { // lista todos as agendas do repositorio
+		for (Consulta a : lista) { // lista todos as agendas do repositorio
 			System.out.println(a + "\n");
 		}
 

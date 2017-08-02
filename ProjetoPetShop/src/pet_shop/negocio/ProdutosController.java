@@ -61,7 +61,7 @@ public class ProdutosController {
 		return this.repositorioProdutos.listarTudo();
 	}
 	
-	public void AlteraProduto(Produto novoProduto, long id) {
+	public void alteraProduto(Produto novoProduto, long id) {
 		Produto p = this.repositorioProdutos.procurar(id);
 		if( (p != null) && (novoProduto.getNome() != null)) {
 			this.repositorioProdutos.alterar(novoProduto, id);

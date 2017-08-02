@@ -5,20 +5,16 @@ import java.time.format.DateTimeFormatter;
 
 public class Animal {
 	
-	private static long proximoID = 1;
-	
 	private long id;
-	private Pessoa dono;
+	private Cliente dono;
 	private String nome;
 	private double peso;
 	private String especie;
 	private String raca;
 	private LocalDate dataNascimento;
 	
-	public Animal(Pessoa dono, String nome, double peso, String especie, String raca,
+	public Animal(Cliente dono, String nome, double peso, String especie, String raca,
 			LocalDate dataNascimento2) {
-		this.id = proximoID;
-		proximoID++;
 		this.dono = dono;
 		this.nome = nome;
 		this.peso = peso;
@@ -31,11 +27,15 @@ public class Animal {
 		return id;
 	}
 	
-	public Pessoa getDono() {
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Cliente getDono() {
 		return dono;
 	}
 
-	public void setDono(Pessoa dono) {
+	public void setDono(Cliente dono) {
 		this.dono = dono;
 	}
 
