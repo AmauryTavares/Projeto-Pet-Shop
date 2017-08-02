@@ -27,7 +27,7 @@ public class ConsultaController {
 	public void saveAgenda(Consulta agenda) {
 		
 		if( (agenda != null) && (!this.agendaRepository.existe(agenda)) && (agenda.getAnimal() != null) 
-				&& (agenda.getDataMarcada() != null) && (agenda.getServicos() != null) ) {
+				&& (agenda.getDataMarcada() != null) && (agenda.getAtendimento() != null) ) {
 			
 			this.agendaRepository.cadastrar(agenda);
 		}
@@ -48,7 +48,7 @@ public class ConsultaController {
 			Consulta a = this.agendaRepository.procurar(id);
 			
 			if( (a != null) && (newAgenda.getAnimal() != null) 
-					&& (newAgenda.getDataMarcada() != null) && (newAgenda.getServicos() != null) ) {
+					&& (newAgenda.getDataMarcada() != null) && (newAgenda.getAtendimento() != null) ) {
 				
 				this.agendaRepository.alterar(newAgenda, id);
 			}			

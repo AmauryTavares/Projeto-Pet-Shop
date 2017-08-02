@@ -2,19 +2,18 @@ package pet_shop.negocio.beans;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 public class Consulta {
 	
 	private long id;
 	private Animal animal;
 	private LocalDate dataMarcada;
-	private ArrayList<Servico> servicos;
+	private Atendimento atendimento;
 	
-	public Consulta(Animal animal, LocalDate dataMarcada, ArrayList<Servico> servicos) {
+	public Consulta(Animal animal, LocalDate dataMarcada, Atendimento atendimento) {
 		this.animal = animal;
 		this.dataMarcada = dataMarcada;
-		this.servicos = servicos;
+		this.atendimento = atendimento;
 	}
 
 	public Animal getAnimal() {
@@ -33,12 +32,12 @@ public class Consulta {
 		this.dataMarcada = dataMarcada;
 	}
 
-	public ArrayList<Servico> getServicos() {
-		return servicos;
+	public Atendimento getAtendimento() {
+		return atendimento;
 	}
 
-	public void setServicos(ArrayList<Servico> servicos) {
-		this.servicos = servicos;
+	public void setAtendimento(Atendimento atendimento) {
+		this.atendimento = atendimento;
 	}
 
 	public long getId() {
@@ -49,30 +48,10 @@ public class Consulta {
 		this.id = id;
 	}
 	
-	public void adicionarServico(Servico s) {
-		if (s != null) {
-			this.servicos.add(s);
-		}	
-	}
-	
-	public void removerServico(long id) {
-		boolean achou = false;
-		for (int i = 0; i < this.servicos.size() && achou == false; i++) {
-			if (this.servicos.get(i).getId() == id) {
-				this.servicos.remove(i);
-				achou = true;
-				i--;
-			}
-		}
-	}
-	
 	public String toString() {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		String text = "\nID: " + this.id + "\nData: " + this.dataMarcada.format(fmt) + "\nNome do animal: " + this.animal.getNome() + "\nServiço(s): ";
+		String text = "\nID: " + this.id + "\nData: " + this.dataMarcada.format(fmt) + "\nNome do animal: " + this.animal.getNome() + this.atendimento;
 		
-		for (int i = 0; i < this.servicos.size(); i++) {
-			text += String.format("\n%20s \tR$%.2f", this.servicos.get(i).getNome(), this.servicos.get(i).getPreco());
-		}
 
 		return text;
 	}

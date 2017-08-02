@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import pet_shop.DAO.IRepositorios.IRepositorioConsulta;
+import pet_shop.negocio.beans.Cliente;
 import pet_shop.negocio.beans.Consulta;
 
-public class ConsultaDAO implements IRepositorioConsulta {
+public class ConsultaDAO extends RepositorioAbstrato<Cliente> implements IRepositorioConsulta {
 	
 	private ArrayList<Consulta> repositorioConsulta;
 	private static ConsultaDAO instance;

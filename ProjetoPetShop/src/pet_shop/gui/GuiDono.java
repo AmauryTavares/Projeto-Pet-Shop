@@ -2617,7 +2617,7 @@ public class GuiDono {
 
 		Animal animal = null;
 		LocalDate data = null;
-		Servico servico = null;
+		Atendimento atendimento = null;
 		boolean dataAtivada = false; // Faz com que a data só seja ativada no
 										// processo principal
 
@@ -2652,50 +2652,28 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			ArrayList<Servico> listaServico = fachada.listarTodosServicos();
+			ArrayList<Atendimento> listaAtendimento = fachada.listarTodosAtendimentos();
 			boolean sairLoop = false;
 
 			while (sairLoop == false) {
-				System.out.println("\n* Serviços *\n");
-				for (Servico s : listaServico) { // lista todos os servicos do
+				System.out.println("\n* Atendimentos *\n");
+				for (Atendimento a : listaAtendimento) { // lista todos os atendimentos do
 													// repositorio
-					System.out.println(s + "\n");
+					System.out.println(a + "\n");
 				}
 
-				System.out.println("\nDigite o id do serviço: ");
+				System.out.println("\nDigite o id do atendimento: ");
 				long id = scanner.nextInt();
 				scanner.nextLine();
-
-				servico = fachada.findServico(id);
+				
+				atendimento = fachada.findAtendimento(id);
 
 				if (id == 0) { // verifica se a opção voltar foi acionada
 					voltar = true;
 					sairLoop = true;
-				} else if (servico != null) { // verifica se o serviço retornado
+				} else if (atendimento != null) { // verifica se o atendimento retornado
 												// existe
-					listaServicoAgendado.add(servico);
-
-					boolean loop = false;
-					while (loop == false) {
-						System.out.println("\nDeseja adicionar mais um serviço? (S/N): ");
-						String verificar = scanner.nextLine();
-						if (verificar.charAt(0) == 'S' || verificar.charAt(0) == 's') {
-							cadastrarAgenda(scanner, listaServicoAgendado, inicio); // inicio
-																					// indica
-																					// se
-																					// é
-																					// o
-																					// primeiro
-																					// processo
-																					// de
-																					// cadastro
-							loop = true;
-							sairLoop = true;
-						} else if (verificar.charAt(0) == 'N' || verificar.charAt(0) == 'n') {
-							sairLoop = true;
-							loop = true;
-						}
-					}
+					atendimento = fachada.findAtendimento(id);		
 				} else {
 					System.out.println("\nID inexistente ou serviço nao necessita de uma consulta, tente novamente!\n");
 				}
@@ -2715,7 +2693,7 @@ public class GuiDono {
 		}
 
 		if (voltar == false && dataAtivada == true) {
-			Consulta a = new Consulta(animal, data, listaServicoAgendado);
+			Consulta a = new Consulta(animal, data, atendimento);
 			fachada.saveAgenda(a);
 			System.out.println("\nAgenda Cadastrada com sucesso!\n");
 		}
@@ -2736,18 +2714,18 @@ public class GuiDono {
 		boolean voltar = false;
 		Animal animalAlt = null;
 		LocalDate dataMarcadaAlt = null;
-		ArrayList<Servico> servicosAlt = null;
+		Atendimento atendimento = null;
 		Consulta agendaAlterado = null;
 		boolean processoPrincipal = false; // ativa a opção de data e lista somente no processo principal
 
 		while (sairLoop == false && inicio) {
 			processoPrincipal = true;
-			System.out.println("\n* Agendas *\n");
-			for (Consulta a : lista) { // lista todos as agendas do repositorio
+			System.out.println("\n* Atendimentos *\n");
+			for (Consulta a : lista) { // lista todos os atendimentos do repositorio
 				System.out.println(a + "\n");
 			}
 
-			System.out.println("\nDigite o id da agenda: ");
+			System.out.println("\nDigite o id do atendimento: ");
 			long id = scanner.nextInt();
 			scanner.nextLine();
 
@@ -2758,9 +2736,6 @@ public class GuiDono {
 				sairLoop = true;
 			} else if (alterarAgenda != null) { // verifica se a agenda
 												// retornado existe
-				animalAlt = alterarAgenda.getAnimal();
-				dataMarcadaAlt = alterarAgenda.getDataMarcada();
-				servicosAlt = alterarAgenda.getServicos();
 				sairLoop = true;
 			} else {
 				System.out.println("\nID inexistente, tente novamente!\n");
@@ -2772,7 +2747,6 @@ public class GuiDono {
 		}
 
 		Animal animal = null;
-		Servico servico = null;
 
 		if (voltar == false && inicio) {
 			System.out.println("Animal atual: \n" + alterarAgenda.getAnimal()); // Imprime
@@ -2816,9 +2790,11 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			System.out.println("Serviços atuais: ");
-			for (int i = 0; i < alterarAgenda.getServicos().size(); i++) {
-				System.out.printf("%20s \t R$%.2f \n", alterarAgenda.getServicos().get(i).getNome(), alterarAgenda.getServicos().get(i).getPreco());
+			ArrayList<Atendimento> listaAtendimento = fachada.listarTodosAtendimentos();
+			
+			System.out.println("Atendimento atual: ");
+			for (Atendimento a : listaAtendimento) {
+				System.out.println(a);
 			}
 			System.out.println("Novos serviços: ");
 
@@ -2827,8 +2803,8 @@ public class GuiDono {
 
 			while (sairLoop == false) {
 				System.out.println();
-				System.out.println("\n* Serviços *\n");
-				for (Servico s : listaServico) { // lista todos os servicos do
+				System.out.println("\n* Atendimento *\n");
+				for (Servico s : listaServico) { // lista todos os atendimentos do
 													// repositorio
 					System.out.println(s + "\n");
 				}
@@ -2837,31 +2813,14 @@ public class GuiDono {
 				long id = scanner.nextInt();
 				scanner.nextLine();
 
-				servico = fachada.findServico(id);
+				atendimento = fachada.findAtendimento(id);
 
 				if (id == 0) { // verifica se a opção voltar foi acionada
 					voltar = true;
 					sairLoop = true;
-				} else if (servico != null) { // verifica se o serviço retornado
+				} else if (atendimento != null) { // verifica se o atendimento retornado
 												// existe
-					listaServicoAgendado.add(servico);
-
-					boolean loop = false;
-					while (loop == false) {
-						System.out.println("\nDeseja adicionar mais um serviço? (S/N): ");
-						String verificar = scanner.nextLine();
-						if (verificar.charAt(0) == 'S' || verificar.charAt(0) == 's') {
-							cadastrarAgenda(scanner, listaServicoAgendado, inicio); // inicio se é o processo principal
-							if (processoPrincipal) {
-								servicosAlt = listaServicoAgendado;
-							}
-							loop = true;
-							sairLoop = true;
-						} else if (verificar.charAt(0) == 'N' || verificar.charAt(0) == 'n') {
-							sairLoop = true;
-							loop = true;
-						}
-					}
+					atendimento = fachada.findAtendimento(id);
 				} else {
 					System.out.println("\nID inexistente ou serviço nao necessita de uma consulta, tente novamente!\n");
 				}
@@ -2883,7 +2842,7 @@ public class GuiDono {
 		}
 		
 		if (voltar == false && processoPrincipal) {
-			agendaAlterado = new Consulta(animalAlt, dataMarcadaAlt, servicosAlt);
+			agendaAlterado = new Consulta(animalAlt, dataMarcadaAlt, atendimento);
 			fachada.updateAgenda(agendaAlterado, alterarAgenda.getId());
 			agendaAlterado = null;
 			alterarAgenda = null;

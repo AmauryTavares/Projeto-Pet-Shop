@@ -5,8 +5,9 @@ import java.util.Collections;
 
 import pet_shop.DAO.IRepositorios.IRepositorioAnimal;
 import pet_shop.negocio.beans.Animal;
+import pet_shop.negocio.beans.Cliente;
 
-public class AnimalDAO implements IRepositorioAnimal{
+public class AnimalDAO extends RepositorioAbstrato<Cliente> implements IRepositorioAnimal{
 	
 	private ArrayList<Animal> repositorioAnimal;
 	private static AnimalDAO instance;

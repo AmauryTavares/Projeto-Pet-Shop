@@ -6,7 +6,7 @@ import java.util.Collections;
 import pet_shop.DAO.IRepositorios.IRepositorioCliente;
 import pet_shop.negocio.beans.Cliente;
 
-public class ClienteDAO implements IRepositorioCliente {
+public class ClienteDAO extends RepositorioAbstrato<Cliente> implements IRepositorioCliente {
 	
 	private ArrayList<Cliente> repositorioCliente;
 	private static ClienteDAO instance;

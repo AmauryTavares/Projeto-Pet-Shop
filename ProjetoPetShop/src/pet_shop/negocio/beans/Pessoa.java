@@ -1,6 +1,6 @@
 package pet_shop.negocio.beans;
 
-public class Pessoa {
+public abstract class Pessoa {
 	
 	protected long id;
 	protected String nome;

@@ -92,11 +92,8 @@ public class GuiLogin {
 		//agenda
 		
 		LocalDate d5 = LocalDate.parse("15/08/2017", fmt);
-		ArrayList<Servico> servicos = new ArrayList<>();
-		servicos.add(s1);
-		servicos.add(s2);
 		
-		Consulta agenda = new Consulta(a[1], d5, servicos);
+		Consulta agenda = new Consulta(a[1], d5, a1);
 		fachada.saveAgenda(agenda);
 		
 		//venda
