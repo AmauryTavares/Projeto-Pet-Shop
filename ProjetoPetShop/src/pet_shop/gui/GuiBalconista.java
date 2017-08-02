@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import pet_shop.negocio.IFachada;
 import pet_shop.negocio.SistemaFachada;
 import pet_shop.negocio.beans.Atendimento;
 import pet_shop.negocio.beans.Servico;
 
 public class GuiBalconista extends GuiDono{
-	SistemaFachada fachada = SistemaFachada.getInstance();
+	IFachada fachada = SistemaFachada.getInstance();
 
 	@Override
 	public void InicioSistema() throws IOException {

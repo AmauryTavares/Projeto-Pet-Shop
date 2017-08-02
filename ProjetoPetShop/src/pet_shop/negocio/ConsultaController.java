@@ -2,29 +2,29 @@ package pet_shop.negocio;
 
 import java.util.ArrayList;
 
-import pet_shop.DAO.AgendaDAO;
-import pet_shop.DAO.IRepositorios.IRepositorioAgenda;
-import pet_shop.negocio.beans.Agenda;
+import pet_shop.DAO.ConsultaDAO;
+import pet_shop.DAO.IRepositorios.IRepositorioConsulta;
+import pet_shop.negocio.beans.Consulta;
 
-public class AgendaController {
+public class ConsultaController {
 	
-	private IRepositorioAgenda agendaRepository;
-	private static AgendaController instance;
+	private IRepositorioConsulta agendaRepository;
+	private static ConsultaController instance;
 	
 	//Singleton
-	private AgendaController() {
-		this.agendaRepository = AgendaDAO.getInstance();
+	private ConsultaController() {
+		this.agendaRepository = ConsultaDAO.getInstance();
 	}
 	
-	public static AgendaController getInstance() {
+	public static ConsultaController getInstance() {
 		if(instance == null) {
-			instance = new AgendaController();
+			instance = new ConsultaController();
 		}
 		return instance;
 	}
 	
 	//Controle dos métodos do repositório
-	public void saveAgenda(Agenda agenda) {
+	public void saveAgenda(Consulta agenda) {
 		
 		if( (agenda != null) && (!this.agendaRepository.existe(agenda)) && (agenda.getAnimal() != null) 
 				&& (agenda.getDataMarcada() != null) && (agenda.getServicos() != null) ) {
@@ -34,7 +34,7 @@ public class AgendaController {
 		
 	}
 	
-	public Agenda findAgenda(long id) {
+	public Consulta findAgenda(long id) {
 		if(id >= 0 && this.agendaRepository.existe(id)) {
 			return this.agendaRepository.procurar(id);
 		} else {
@@ -42,10 +42,10 @@ public class AgendaController {
 		}
 	}
 	
-	public void updateAgenda(Agenda newAgenda ,long id) {
+	public void updateAgenda(Consulta newAgenda ,long id) {
 		
 		if (newAgenda != null) {			
-			Agenda a = this.agendaRepository.procurar(id);
+			Consulta a = this.agendaRepository.procurar(id);
 			
 			if( (a != null) && (newAgenda.getAnimal() != null) 
 					&& (newAgenda.getDataMarcada() != null) && (newAgenda.getServicos() != null) ) {
@@ -73,7 +73,7 @@ public class AgendaController {
 		
 	}
 	
-	public ArrayList<Agenda> listarTodasAgendas() {
+	public ArrayList<Consulta> listarTodasAgendas() {
 		return this.agendaRepository.listarTudo();
 	}
 	

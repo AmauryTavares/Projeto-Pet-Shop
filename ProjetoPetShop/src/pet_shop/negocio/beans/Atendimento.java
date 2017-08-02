@@ -5,8 +5,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Atendimento {
 
-	private static long proximoID = 1;
-	
 	private long id;
 	private Animal animal;
 	private Funcionario funcionario;
@@ -15,8 +13,6 @@ public class Atendimento {
 	private String diagnostico;
 	
 	public Atendimento(Animal animal, Funcionario funcionario, Servico servico, LocalDate data, String diagnostico) {
-		this.id = proximoID;
-		proximoID++;
 		this.animal = animal;
 		this.funcionario = funcionario;
 		this.servico = servico;
@@ -66,6 +62,10 @@ public class Atendimento {
 
 	public long getId() {
 		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	public String toString() {

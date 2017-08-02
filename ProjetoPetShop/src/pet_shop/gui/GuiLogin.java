@@ -6,8 +6,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import pet_shop.negocio.IFachada;
 import pet_shop.negocio.SistemaFachada;
-import pet_shop.negocio.beans.Agenda;
+import pet_shop.negocio.beans.Consulta;
+import pet_shop.negocio.beans.Endereco;
 import pet_shop.negocio.beans.Animal;
 import pet_shop.negocio.beans.Atendimento;
 import pet_shop.negocio.beans.Cliente;
@@ -19,17 +21,17 @@ import pet_shop.negocio.beans.Venda;
 public class GuiLogin {
 	static Funcionario logado = null;
 	public void login() throws IOException {
-		SistemaFachada fachada = SistemaFachada.getInstance();
+		IFachada fachada = SistemaFachada.getInstance();
 		Scanner scanner = new Scanner(System.in);
 		
 		//Pré-cadastramento de funcionário, cliente, animal, serviço, produto, atendimento, venda.
-		Funcionario f1 = new Funcionario("Amaury Tavares", "11111111111", "Rua A", "Bairro B", "35", "amaury@hotmail.com"
+		Funcionario f1 = new Funcionario("Amaury Tavares", "11111111111", new Endereco("Rua A", "35", "Bairro B", "casa"), "amaury@hotmail.com"
 				, "9998855663", "amaury.tavares", "123456", 800.00, "Dono"); // usuario dono *teste
 		
-		Funcionario f2 = new Funcionario("Pedro nascimento", "00000000000", "Rua Sao Joao", "Bairro Novo", "20"
+		Funcionario f2 = new Funcionario("Pedro nascimento", "00000000000", new Endereco("Rua C", "35", "Bairro A", "casa")
 				, "pedro.nascimento@ufrpe.com", "99992222", "pedro.nascimento", "654321", 2000.00, "Médico");
 		
-		Funcionario f3 = new Funcionario("Isaque Ferreira", "99999999999", "Rua da Paz", "Bairro da Escuridão", "666"
+		Funcionario f3 = new Funcionario("Isaque Ferreira", "99999999999", new Endereco("Rua Paz", "666", "Bairro Escuridão", "casa")
 				, "isaque.ferreira@ufrpe.com", "88111188", "isaque.ferreira", "555555", 1750.00, "Balconista");
 		
 		fachada.cadastrarFuncionario(f1);
@@ -37,9 +39,9 @@ public class GuiLogin {
 		fachada.cadastrarFuncionario(f3);
 		
 		//clientes
-		Cliente c1 = new Cliente("Karol Souza", "22222222222", "Rua Sao Jose", "Beira Rio", "10", "karol.souza@ufrpe.com", "87878989");
-		Cliente c2 = new Cliente("Pedro Araujo", "12365479800", "Rua C", "Centro", "2", "pedro.araujo@ufrpe.com", "99993663");
-		Cliente c3 = new Cliente("Gabi Arcajo", "33300011122", "Rua B", "Boa Vista", "666", "gabi.aracanjo@ufrpe.com", "90066654");
+		Cliente c1 = new Cliente("Karol Souza", "22222222222", new Endereco("Rua São José", "10", "Beira Rio", "apartamento"), "karol.souza@ufrpe.com", "87878989");
+		Cliente c2 = new Cliente("Pedro Araujo", "12365479800", new Endereco("Rua D", "2", "Centro", "casa"), "pedro.araujo@ufrpe.com", "99993663");
+		Cliente c3 = new Cliente("Gabi Arcajo", "33300011122", new Endereco("Rua Jesus", "666", "Boa Viagem", "casa"), "gabi.aracanjo@ufrpe.com", "90066654");
 		
 		fachada.cadastrarCliente(c1);
 		fachada.cadastrarCliente(c2);
@@ -94,7 +96,7 @@ public class GuiLogin {
 		servicos.add(s1);
 		servicos.add(s2);
 		
-		Agenda agenda = new Agenda(a[1], d5, servicos);
+		Consulta agenda = new Consulta(a[1], d5, servicos);
 		fachada.saveAgenda(agenda);
 		
 		//venda

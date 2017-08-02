@@ -1,8 +1,6 @@
 package pet_shop.negocio.beans;
 
 public class Servico {
-
-	private static long proximoID = 1;
 	
 	private long id;
 	private String nome;
@@ -10,8 +8,6 @@ public class Servico {
 	private boolean necessitaConsulta;
 	
 	public Servico(String nome, double preco, boolean consulta) {
-		this.id = proximoID;
-		proximoID++;
 		this.nome = nome;
 		this.preco = preco;
 		this.necessitaConsulta = consulta;
@@ -19,6 +15,10 @@ public class Servico {
 
 	public long getId() {
 		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getNome() {

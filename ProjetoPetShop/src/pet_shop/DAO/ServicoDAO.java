@@ -1,6 +1,7 @@
 package pet_shop.DAO;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import pet_shop.DAO.IRepositorios.IRepositorioServico;
 import pet_shop.negocio.beans.Servico;
@@ -9,6 +10,7 @@ public class ServicoDAO implements IRepositorioServico {
 	
 	private ArrayList<Servico> repositorioServico;
 	private static ServicoDAO instance;
+	private static long proximoID = 0;
 	
 	private ServicoDAO() {
 		this.repositorioServico = new ArrayList<>();
@@ -23,6 +25,8 @@ public class ServicoDAO implements IRepositorioServico {
 
 	@Override
 	public void cadastrar(Servico s) {
+		ServicoDAO.proximoID = this.repositorioServico.size() + 1;
+		s.setId(proximoID);
 		this.repositorioServico.add(s);
 	}
 
@@ -57,7 +61,7 @@ public class ServicoDAO implements IRepositorioServico {
 
 	@Override
 	public ArrayList<Servico> listarTudo() {
-		return this.repositorioServico;
+		return (ArrayList<Servico>) Collections.unmodifiableList(this.repositorioServico);
 	}
 	
 	public int procurarID(long id) { //procura pela reserva do cliente

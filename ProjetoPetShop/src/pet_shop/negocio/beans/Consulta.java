@@ -4,18 +4,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class Agenda {
-
-	private static long proximoID = 1;
+public class Consulta {
 	
 	private long id;
 	private Animal animal;
 	private LocalDate dataMarcada;
 	private ArrayList<Servico> servicos;
 	
-	public Agenda(Animal animal, LocalDate dataMarcada, ArrayList<Servico> servicos) {
-		this.id = proximoID;
-		proximoID++;
+	public Consulta(Animal animal, LocalDate dataMarcada, ArrayList<Servico> servicos) {
 		this.animal = animal;
 		this.dataMarcada = dataMarcada;
 		this.servicos = servicos;
@@ -47,6 +43,10 @@ public class Agenda {
 
 	public long getId() {
 		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	public void adicionarServico(Servico s) {
