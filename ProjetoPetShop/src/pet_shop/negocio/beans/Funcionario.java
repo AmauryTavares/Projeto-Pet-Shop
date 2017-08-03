@@ -7,9 +7,9 @@ public class Funcionario extends Pessoa{
 	private double salario;
 	private String cargo;
 
-	public Funcionario(String nome, String cpf, String rua, String bairro, String numCasa, String email,
+	public Funcionario(String nome, String cpf, Endereco endereco, String email,
 			String telefone, String login, String senha, double salario, String cargo) {
-		super(nome, cpf, rua, bairro, numCasa, email, telefone);
+		super(nome, cpf, endereco, email, telefone);
 		this.login = login;
 		this.senha = senha;
 		this.salario = salario;
@@ -49,8 +49,8 @@ public class Funcionario extends Pessoa{
 	}
 	
 	public String toString() {
-		return "ID: " + this.id + "\nNome: " + this.nome + "\nCPF: " + this.cpf + "\nRua: " + this.rua + "\nBairro: " + this.bairro + 
-				"\nNúmero da casa: " + this.numCasa + "\nEmail: " + this.email + "\nTelefone: " + this.telefone + "\nCargo: " + this.cargo + "\nSalário: R$" + String.format("%.2f", this.salario) ;
+		return "ID: " + this.id + "\nNome: " + this.nome + "\nCPF: " + this.cpf + "\nEndereco: " + this.endereco + 
+				"\nEmail: " + this.email + "\nTelefone: " + this.telefone + "\nCargo: " + this.cargo + "\nSalário: R$" + String.format("%.2f", this.salario) ;
 	}
 
 	@Override

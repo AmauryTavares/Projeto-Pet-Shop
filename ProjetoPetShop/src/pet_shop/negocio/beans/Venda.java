@@ -5,8 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Venda {
-
-	private static long proximoID = 1;
 	
 	private long id;
 	private Funcionario funcionario;
@@ -16,8 +14,6 @@ public class Venda {
 	private double valorTotal;
 	
 	public Venda(Funcionario funcionario, ArrayList<Atendimento> atendimentos, ArrayList<Produto> produtos, LocalDate data) {
-		this.id = proximoID;
-		proximoID++;
 		this.funcionario = funcionario;
 		this.atendimentos = atendimentos;
 		this.produtos = produtos;
@@ -67,6 +63,10 @@ public class Venda {
 
 	public long getId() {
 		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	public void adicionarProduto(Produto p) {

@@ -1,14 +1,17 @@
 package pet_shop.DAO;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import pet_shop.DAO.IRepositorios.IRepositorioVenda;
+import pet_shop.negocio.beans.Cliente;
 import pet_shop.negocio.beans.Venda;
 
-public class VendaDAO implements IRepositorioVenda {
+public class VendaDAO extends RepositorioAbstrato<Cliente> implements IRepositorioVenda {
 	
 	private ArrayList<Venda> repositorioVenda;
 	private static VendaDAO instance;
+	private static long proximoID = 0;
 	
 	private VendaDAO() {
 		this.repositorioVenda = new ArrayList<>();
@@ -23,6 +26,8 @@ public class VendaDAO implements IRepositorioVenda {
 
 	@Override
 	public void cadastrar(Venda v) {
+		VendaDAO.proximoID = this.repositorioVenda.size() + 1;
+		v.setId(proximoID);
 		this.repositorioVenda.add(v);
 	}
 
@@ -57,7 +62,7 @@ public class VendaDAO implements IRepositorioVenda {
 
 	@Override
 	public ArrayList<Venda> listarTudo() {
-		return this.repositorioVenda;
+		return (ArrayList<Venda>) Collections.unmodifiableList(this.repositorioVenda);
 	}
 	
 	public int procurarID(long id) { //procura pela reserva do cliente

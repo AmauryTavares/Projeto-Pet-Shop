@@ -2,15 +2,12 @@ package pet_shop.negocio.beans;
 
 public class Produto {
 
-	private static long proximoID = 1;
-	
 	private long id;
 	private String nome;
 	private double preco;
 	private double qtdEstoque;
+	
 	public Produto(String nome, double preco, double qtdEstoque) {
-		this.id = proximoID;
-		proximoID++;
 		this.nome = nome;
 		this.preco = preco;
 		this.qtdEstoque = qtdEstoque;
@@ -37,6 +34,10 @@ public class Produto {
 
 	public long getId() {
 		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	public String toString() {
