@@ -21,7 +21,7 @@ public interface IFachada {
 	
 	public abstract void saveAnimal(Animal animal);
 	public abstract void updateAnimal(Animal animal, long id);
-	public abstract void deleteAnimal(long id) ;
+	public abstract void deleteAnimal(long id, ArrayList<Consulta> c) ;
 	public abstract Animal findAnimal(long id) ;
 	public abstract ArrayList<Animal> listarTodosAnimais();
 

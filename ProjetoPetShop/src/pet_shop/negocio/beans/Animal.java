@@ -22,6 +22,10 @@ public class Animal {
 		this.raca = raca;
 		this.dataNascimento = dataNascimento2;
 	}
+	
+	public Animal() {
+		
+	}
 
 	public long getId() {
 		return id;

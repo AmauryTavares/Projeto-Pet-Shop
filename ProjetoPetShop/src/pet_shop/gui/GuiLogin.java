@@ -66,9 +66,9 @@ public class GuiLogin {
 		fachada.saveAnimal(a[3]);
 		
 		//serviços e produtos
-		Servico s1 = new Servico("Tosa", 60.0, false);
-		Servico s2 = new Servico("Banho", 80.0, false);
-		Servico s3 = new Servico("Raio-X", 70.0, true);
+		Servico s1 = new Servico("Tosa", 60.0, false, a[0]);
+		Servico s2 = new Servico("Banho", 80.0, false, a[3]);
+		Servico s3 = new Servico("Raio-X", 70.0, true, a[1]);
 		
 		fachada.saveServico(s1);
 		fachada.saveServico(s2);
