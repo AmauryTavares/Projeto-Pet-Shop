@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import pet_shop.DAO.AnimalDAO;
 import pet_shop.DAO.IRepositorios.IRepositorioAnimal;
 import pet_shop.negocio.beans.Animal;
+import pet_shop.negocio.beans.Consulta;
 
 public class AnimalController {
 	
@@ -49,9 +50,9 @@ public class AnimalController {
 		
 	}
 	
-	public void deleteAnimal(long id) {
+	public void deleteAnimal(long id, ArrayList<Consulta> c) {
 		
-		if(id >= 0 && this.animalRepository.existe(id)) {
+		if(id >= 0 && this.animalRepository.existe(id) && !this.agendamento(id, c)) {
 			this.animalRepository.excluir(id);
 		}
 		
@@ -69,6 +70,19 @@ public class AnimalController {
 	
 	public ArrayList<Animal> listarTodosAnimais() {
 		return this.animalRepository.listarTudo();	
+	}
+	
+	public boolean agendamento(long id, ArrayList<Consulta> consultas) {
+		
+		boolean verifica = false;
+		
+		for (Consulta c : consultas) {
+			if(c.getAnimal().getId() == id) {
+				verifica = true;
+			}
+		}
+		
+		return verifica;
 	}
 
 }

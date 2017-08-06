@@ -74,8 +74,8 @@ public class SistemaFachada implements IFachada {
 	}
 
 	@Override
-	public void deleteAnimal(long id) {
-		controleAnimais.deleteAnimal(id);
+	public void deleteAnimal(long id, ArrayList<Consulta> c) {
+		controleAnimais.deleteAnimal(id, c);
 	}
 
 	@Override

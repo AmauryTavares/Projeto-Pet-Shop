@@ -762,6 +762,7 @@ public class GuiDono {
 		String nome = null;
 		double preco = 0;
 		boolean necessitaConsulta = false;
+		Animal animal = new Animal();
 
 		if (voltar == false) {
 			System.out.print("Nome: ");
@@ -779,6 +780,42 @@ public class GuiDono {
 			if (preco == 0) {
 				voltar = true;
 			}
+		}
+		
+		if (voltar == false) {
+			System.out.print("Preço: ");
+			preco = scanner.nextDouble();
+			scanner.nextLine();
+			if (preco == 0) {
+				voltar = true;
+			}
+		}
+		
+		if (voltar == false) {
+			
+			int id = 0;
+			boolean ciclo = false;
+			ArrayList<Animal> listAnimal = new ArrayList<>();
+			
+			while(ciclo == false) {
+				
+				for (Animal a : listAnimal) {
+					System.out.println(a);
+				}
+				System.out.println("Digite o id do animal: ");
+				id = scanner.nextInt();
+				scanner.nextLine();
+				
+				Animal a1 = fachada.findAnimal(id);
+				if(a1 != null) {
+					animal = a1;
+					ciclo = true;
+				} else {
+					System.out.println("Id incorreto, digite novamente!\n\n");
+				}
+				
+			}
+			
 		}
 
 		if (voltar == false) {
@@ -810,7 +847,7 @@ public class GuiDono {
 			}
 		}
 		if (voltar == false) {
-			Servico s = new Servico(nome, preco, necessitaConsulta);
+			Servico s = new Servico(nome, preco, necessitaConsulta, animal);
 			fachada.saveServico(s);
 			System.out.println("\nServiço Cadastrado com sucesso!\n");
 		}
@@ -831,6 +868,7 @@ public class GuiDono {
 		boolean consulta = false;
 		double preco = 0;
 		Servico servicoAlterado = null;
+		Animal animal = new Animal();
 
 		while (sairLoop == false) {
 			System.out.println("\n* Serviços *\n");
@@ -893,6 +931,33 @@ public class GuiDono {
 				preco = Double.parseDouble(texto.replace(',', '.'));
 			}
 		}
+		
+		if (voltar == false) {
+			
+			int id = 0;
+			boolean ciclo = false;
+			ArrayList<Animal> listAnimal = new ArrayList<>();
+			
+			while(ciclo == false) {
+				
+				for (Animal a : listAnimal) {
+					System.out.println(a);
+				}
+				System.out.println("Digite o id do animal: ");
+				id = scanner.nextInt();
+				scanner.nextLine();
+				
+				Animal a1 = fachada.findAnimal(id);
+				if(a1 != null) {
+					animal = a1;
+					ciclo = true;
+				} else {
+					System.out.println("Id incorreto, digite novamente!\n\n");
+				}
+				
+			}
+			
+		}
 
 		if (voltar == false) {
 			String consultaTexto = (alterarServico.isConsulta()) ? "Sim" : "Não";
@@ -934,7 +999,7 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			servicoAlterado = new Servico(nome, preco, consulta);
+			servicoAlterado = new Servico(nome, preco, consulta,animal);
 			fachada.updateServico(servicoAlterado, alterarServico.getId());
 			servicoAlterado = null;
 			alterarServico = null;
@@ -2442,7 +2507,7 @@ public class GuiDono {
 																			// sai
 																			// do
 																			// laço
-						fachada.deleteAnimal(id);
+						fachada.deleteAnimal(id, fachada.listarTodasAgendas());
 						System.out.println("\nAnimal excluído com sucesso!\n");
 						loop = true;
 						sairLoop = true;
