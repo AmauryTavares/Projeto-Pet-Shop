@@ -1,20 +1,20 @@
 package pet_shop.DAO;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 import pet_shop.DAO.IRepositorios.IRepositorioConsulta;
-import pet_shop.negocio.beans.Cliente;
+import pet_shop.negocio.beans.Atendimento;
 import pet_shop.negocio.beans.Consulta;
 
-public class ConsultaDAO extends RepositorioAbstrato<Cliente> implements IRepositorioConsulta {
-	
-	private ArrayList<Consulta> repositorioConsulta;
+public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepositorioConsulta {
+
 	private static ConsultaDAO instance;
 	private static long proximoID = 0;
 	
 	private ConsultaDAO() {
-		this.repositorioConsulta = new ArrayList<>();
+		super();
+		proximoID = this.list.get(this.list.size() - 1).getId();
 	}
 	
 	public static ConsultaDAO getInstance() {
@@ -26,117 +26,69 @@ public class ConsultaDAO extends RepositorioAbstrato<Cliente> implements IReposi
 	
 	@Override
 	public void cadastrar(Consulta c) {
-		ConsultaDAO.proximoID = this.repositorioConsulta.size() + 1;
-		c.setId(proximoID);
-		this.repositorioConsulta.add(c);		
-	}
-
-	@Override
-	public void excluir(long id) {
-		int indice = procurarID(id);
-		if(indice != this.repositorioConsulta.size()) {
-			this.repositorioConsulta.remove(indice);
+		if(!this.list.contains(c)) {
+			c.setId(proximoID++);
+			this.list.add(c);
 		}
 	}
-
+	
 	@Override
 	public Consulta procurar(long id) {
 		Consulta busca = null;
 		
 		int indice = procurarID(id);
-		if(indice != this.repositorioConsulta.size()) {
-			busca = this.repositorioConsulta.get(indice);
+		if(indice != this.list.size()) {
+			busca = this.list.get(indice);
 		}
 		
 		return busca;
 	}
-
-	@Override
-	public void alterar(Consulta newConsulta, long id) {
-		int indice = procurarID(id);
-		if(indice != this.repositorioConsulta.size()) {
-			this.repositorioConsulta.remove(indice);
-			this.repositorioConsulta.add(indice, newConsulta);
-		}
-	}
-
-	@Override
-	public ArrayList<Consulta> listarTudo() {
-		return (ArrayList<Consulta>) Collections.unmodifiableList(this.repositorioConsulta);
-	}
 	
-	public int procurarID(long id) { //procura pela reserva do cliente
+	@Override
+	public List<Consulta> procurar(String nome) {
+		List<Consulta> lista = new ArrayList<>();
+
+		for (int i = 0; i < this.list.size(); i++) {
+			if (this.list.get(i).getAnimal().getDono().getNome().equals(nome)) {
+				lista.add(this.list.get(i));
+			}	
+		}
 		
+		return lista;
+	}
+
+	@Override
+	public int procurarID(long id) { //procura pela reserva do conuslta
 		boolean achou = false;
-		int i = 0;
+		int i;
 		
-		while((!achou) && (i < this.repositorioConsulta.size())) {
-			
-			if(this.repositorioConsulta.get(i).getId() == id) {
+		for (i = 0; i < this.list.size() && !achou; i++) {
+			if (this.list.get(i).getId() == id) {
 				achou = true;
-			} else {
-				i++;
-			}
-			
+			}	
 		}
-		
 		return i;
-		
-	}
-	
-	@Override
-	public int procurarIDReservada(long id) { //procura pela reserva do cliente
-		
-		boolean achou = false;
-		int i = 0;
-		
-		while((!achou) && (i < this.repositorioConsulta.size())) {
-			
-			if(this.repositorioConsulta.get(i).getAnimal().getDono().getId()== id) {
-				achou = true;
-			} else {
-				i++;
-			}
-			
-		}
-		
-		return i;
-		
-	}
-	
-	@Override
-	public void excluirAgendaPorPosicao(int i) {
-		this.repositorioConsulta.remove(i);
-	}
-	
-	@Override
-	public boolean existeReservada(long id) {
-		
-		boolean existe = false;
-		int indice = procurarIDReservada(id);
-		
-		if(indice != this.repositorioConsulta.size()) {
-			existe = true;
-		}
-		
-		return existe;
 	}
 
+	@Override
+	public List<Consulta> procurarIDReservada(long id) { //procura pela reserva do cliente
+		boolean achou = false;
+		List<Consulta> lista = new ArrayList<>();
+		
+		for (int i = 0; i < this.list.size() && !achou; i++) {
+			if (this.list.get(i).getAnimal().getDono().getId() == id) {
+				lista.add(this.list.get(i));
+				achou = true;
+			}	
+		}	
+		return lista;	
+	}
+	
 	@Override
 	public boolean existe(Consulta c) {
-		return this.repositorioConsulta.contains(c);
-	}
-
-	@Override
-	public boolean existe(long id) {
-		boolean existe = false;
-		int i = procurarID(id);
-		
-		if(i != this.repositorioConsulta.size()) {
-			existe = true;
+		if (this.list.contains(c)) {
+			return true;
 		}
-		
-		return existe;
+		return false;
 	}
-	
 }

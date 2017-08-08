@@ -14,6 +14,7 @@ import pet_shop.negocio.beans.Animal;
 import pet_shop.negocio.beans.Atendimento;
 import pet_shop.negocio.beans.Cliente;
 import pet_shop.negocio.beans.Funcionario;
+import pet_shop.negocio.beans.Pessoa;
 import pet_shop.negocio.beans.Produto;
 import pet_shop.negocio.beans.Servico;
 import pet_shop.negocio.beans.Venda;
@@ -2310,7 +2311,7 @@ public class GuiDono {
 		boolean sairLoop = false;
 		boolean voltar = false;
 		boolean loop = false;
-		Cliente donoAlt = null;
+		Pessoa donoAlt = null;
 		String nome = null;
 		double peso = 0;
 		String especie = null;
@@ -2462,7 +2463,7 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			animalAlterado = new Animal(donoAlt, nome, peso, especie, raca, dataNascimentoAlt);
+			animalAlterado = new Animal((Cliente)donoAlt, nome, peso, especie, raca, dataNascimentoAlt);
 			fachada.updateAnimal(animalAlterado, alterarAnimal.getId());
 			animalAlterado = null;
 			alterarAnimal = null;

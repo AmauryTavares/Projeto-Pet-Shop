@@ -1,17 +1,15 @@
 package pet_shop.DAO.IRepositorios;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import pet_shop.negocio.beans.Atendimento;
 
 public interface IRepositorioAtendimento {
 	
 	public abstract void cadastrar (Atendimento a);
-	public abstract void excluir (long id);
 	public abstract Atendimento procurar (long id);
-	public abstract void alterar (Atendimento newAtendimento, long id);
-	public abstract ArrayList<Atendimento> listarTudo ();
+	public abstract int procurarID(long id);
 	public abstract boolean existe(Atendimento a);
-	public abstract boolean existe(long id);
-
+	public abstract List<Atendimento> procurar(String nome);
+	
 }

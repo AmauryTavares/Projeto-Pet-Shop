@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Animal {
 	
 	private long id;
-	private Cliente dono;
+	private Pessoa dono;
 	private String nome;
 	private double peso;
 	private String especie;
@@ -35,7 +35,7 @@ public class Animal {
 		this.id = id;
 	}
 
-	public Cliente getDono() {
+	public Pessoa getDono() {
 		return dono;
 	}
 

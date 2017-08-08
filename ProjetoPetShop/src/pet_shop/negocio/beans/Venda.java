@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Venda {
 	
 	private long id;
+	private Cliente cliente;
 	private Funcionario funcionario;
 	private ArrayList<Atendimento> atendimentos;
 	private ArrayList<Produto> produtos;
@@ -19,6 +20,14 @@ public class Venda {
 		this.produtos = produtos;
 		this.data = data;
 		this.valorTotal = valorAtendimentos() + valorProdutos();
+	}
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public Funcionario getFuncionario() {

@@ -10,7 +10,7 @@ public class SistemaFachada implements IFachada {
 	private ConsultaController controleAgendas;
 	private AnimalController controleAnimais;
 	private AtendimentoController controleAtendimentos;
-	private ClienteController controllerClientes;
+	private PessoaController controllerClientes;
 	private FuncionarioController controllerFuncionario;
 	private ProdutosController controllerProdutos;
 	private ServicoContoller controllerServico;
@@ -24,7 +24,7 @@ public class SistemaFachada implements IFachada {
 		this.controleAgendas = ConsultaController.getInstance();
 		this.controleAnimais = AnimalController.getInstance();
 		this.controleAtendimentos = AtendimentoController.getInstance();
-		this.controllerClientes = ClienteController.getInstance();
+		this.controllerClientes = PessoaController.getInstance();
 		this.controllerFuncionario = FuncionarioController.getInstance();
 		this.controllerProdutos = ProdutosController.getInstance();
 		this.controllerServico = ServicoContoller.getInstance();

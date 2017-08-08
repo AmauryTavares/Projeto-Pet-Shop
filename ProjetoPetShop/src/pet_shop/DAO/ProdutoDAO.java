@@ -1,20 +1,20 @@
 package pet_shop.DAO;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 import pet_shop.DAO.IRepositorios.IRepositorioProduto;
-import pet_shop.negocio.beans.Cliente;
+import pet_shop.negocio.beans.Pessoa;
 import pet_shop.negocio.beans.Produto;
 
-public class ProdutoDAO extends RepositorioAbstrato<Cliente> implements IRepositorioProduto {
+public class ProdutoDAO extends RepositorioAbstrato<Produto> implements IRepositorioProduto {
 	
-	private ArrayList<Produto> repositorioProduto;
 	private static ProdutoDAO instance;
 	private static long proximoID = 0;
 	
 	private ProdutoDAO() {
-		this.repositorioProduto = new ArrayList<>();
+		super();
+		proximoID = this.list.get(this.list.size() - 1).getId();
 	}
 	
 	public static ProdutoDAO getInstance() {
@@ -26,16 +26,9 @@ public class ProdutoDAO extends RepositorioAbstrato<Cliente> implements IReposit
 	
 	@Override
 	public void cadastrar(Produto p) {
-		ProdutoDAO.proximoID = this.repositorioProduto.size() + 1;
-		p.setId(proximoID);
-		this.repositorioProduto.add(p);
-	}
-
-	@Override
-	public void excluir(long id) {
-		int indice = procurarID(id);
-		if(indice != this.repositorioProduto.size()) {
-			this.repositorioProduto.remove(indice);
+		if (!this.list.contains(p)) {
+			p.setId(proximoID++);
+			this.list.add(p);
 		}
 	}
 
@@ -44,61 +37,44 @@ public class ProdutoDAO extends RepositorioAbstrato<Cliente> implements IReposit
 		Produto busca = null;
 		
 		int indice = procurarID(id);
-		if(indice != this.repositorioProduto.size()) {
-			busca = this.repositorioProduto.get(indice);
+		if(indice != this.list.size()) {
+			busca = this.list.get(indice);
 		}
-		
 		return busca;
 	}
-
+	
 	@Override
-	public void alterar(Produto newProduto, long id) {
-		int indice = procurarID(id);
-		if(indice != this.repositorioProduto.size()) {
-			this.repositorioProduto.remove(indice);
-			this.repositorioProduto.add(indice, newProduto);
+	public List<Produto> procurar(String nome) {
+		List<Produto> lista = new ArrayList<>();
+
+		for (int i = 0; i < this.list.size(); i++) {
+			if (this.list.get(i).getNome().equals(nome)) {
+				lista.add(this.list.get(i));
+			}	
 		}
-	}
-
-	@Override
-	public ArrayList<Produto> listarTudo() {
-		return (ArrayList<Produto>) Collections.unmodifiableList(this.repositorioProduto);
+		
+		return lista;
 	}
 	
-	public int procurarID(long id) { //procura pela reserva do cliente
-		
+	@Override
+	public int procurarID(long id) { //procura pela reserva do atendimento
 		boolean achou = false;
-		int i = 0;
+		int i;
 		
-		while((!achou) && (i < this.repositorioProduto.size())) {
-			
-			if(this.repositorioProduto.get(i).getId() == id) {
+		for (i = 0; i < this.list.size() && !achou; i++) {
+			if (this.list.get(i).getId() == id) {
 				achou = true;
-			} else {
-				i++;
-			}
-			
+			}	
 		}
-		
 		return i;
-		
 	}
-
+	
 	@Override
 	public boolean existe(Produto p) {
-		return this.repositorioProduto.contains(p);
-	}
-
-	@Override
-	public boolean existe(long id) {
-		boolean existe = false;
-		int i = procurarID(id);
-		
-		if(i != this.repositorioProduto.size()) {
-			existe = true;
+		if (this.list.contains(p)) {
+			return true;
 		}
-		
-		return existe;
+		return false;
 	}
 	
 }

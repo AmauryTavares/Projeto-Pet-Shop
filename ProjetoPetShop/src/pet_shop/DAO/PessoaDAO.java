@@ -3,49 +3,50 @@ package pet_shop.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
-import pet_shop.DAO.IRepositorios.IRepositorioServico;
-import pet_shop.negocio.beans.Produto;
-import pet_shop.negocio.beans.Servico;
+import pet_shop.DAO.IRepositorios.IRepositorioPessoa;
+import pet_shop.negocio.beans.Consulta;
+import pet_shop.negocio.beans.Pessoa;
 
-public class ServicoDAO extends RepositorioAbstrato<Servico> implements IRepositorioServico {
+public class PessoaDAO extends RepositorioAbstrato<Pessoa> implements IRepositorioPessoa {
 	
-	private static ServicoDAO instance;
+	private static PessoaDAO instance;
 	private static long proximoID = 0;
 	
-	private ServicoDAO() {
+	private PessoaDAO() {
 		super();
 		proximoID = this.list.get(this.list.size() - 1).getId();
 	}
 	
-	public static ServicoDAO getInstance() {
+	public static PessoaDAO getInstance() {
 		if (instance == null) {
-			instance = new ServicoDAO();
+			instance = new PessoaDAO();
 		}
 		return instance;
 	}
 
 	@Override
-	public void cadastrar(Servico s) {
-		if (!this.list.contains(s)) {
-			s.setId(proximoID++);
-			this.list.add(s);
+	public void cadastrar(Pessoa p) {
+		if(!this.list.contains(p)) {
+			p.setId(proximoID++);
+			this.list.add(p);
 		}
 	}
-
+	
 	@Override
-	public Servico procurar(long id) {
-		Servico busca = null;
+	public Pessoa procurar(long id) {
+		Pessoa busca = null;
 		
 		int indice = procurarID(id);
 		if(indice != this.list.size()) {
 			busca = this.list.get(indice);
 		}
+		
 		return busca;
 	}
-	
+
 	@Override
-	public List<Servico> procurar(String nome) {
-		List<Servico> lista = new ArrayList<>();
+	public List<Pessoa> procurar(String nome) {
+		List<Pessoa> lista = new ArrayList<>();
 
 		for (int i = 0; i < this.list.size(); i++) {
 			if (this.list.get(i).getNome().equals(nome)) {
@@ -57,7 +58,7 @@ public class ServicoDAO extends RepositorioAbstrato<Servico> implements IReposit
 	}
 	
 	@Override
-	public int procurarID(long id) { //procura pela reserva do atendimento
+	public int procurarID(long id) { //procura pela reserva do cliente
 		boolean achou = false;
 		int i;
 		
@@ -70,8 +71,8 @@ public class ServicoDAO extends RepositorioAbstrato<Servico> implements IReposit
 	}
 	
 	@Override
-	public boolean existe(Servico s) {
-		if (this.list.contains(s)) {
+	public boolean existe(Pessoa p) {
+		if (this.list.contains(p)) {
 			return true;
 		}
 		return false;

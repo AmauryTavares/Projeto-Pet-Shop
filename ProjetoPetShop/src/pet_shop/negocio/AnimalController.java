@@ -1,11 +1,21 @@
 package pet_shop.negocio;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pet_shop.DAO.AnimalDAO;
 import pet_shop.DAO.IRepositorios.IRepositorioAnimal;
 import pet_shop.negocio.beans.Animal;
 import pet_shop.negocio.beans.Consulta;
+import pet_shop.negocio.excecoes.AnimalCadastradoException;
+import pet_shop.negocio.excecoes.AnimalInexistenteException;
+import pet_shop.negocio.excecoes.DataInvalidaException;
+import pet_shop.negocio.excecoes.DonoInvalidoException;
+import pet_shop.negocio.excecoes.EspecieInvalidaException;
+import pet_shop.negocio.excecoes.NadaEncontradoException;
+import pet_shop.negocio.excecoes.NomeInvalidoException;
+import pet_shop.negocio.excecoes.PesoInvalidoException;
+import pet_shop.negocio.excecoes.RacaInvalidaException;
 
 public class AnimalController {
 	
@@ -25,64 +35,122 @@ public class AnimalController {
 	}
 	
 	//Controle dos métodos do repositório
-	public void saveAnimal(Animal animal) {
-		
-		if( (animal != null) && (!this.animalRepository.existe(animal)) && (animal.getDono() != null) 
-				&& (animal.getDataNascimento() != null) && (animal.getEspecie() != null) 
-				&& (animal.getNome() != null) && (animal.getPeso() > 0) && (animal.getRaca() != null) ) {
-			
-			this.animalRepository.cadastrar(animal);
-		}
-		
-	}
-	
-	public void updateAnimal(Animal newAnimal, long id) {
-		
-		if(newAnimal != null) {
-			Animal a = this.animalRepository.procurar(id);
-			
-			if( (a != null) && (newAnimal.getDataNascimento() != null) && (newAnimal.getDono() != null) && (newAnimal.getEspecie() != null) 
-					&& (newAnimal.getNome() != null) && (newAnimal.getPeso() > 0) && (newAnimal.getRaca() != null)) {
-				
-				this.animalRepository.alterar(newAnimal, id);
+	public void saveAnimal(Animal animal) throws AnimalCadastradoException, DonoInvalidoException, DataInvalidaException, EspecieInvalidaException, NomeInvalidoException, PesoInvalidoException, RacaInvalidaException {
+		if (animal != null) {
+			if (!this.animalRepository.existe(animal)) {
+				if (animal.getDono() != null) {
+					if (animal.getDataNascimento() != null) {
+						if (animal.getEspecie() != null) {
+							if (animal.getNome() != null) {
+								if (animal.getPeso() > 0) {
+									if (animal.getRaca() != null) {
+										this.animalRepository.cadastrar(animal);
+									} else {
+										throw new RacaInvalidaException();
+									}
+								} else {
+									throw new PesoInvalidoException();
+								}
+							} else {
+								throw new NomeInvalidoException();
+							}
+						} else {
+							throw new EspecieInvalidaException();
+						}
+					} else {
+						throw new DataInvalidaException();
+					}
+				} else {
+					throw new DonoInvalidoException();
+				}
+			} else {
+				throw new AnimalCadastradoException(animal.getNome());
 			}
-		}
-		
-	}
-	
-	public void deleteAnimal(long id, ArrayList<Consulta> c) {
-		
-		if(id >= 0 && this.animalRepository.existe(id) && !this.agendamento(id, c)) {
-			this.animalRepository.excluir(id);
-		}
-		
-	}
-	
-	public Animal findAnimal(long id) {
-		
-		if(id >= 0 && this.animalRepository.existe(id)) {
-			return this.animalRepository.procurar(id);
 		} else {
-			return null;
+			throw new IllegalArgumentException("Parâmetro inválido!");
 		}
-		
 	}
 	
-	public ArrayList<Animal> listarTodosAnimais() {
-		return this.animalRepository.listarTudo();	
-	}
-	
-	public boolean agendamento(long id, ArrayList<Consulta> consultas) {
+	public void updateAnimal(Animal newAnimal) throws RacaInvalidaException, PesoInvalidoException, DonoInvalidoException, DataInvalidaException, EspecieInvalidaException, NomeInvalidoException, AnimalInexistenteException {
 		
-		boolean verifica = false;
-		
-		for (Consulta c : consultas) {
-			if(c.getAnimal().getId() == id) {
-				verifica = true;
+		if (newAnimal != null) {
+			AnimalDAO t1 = (AnimalDAO) this.animalRepository;
+			int indice = this.animalRepository.procurarID(newAnimal.getId());
+			if (indice != t1.listar().size()) {
+				if (newAnimal.getDono() != null) {
+					if (newAnimal.getDataNascimento() != null) {
+						if (newAnimal.getEspecie() != null) {
+							if (newAnimal.getNome() != null) {
+								if (newAnimal.getPeso() > 0) {
+									if (newAnimal.getRaca() != null) {
+										t1.alterar(newAnimal);
+									} else {
+										throw new RacaInvalidaException();
+									}
+								} else {
+									throw new PesoInvalidoException();
+								}
+							} else {
+								throw new NomeInvalidoException();
+							}
+						} else {
+							throw new EspecieInvalidaException();
+						}
+					} else {
+						throw new DataInvalidaException();
+					}
+				} else {
+					throw new DonoInvalidoException();
+				}
+			} else {
+				throw new AnimalInexistenteException();
 			}
+		} else {
+			throw new IllegalArgumentException("Parâmetro inválido!");
+		}
+	}
+	
+	public void deleteAnimal(Animal animal) throws AnimalInexistenteException {
+		
+		if (animal != null) {
+			AnimalDAO t1 = (AnimalDAO) this.animalRepository;
+			int indice = this.animalRepository.procurarID(animal.getId());
+			if (indice != t1.listar().size()) {
+				t1.excluir(animal);
+			} else {
+				throw new AnimalInexistenteException();
+			}
+		} else {
+			throw new IllegalArgumentException("Parâmetro inválido!");
 		}
 		
-		return verifica;
+	}
+	
+	public List<Animal> findAnimal(String nome) throws IllegalAccessException, NadaEncontradoException {
+		
+		List<Animal> lista = new ArrayList<>();
+		if (nome != null) {
+			if (this.animalRepository.procurar(nome).size() > 0) {
+				lista = this.animalRepository.procurar(nome);
+			} else {
+				throw new NadaEncontradoException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
+		}
+		
+		return lista;
+	}
+	
+	public List<Animal> listarTodosAnimais() throws NadaEncontradoException {
+		List<Animal> lista = new ArrayList<>();
+		AnimalDAO t1 = (AnimalDAO) this.animalRepository;
+		if (t1.listar().size() > 0) {
+			lista = t1.listar();
+		} else {
+			throw new NadaEncontradoException();
+		}
+		return lista;
 	}
 
 }

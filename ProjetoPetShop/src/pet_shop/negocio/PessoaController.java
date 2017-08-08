@@ -2,22 +2,22 @@ package pet_shop.negocio;
 
 import java.util.ArrayList;
 
-import pet_shop.DAO.ClienteDAO;
+import pet_shop.DAO.PessoaDAO;
 import pet_shop.negocio.beans.Cliente;
 import pet_shop.negocio.ConsultaController;
 
-public class ClienteController {
+public class PessoaController {
 	
-	private ClienteDAO repositorioClientes;
-	private static ClienteController instance;
+	private PessoaDAO repositorioClientes;
+	private static PessoaController instance;
 	
-	private ClienteController() {
-        this.repositorioClientes = ClienteDAO.getInstance(); 
+	private PessoaController() {
+        this.repositorioClientes = PessoaDAO.getInstance(); 
     }
 	
-	public static ClienteController getInstance() {
+	public static PessoaController getInstance() {
 		if(instance == null)
-			instance = new ClienteController();
+			instance = new PessoaController();
 		
 		return instance;
 	}

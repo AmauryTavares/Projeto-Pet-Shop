@@ -1,20 +1,19 @@
 package pet_shop.DAO;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 import pet_shop.DAO.IRepositorios.IRepositorioAnimal;
 import pet_shop.negocio.beans.Animal;
-import pet_shop.negocio.beans.Cliente;
 
-public class AnimalDAO extends RepositorioAbstrato<Cliente> implements IRepositorioAnimal{
+public class AnimalDAO extends RepositorioAbstrato<Animal> implements IRepositorioAnimal{
 	
-	private ArrayList<Animal> repositorioAnimal;
 	private static AnimalDAO instance;
 	private static long proximoID = 0;
 	
 	private AnimalDAO() {
-		this.repositorioAnimal = new ArrayList<>();
+		super();
+		proximoID = this.list.get(this.list.size() - 1).getId();
 	}
 	
 	public static AnimalDAO getInstance() {
@@ -23,82 +22,59 @@ public class AnimalDAO extends RepositorioAbstrato<Cliente> implements IReposito
 		}
 		return instance;
 	}
-	
+
 	@Override
 	public void cadastrar(Animal a) {
-		AnimalDAO.proximoID = this.repositorioAnimal.size() + 1;
-		a.setId(proximoID);
-		this.repositorioAnimal.add(a);
-	}
-
-	@Override
-	public void excluir(long id) {
-		int indice = procurarID(id);
-		if(indice != this.repositorioAnimal.size()) {
-			this.repositorioAnimal.remove(indice);
+		if(!this.list.contains(a)) {
+			a.setId(proximoID++);
+			this.list.add(a);
 		}
 	}
-
+	
 	@Override
 	public Animal procurar(long id) {
 		Animal busca = null;
 		
 		int indice = procurarID(id);
-		if(indice != this.repositorioAnimal.size()) {
-			busca = this.repositorioAnimal.get(indice);
+		if(indice != this.list.size()) {
+			busca = this.list.get(indice);
 		}
 		
 		return busca;
 	}
-
-	@Override
-	public void alterar(Animal newAnimal, long id) {
-		int indice = procurarID(id);
-		if(indice != this.repositorioAnimal.size()) {
-			this.repositorioAnimal.remove(indice);
-			this.repositorioAnimal.add(indice, newAnimal);
-		}		
-	}
-
-	@Override
-	public ArrayList<Animal> listarTudo() {
-		return (ArrayList<Animal>) Collections.unmodifiableList(this.repositorioAnimal);
-	}
 	
-	public int procurarID(long id) { //procura pela reserva do cliente
-		
-		boolean achou = false;
-		int i = 0;
-		
-		while((!achou) && (i < this.repositorioAnimal.size())) {
-			
-			if(this.repositorioAnimal.get(i).getId() == id) {
-				achou = true;
-			} else {
-				i++;
-			}
-			
+	@Override
+	public List<Animal> procurar(String nome) {
+		List<Animal> lista = new ArrayList<>();
+
+		for (int i = 0; i < this.list.size(); i++) {
+			if (this.list.get(i).getNome().equals(nome)) {
+				lista.add(this.list.get(i));
+			}	
 		}
 		
-		return i;
+		return lista;
+	}
+
+	@Override
+	public int procurarID(long id) { //procura pela reserva do cliente
+		boolean achou = false;
+		int i;
 		
+		for (i = 0; i < this.list.size() && !achou; i++) {
+			if (this.list.get(i).getId() == id) {
+				achou = true;
+			}	
+		}
+		return i;
 	}
 
 	@Override
 	public boolean existe(Animal a) {
-		return this.repositorioAnimal.contains(a);
-	}
-
-	@Override
-	public boolean existe(long id) {
-		boolean existe = false;
-		int i = procurarID(id);
-		
-		if(i != this.repositorioAnimal.size()) {
-			existe = true;
+		if (this.list.contains(a)) {
+			return true;
 		}
-		
-		return existe;
+		return false;
 	}
 	
 }
