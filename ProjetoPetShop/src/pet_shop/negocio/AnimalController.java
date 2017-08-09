@@ -6,7 +6,6 @@ import java.util.List;
 import pet_shop.DAO.AnimalDAO;
 import pet_shop.DAO.IRepositorios.IRepositorioAnimal;
 import pet_shop.negocio.beans.Animal;
-import pet_shop.negocio.beans.Consulta;
 import pet_shop.negocio.excecoes.AnimalCadastradoException;
 import pet_shop.negocio.excecoes.AnimalInexistenteException;
 import pet_shop.negocio.excecoes.DataInvalidaException;
@@ -113,9 +112,8 @@ public class AnimalController {
 	public void deleteAnimal(Animal animal) throws AnimalInexistenteException {
 		
 		if (animal != null) {
-			AnimalDAO t1 = (AnimalDAO) this.animalRepository;
-			int indice = this.animalRepository.procurarID(animal.getId());
-			if (indice != t1.listar().size()) {
+			if (this.animalRepository.existe(animal)) {
+				AnimalDAO t1 = (AnimalDAO) this.animalRepository;
 				t1.excluir(animal);
 			} else {
 				throw new AnimalInexistenteException();

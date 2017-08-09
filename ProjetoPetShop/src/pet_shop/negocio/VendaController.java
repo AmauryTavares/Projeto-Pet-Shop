@@ -1,69 +1,146 @@
 package pet_shop.negocio;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pet_shop.DAO.VendaDAO;
 import pet_shop.DAO.IRepositorios.IRepositorioVenda;
 import pet_shop.negocio.beans.Venda;
+import pet_shop.negocio.excecoes.AtendimentoInvalidoException;
+import pet_shop.negocio.excecoes.ClienteInvalidoException;
+import pet_shop.negocio.excecoes.DataInvalidaException;
+import pet_shop.negocio.excecoes.FuncionarioInvalidoException;
+import pet_shop.negocio.excecoes.NadaEncontradoException;
+import pet_shop.negocio.excecoes.PrecoInvalidoException;
+import pet_shop.negocio.excecoes.ProdutoInvalidoException;
+import pet_shop.negocio.excecoes.VendaInexistenteException;
 
-public class VendaController 
-{
+public class VendaController {
 	private IRepositorioVenda vendaRepository;
 	private static VendaController instance;
-	
-	//Singleton
+
+	// Singleton
 	private VendaController() {
 		this.vendaRepository = VendaDAO.getInstance();
 	}
-	
+
 	public static VendaController getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new VendaController();
 		}
 		return instance;
 	}
-	public void saveVenda(Venda venda) 
-	{		
-		if( (venda != null) && (!this.vendaRepository.existe(venda))&& (venda.getValorTotal() >= 0) 
-		&& (venda.getFuncionario() != null) && (venda.getData() != null) && (venda.getAtendimentos() != null) 
-		&& (venda.getProdutos() != null)) 
-		{			
-			this.vendaRepository.cadastrar(venda);
-		}
-		
-	}
-	public void updateVenda(Venda venda, long id) 
-	{
-		if(venda != null) 
-		{
-			Venda a = this.vendaRepository.procurar(id);			
-			if( (a != null) && (!this.vendaRepository.existe(venda))) 
-			{
-				this.vendaRepository.alterar(venda, id);
+
+	public void saveVenda(Venda venda) throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException, AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException {
+
+		if (venda != null) {
+			if (venda.getCliente() != null) {
+				if (venda.getFuncionario() != null) {
+					if (venda.getAtendimentos() != null) {
+						if (venda.getProdutos() != null) {
+							if (venda.getData() != null) {
+								if (venda.getValorTotal() > 0) {
+									this.vendaRepository.cadastrar(venda);
+								} else {
+									throw new PrecoInvalidoException();
+								}
+							} else {
+								throw new DataInvalidaException();
+							}
+						} else {
+							throw new ProdutoInvalidoException();
+						}
+					} else {
+						throw new AtendimentoInvalidoException();
+					}
+				} else {
+					throw new FuncionarioInvalidoException();
+				}
+			} else {
+				throw new ClienteInvalidoException();
 			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
+		}
+
+	}
+
+	public void updateVenda(Venda venda) throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException, AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException {
+		
+		if (venda != null) {
+			if (venda.getCliente() != null) {
+				if (venda.getFuncionario() != null) {
+					if (venda.getAtendimentos() != null) {
+						if (venda.getProdutos() != null) {
+							if (venda.getData() != null) {
+								if (venda.getValorTotal() > 0) {
+									VendaDAO v1 = (VendaDAO) this.vendaRepository;
+									v1.alterar(venda);
+								} else {
+									throw new PrecoInvalidoException();
+								}
+							} else {
+								throw new DataInvalidaException();
+							}
+						} else {
+							throw new ProdutoInvalidoException();
+						}
+					} else {
+						throw new AtendimentoInvalidoException();
+					}
+				} else {
+					throw new FuncionarioInvalidoException();
+				}
+			} else {
+				throw new ClienteInvalidoException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
+		}
+
+	}
+
+	public void deleteVenda(Venda venda) throws IllegalAccessException, VendaInexistenteException {
+		
+		if (venda != null) {
+			if (this.vendaRepository.existe(venda)) {
+				VendaDAO v1 = (VendaDAO) this.vendaRepository;
+				v1.excluir(venda);
+			} else {
+				throw new VendaInexistenteException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
+		}
+
+	}
+
+	public List<Venda> findVenda(String nome) throws IllegalAccessException, NadaEncontradoException {
+		
+		List<Venda> lista = new ArrayList<>();
+		if (nome != null) {
+			if (this.vendaRepository.procurar(nome).size() > 0) {
+				lista = this.vendaRepository.procurar(nome);
+			} else {
+				throw new NadaEncontradoException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
 		}
 		
+		return lista;
 	}
-	public void deleteVenda(long id) 
-	{
-	if(id > 0 && this.vendaRepository.existe(id)) 
-	{
-		this.vendaRepository.excluir(id);
-	}
-	
-	}
-	public Venda findVenda(long id) 
-	{
-		if(id >= 0 && this.vendaRepository.existe(id)) 
-		{
-			return this.vendaRepository.procurar(id);
-		} else 
-		{
-			return null;
-		}	
-	}
-	public ArrayList<Venda> listarTodasVendas() 
-	{
-		return this.vendaRepository.listarTudo();
+
+	public List<Venda> listarTodasVendas() throws NadaEncontradoException {
+
+		List<Venda> lista = new ArrayList<>();
+		VendaDAO v1 = (VendaDAO) this.vendaRepository;
+		if (v1.listar().size() > 0) {
+			lista = v1.listar();
+		} else {
+			throw new NadaEncontradoException();			
+		}
+		 
+		return lista;
 	}
 }

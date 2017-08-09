@@ -1,10 +1,17 @@
 package pet_shop.negocio;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pet_shop.DAO.ProdutoDAO;
 import pet_shop.DAO.IRepositorios.IRepositorioProduto;
 import pet_shop.negocio.beans.Produto;
+import pet_shop.negocio.excecoes.NadaEncontradoException;
+import pet_shop.negocio.excecoes.NomeInvalidoException;
+import pet_shop.negocio.excecoes.PrecoInvalidoException;
+import pet_shop.negocio.excecoes.ProdutoCadastradoException;
+import pet_shop.negocio.excecoes.ProdutoInexistenteException;
+import pet_shop.negocio.excecoes.QtdEstoqueInvalidoException;
 
 public class ProdutosController {
 	
@@ -23,48 +30,101 @@ public class ProdutosController {
 	}
 	
 	//Cadastro do produto
-	public void cadastrarProduto(Produto p) {
-	    if (p == null) {
-	      //Exceção
+	public void cadastrarProduto(Produto p) throws IllegalAccessException, NomeInvalidoException, PrecoInvalidoException, QtdEstoqueInvalidoException, ProdutoCadastradoException {
+	    if (p != null) {
+	    	if (!this.repositorioProdutos.existe(p)) {
+	    		if (p.getNome() != null) {
+	    			if (p.getPreco() > 0) {
+	    				if (p.getQtdEstoque() > 0) {
+	    					this.repositorioProdutos.cadastrar(p);
+	    				} else {
+	    					throw new QtdEstoqueInvalidoException();
+	    				}
+	    			} else {
+	    				throw new PrecoInvalidoException();
+	    			}
+	    		} else {
+	    			throw new NomeInvalidoException();
+	    		}
+	    	} else {
+	    		throw new ProdutoCadastradoException(p.getNome());
+	    	}
 	    } else {
-	      if (!this.existe(p)) {
-	        this.repositorioProdutos.cadastrar(p);
-	      } 
+	    	throw new IllegalAccessException("Parâmetro inválido!");
 	    }
 	}
 	
-	//Descadastra o produto do id repassado, depois de verificar a existência do produto
-	public void descadastrarProduto(long id){
-		Produto p = this.repositorioProdutos.procurar(id);
-		if(p != null){
-			this.repositorioProdutos.excluir(id);
-		}
-	}
-	
 	//Lista produto de acordo com o id repassado
-	public Produto listarProduto(long id){
-		return this.repositorioProdutos.procurar(id);
-	}
-	
-	//Verifica se o produto existe
-	public boolean existe(Produto p) {
-	    return this.repositorioProdutos.existe(p);
+	public List<Produto> listarProduto(String nome) throws IllegalAccessException, NadaEncontradoException{
+		
+		List<Produto> lista = new ArrayList<>();
+		
+		if (nome != null) {
+			if (this.repositorioProdutos.procurar(nome).size() > 0) {
+				lista = this.repositorioProdutos.procurar(nome);
+			} else {
+				throw new NadaEncontradoException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
+		}
+		
+		return lista;
 	}
 	
 	//Exclui o produto de acordo com o id repassado
-	public void excluirProduto(long id){
-		this.repositorioProdutos.excluir(id);
+	public void excluirProduto(Produto p) throws IllegalAccessException, ProdutoInexistenteException{
+
+		if (p != null) {
+			if (this.repositorioProdutos.existe(p)) {
+				ProdutoDAO p1 = (ProdutoDAO) this.repositorioProdutos;
+				p1.excluir(p);
+			} else {
+				throw new ProdutoInexistenteException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
+		}
 	}
 
 	//Listar todos os produtos
-	public ArrayList<Produto> listarTudoProduto(){
-		return this.repositorioProdutos.listarTudo();
+	public List<Produto> listarTudoProduto() throws NadaEncontradoException{
+		
+		List<Produto> lista = new ArrayList<>();
+		ProdutoDAO p1 = (ProdutoDAO) this.repositorioProdutos;
+		if (p1.listar().size() > 0) {
+			lista = p1.listar();
+		} else {
+			throw new NadaEncontradoException();
+		}
+		return lista;
 	}
 	
-	public void alteraProduto(Produto novoProduto, long id) {
-		Produto p = this.repositorioProdutos.procurar(id);
-		if( (p != null) && (novoProduto.getNome() != null)) {
-			this.repositorioProdutos.alterar(novoProduto, id);
-		}
+	public void alterarProduto(Produto p) throws IllegalAccessException, NomeInvalidoException, PrecoInvalidoException, QtdEstoqueInvalidoException, ProdutoInexistenteException {
+		
+		if (p != null) {
+			ProdutoDAO p1 = (ProdutoDAO) this.repositorioProdutos;
+			int indice = this.repositorioProdutos.procurarID(p.getId());
+	    	if (indice != p1.listar().size()) {
+	    		if (p.getNome() != null) {
+	    			if (p.getPreco() > 0) {
+	    				if (p.getQtdEstoque() > 0) {
+	    					p1.alterar(p);
+	    				} else {
+	    					throw new QtdEstoqueInvalidoException();
+	    				}
+	    			} else {
+	    				throw new PrecoInvalidoException();
+	    			}
+	    		} else {
+	    			throw new NomeInvalidoException();
+	    		}
+	    	} else {
+	    		throw new ProdutoInexistenteException();
+	    	}
+	    } else {
+	    	throw new IllegalAccessException("Parâmetro inválido!");
+	    }
+		
 	}
 }

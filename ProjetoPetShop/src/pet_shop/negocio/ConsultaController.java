@@ -1,10 +1,19 @@
 package pet_shop.negocio;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
+import java.util.List;
 
 import pet_shop.DAO.ConsultaDAO;
 import pet_shop.DAO.IRepositorios.IRepositorioConsulta;
 import pet_shop.negocio.beans.Consulta;
+import pet_shop.negocio.excecoes.AnimalInexistenteException;
+import pet_shop.negocio.excecoes.AtendimentoInexistenteException;
+import pet_shop.negocio.excecoes.ConsultaCadastradaException;
+import pet_shop.negocio.excecoes.ConsultaInexistenteException;
+import pet_shop.negocio.excecoes.DataInvalidaException;
+import pet_shop.negocio.excecoes.NadaEncontradoException;
 
 public class ConsultaController {
 	
@@ -24,58 +33,113 @@ public class ConsultaController {
 	}
 	
 	//Controle dos métodos do repositório
-	public void saveAgenda(Consulta agenda) {
+	public void saveAgenda(Consulta agenda) throws IllegalAccessException, AnimalInexistenteException, AtendimentoInexistenteException, DataInvalidaException, ConsultaCadastradaException {
 		
-		if( (agenda != null) && (!this.agendaRepository.existe(agenda)) && (agenda.getAnimal() != null) 
-				&& (agenda.getDataMarcada() != null) && (agenda.getAtendimento() != null) ) {
-			
-			this.agendaRepository.cadastrar(agenda);
-		}
-		
-	}
-	
-	public Consulta findAgenda(long id) {
-		if(id >= 0 && this.agendaRepository.existe(id)) {
-			return this.agendaRepository.procurar(id);
+		if (agenda != null) {
+			if (!this.agendaRepository.existe(agenda)) {
+				if (agenda.getAnimal() != null) {
+					if (agenda.getAtendimento() != null) {
+						if (agenda.getDataMarcada() != null) {
+							Period p = Period.between(LocalDate.now(), agenda.getDataMarcada());
+							if (p.getDays() >= 0 && p.getMonths() >= 0 && p.getYears() >= 0) {
+								this.agendaRepository.cadastrar(agenda);
+							} else {
+								throw new DataInvalidaException();
+							}
+						} else {
+							throw new DataInvalidaException();
+						}
+					} else {
+						throw new AtendimentoInexistenteException();
+					}
+				} else {
+					throw new AnimalInexistenteException();
+				}
+			} else {
+				throw new ConsultaCadastradaException();
+			}
 		} else {
-			return null;
+			throw new IllegalAccessException("Parâmetro inválido!");
 		}
+		
 	}
 	
-	public void updateAgenda(Consulta newAgenda ,long id) {
+	public List<Consulta> findAgenda(String nome) throws IllegalAccessException, NadaEncontradoException {
 		
-		if (newAgenda != null) {			
-			Consulta a = this.agendaRepository.procurar(id);
+		List<Consulta> lista = new ArrayList<>();
+		if (nome != null) {
+			ConsultaDAO c1 = (ConsultaDAO) this.agendaRepository;
+			if (c1.listar().size() > 0) {
+				lista = c1.listar();
+			} else {
+				throw new NadaEncontradoException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
+		}
+		
+		return lista;
+	}
+	
+	public void updateAgenda(Consulta newAgenda) throws IllegalAccessException, ConsultaInexistenteException, AnimalInexistenteException, AtendimentoInexistenteException, DataInvalidaException {
+		
+		if (newAgenda != null) {
+			ConsultaDAO c1 = (ConsultaDAO) this.agendaRepository;
+			int indice = this.agendaRepository.procurarID(newAgenda.getId());
+			if (indice != c1.listar().size()) {
+				if (newAgenda.getAnimal() != null) {
+					if (newAgenda.getAtendimento() != null) {
+						if (newAgenda.getDataMarcada() != null) {
+							Period p = Period.between(LocalDate.now(), newAgenda.getDataMarcada());
+							if (p.getDays() >= 0 && p.getMonths() >= 0 && p.getYears() >= 0) {
+								c1.alterar(newAgenda);
+							} else {
+								throw new DataInvalidaException();
+							}
+						} else {
+							throw new DataInvalidaException();
+						}
+					} else {
+						throw new AtendimentoInexistenteException();
+					}
+				} else {
+					throw new AnimalInexistenteException();
+				}
+			} else {
+				throw new ConsultaInexistenteException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
+		}
 			
-			if( (a != null) && (newAgenda.getAnimal() != null) 
-					&& (newAgenda.getDataMarcada() != null) && (newAgenda.getAtendimento() != null) ) {
-				
-				this.agendaRepository.alterar(newAgenda, id);
-			}			
-		}
-				
 	}
 	
-	public void deleteAgenda(long id) {
+	public void deleteAgenda(Consulta consulta) throws IllegalAccessException, ConsultaInexistenteException {
 		
-		if(id >= 0 && this.agendaRepository.existe(id)) {
-			this.agendaRepository.excluir(id);
-		}
-		
-	}
-	
-	public void deleteAgendaReservada(long id) {
-		
-		if(id >= 0 && this.agendaRepository.existeReservada(id)) {
-			int i = this.agendaRepository.procurarIDReservada(id);
-			this.agendaRepository.excluirAgendaPorPosicao(i);
+		if (consulta != null) {
+			if (this.agendaRepository.existe(consulta)) {
+				ConsultaDAO c1 = (ConsultaDAO) this.agendaRepository;
+				c1.excluir(consulta);
+			} else {
+				throw new ConsultaInexistenteException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
 		}
 		
 	}
 	
-	public ArrayList<Consulta> listarTodasAgendas() {
-		return this.agendaRepository.listarTudo();
+	public List<Consulta> listarTodasAgendas() throws NadaEncontradoException {
+		
+		List<Consulta> lista = new ArrayList<>();
+		ConsultaDAO c1 = (ConsultaDAO) this.agendaRepository;
+		if (c1.listar().size() > 0) {
+			lista = c1.listar();
+		} else {
+			throw new NadaEncontradoException();
+		}
+		
+		return lista;
 	}
 	
-
 }

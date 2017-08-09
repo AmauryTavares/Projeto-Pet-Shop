@@ -1,18 +1,30 @@
 package pet_shop.negocio;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pet_shop.DAO.PessoaDAO;
-import pet_shop.negocio.beans.Cliente;
-import pet_shop.negocio.ConsultaController;
+import pet_shop.negocio.beans.Funcionario;
+import pet_shop.negocio.beans.Pessoa;
+import pet_shop.negocio.excecoes.CargoInvalidoException;
+import pet_shop.negocio.excecoes.CpfInvalidoException;
+import pet_shop.negocio.excecoes.EmailInvalidoException;
+import pet_shop.negocio.excecoes.EnderecoInvalidoException;
+import pet_shop.negocio.excecoes.LoginInvalidoException;
+import pet_shop.negocio.excecoes.NadaEncontradoException;
+import pet_shop.negocio.excecoes.NomeInvalidoException;
+import pet_shop.negocio.excecoes.PessoaCadastradoException;
+import pet_shop.negocio.excecoes.PessoaInexistenteException;
+import pet_shop.negocio.excecoes.SenhaInvalidaException;
+import pet_shop.negocio.excecoes.TelefoneInvalidoException;
 
 public class PessoaController {
 	
-	private PessoaDAO repositorioClientes;
+	private PessoaDAO repositorioPessoa;
 	private static PessoaController instance;
 	
 	private PessoaController() {
-        this.repositorioClientes = PessoaDAO.getInstance(); 
+        this.repositorioPessoa = PessoaDAO.getInstance(); 
     }
 	
 	public static PessoaController getInstance() {
@@ -22,47 +34,148 @@ public class PessoaController {
 		return instance;
 	}
 	
-	public void cadastrarCliente(Cliente c) {
-	    if (c == null) {
-	      //Exceção
-	    } else {
-	      if (!this.existe(c)) {
-	        this.repositorioClientes.cadastrar(c);
-	      } 
-	    }
-	}
-	
-	public void descadastrarCliente(long id){
-		Cliente c = this.repositorioClientes.procurar(id);
-		
-		if(c != null ){
-			this.repositorioClientes.excluir(id);
-			for(int i = 0; i < ConsultaController.getInstance().listarTodasAgendas().size(); i++){
-				ConsultaController.getInstance().deleteAgendaReservada(id);
+	public void cadastrarCliente(Pessoa p) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException, EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException, SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException, PessoaCadastradoException {
+	    
+		if (p != null) {
+			if (!this.repositorioPessoa.existe(p)) {
+				if (p.getNome() != null) {
+					if (p.getCpf() != null) {
+						if (p.getEmail() != null) {
+							if (p.getEndereco() != null && p.getEndereco().getRua() != null && p.getEndereco().getBairro() != null 
+									&& p.getEndereco().getComplemento() != null && p.getEndereco().getNumCasa() != null) {
+								if (p.getTelefone() != null) {
+									if (p instanceof Funcionario) {
+										if (((Funcionario) p).getLogin() != null) {
+											if (((Funcionario) p).getSenha() != null) {
+												if (((Funcionario) p).getCargo() != null) {
+													this.repositorioPessoa.cadastrar(p);
+												} else {
+													throw new CargoInvalidoException();
+												}
+											} else {
+												throw new SenhaInvalidaException();
+											}
+										} else {
+											throw new LoginInvalidoException();
+										}
+									} else {
+										this.repositorioPessoa.cadastrar(p);
+									}
+								} else {
+									throw new TelefoneInvalidoException();
+								}
+							} else {
+								throw new EnderecoInvalidoException();
+							}
+						} else {
+							throw new EmailInvalidoException();
+						}
+					} else {
+						throw new CpfInvalidoException();
+					}
+				} else {
+					throw new NomeInvalidoException();
+				}
+			} else {
+				throw new PessoaCadastradoException(p.getNome(), p.getCpf());
 			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
 		}
+		
 	}
 	
-	public Cliente listarCliente(long id){
-		return this.repositorioClientes.procurar(id);
+	public List<Pessoa> listarCliente(String nome) throws IllegalAccessException, NadaEncontradoException{
+		
+		List<Pessoa> lista = new ArrayList<>();
+		if (nome != null) {
+			if (this.repositorioPessoa.procurar(nome).size() > 0) {
+				lista = this.repositorioPessoa.procurar(nome);
+			} else {
+				throw new NadaEncontradoException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
+		}
+		
+		return lista;
 	}
 	
-	public ArrayList<Cliente> listarTudo() {
-		return this.repositorioClientes.listarTudo();
+	public List<Pessoa> listarTudo() throws NadaEncontradoException {
+		
+		List<Pessoa> lista = new ArrayList<>();
+		PessoaDAO p1 = (PessoaDAO) this.repositorioPessoa;
+		if (p1.listar().size() > 0) {
+			lista = p1.listar();
+		} else {
+			throw new NadaEncontradoException();
+		}
+		return lista;
 	}
 	
-	public boolean existe(Cliente c) {
-	    return this.repositorioClientes.existe(c);
+	public void excluirCliente(Pessoa p) throws IllegalAccessException, PessoaInexistenteException{
+
+		if (p != null) {
+			if (this.repositorioPessoa.existe(p)) {
+				PessoaDAO p1 = (PessoaDAO) this.repositorioPessoa;
+				p1.excluir(p);
+			} else {
+				throw new PessoaInexistenteException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
+		}
+		
 	}
 	
-	public void excluirCliente(long id){
-		this.repositorioClientes.excluir(id);
-	}
-	
-	public void alterarCliente(Cliente novoCliente, long id) {
-		Cliente c = this.repositorioClientes.procurar(id);
-		if( (c != null) && (novoCliente.getNome() != null) && (novoCliente.getCpf()!=null)) {
-			this.repositorioClientes.alterar(novoCliente, id);
+	public void alterarCliente(Pessoa p) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException, EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException, SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException {
+		if (p != null) {
+			PessoaDAO p1 = (PessoaDAO) this.repositorioPessoa;
+			int indice = this.repositorioPessoa.procurarID(p.getId());
+			if (indice != p1.listar().size()) {
+				if (p.getNome() != null) {
+					if (p.getCpf() != null) {
+						if (p.getEmail() != null) {
+							if (p.getEndereco() != null && p.getEndereco().getRua() != null && p.getEndereco().getBairro() != null 
+									&& p.getEndereco().getComplemento() != null && p.getEndereco().getNumCasa() != null) {
+								if (p.getTelefone() != null) {
+									if (p instanceof Funcionario) {
+										if (((Funcionario) p).getLogin() != null) {
+											if (((Funcionario) p).getSenha() != null) {
+												if (((Funcionario) p).getCargo() != null) {
+													p1.alterar(p);
+												} else {
+													throw new CargoInvalidoException();
+												}
+											} else {
+												throw new SenhaInvalidaException();
+											}
+										} else {
+											throw new LoginInvalidoException();
+										}
+									} else {
+										p1.alterar(p);
+									}
+								} else {
+									throw new TelefoneInvalidoException();
+								}
+							} else {
+								throw new EnderecoInvalidoException();
+							}
+						} else {
+							throw new EmailInvalidoException();
+						}
+					} else {
+						throw new CpfInvalidoException();
+					}
+				} else {
+					throw new NomeInvalidoException();
+				}
+			} else {
+				throw new PessoaInexistenteException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
 		}
 	}
 }

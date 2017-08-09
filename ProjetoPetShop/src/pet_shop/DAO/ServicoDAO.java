@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pet_shop.DAO.IRepositorios.IRepositorioServico;
-import pet_shop.negocio.beans.Produto;
 import pet_shop.negocio.beans.Servico;
 
 public class ServicoDAO extends RepositorioAbstrato<Servico> implements IRepositorioServico {

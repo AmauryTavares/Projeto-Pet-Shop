@@ -1,9 +1,9 @@
 package pet_shop.negocio;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import pet_shop.negocio.beans.*;
-
+import pet_shop.negocio.excecoes.*;
 
 public class SistemaFachada implements IFachada {
 	
@@ -11,7 +11,6 @@ public class SistemaFachada implements IFachada {
 	private AnimalController controleAnimais;
 	private AtendimentoController controleAtendimentos;
 	private PessoaController controllerClientes;
-	private FuncionarioController controllerFuncionario;
 	private ProdutosController controllerProdutos;
 	private ServicoContoller controllerServico;
 	private VendaController controllerVenda;
@@ -25,7 +24,6 @@ public class SistemaFachada implements IFachada {
 		this.controleAnimais = AnimalController.getInstance();
 		this.controleAtendimentos = AtendimentoController.getInstance();
 		this.controllerClientes = PessoaController.getInstance();
-		this.controllerFuncionario = FuncionarioController.getInstance();
 		this.controllerProdutos = ProdutosController.getInstance();
 		this.controllerServico = ServicoContoller.getInstance();
 		this.controllerVenda = VendaController.getInstance();
@@ -37,236 +35,168 @@ public class SistemaFachada implements IFachada {
 		}
 		return instance;
 	}
-	
-	@Override
-	public void saveAgenda(Consulta agenda) {
+
+	public void saveAgenda(Consulta agenda) throws IllegalAccessException, AnimalInexistenteException,
+			AtendimentoInexistenteException, DataInvalidaException, ConsultaCadastradaException {
 		controleAgendas.saveAgenda(agenda);
 	}
 
-	@Override
-	public Consulta findAgenda(long id) {
-		return controleAgendas.findAgenda(id);
+	public List<Consulta> findAgenda(String nome) throws IllegalAccessException, NadaEncontradoException {
+		return controleAgendas.findAgenda(nome);
 	}
 
-	@Override
-	public void updateAgenda(Consulta newAgenda, long id) {
-		controleAgendas.updateAgenda(newAgenda, id);
+	public void updateAgenda(Consulta newAgenda) throws IllegalAccessException, ConsultaInexistenteException,
+			AnimalInexistenteException, AtendimentoInexistenteException, DataInvalidaException {
+		controleAgendas.updateAgenda(newAgenda);
 	}
 
-	@Override
-	public void deleteAgenda(long id) {
-		controleAgendas.deleteAgenda(id);
+	public void deleteAgenda(Consulta consulta) throws IllegalAccessException, ConsultaInexistenteException {
+		controleAgendas.deleteAgenda(consulta);
 	}
 
-	@Override
-	public ArrayList<Consulta> listarTodasAgendas() {
+	public List<Consulta> listarTodasAgendas() throws NadaEncontradoException {
 		return controleAgendas.listarTodasAgendas();
 	}
 
-	@Override
-	public void saveAnimal(Animal animal) {
+	public void saveAnimal(Animal animal)
+			throws AnimalCadastradoException, DonoInvalidoException, DataInvalidaException, EspecieInvalidaException,
+			NomeInvalidoException, PesoInvalidoException, RacaInvalidaException {
 		controleAnimais.saveAnimal(animal);
 	}
 
-	@Override
-	public void updateAnimal(Animal animal, long id) {
-		controleAnimais.updateAnimal(animal, id);
+	public void updateAnimal(Animal newAnimal)
+			throws RacaInvalidaException, PesoInvalidoException, DonoInvalidoException, DataInvalidaException,
+			EspecieInvalidaException, NomeInvalidoException, AnimalInexistenteException {
+		controleAnimais.updateAnimal(newAnimal);
 	}
 
-	@Override
-	public void deleteAnimal(long id, ArrayList<Consulta> c) {
-		controleAnimais.deleteAnimal(id, c);
+	public void deleteAnimal(Animal animal) throws AnimalInexistenteException {
+		controleAnimais.deleteAnimal(animal);
 	}
 
-	@Override
-	public Animal findAnimal(long id) {
-		return controleAnimais.findAnimal(id);
+	public List<Animal> findAnimal(String nome) throws IllegalAccessException, NadaEncontradoException {
+		return controleAnimais.findAnimal(nome);
 	}
 
-	@Override
-	public ArrayList<Animal> listarTodosAnimais() {
+	public List<Animal> listarTodosAnimais() throws NadaEncontradoException {
 		return controleAnimais.listarTodosAnimais();
 	}
 
-	@Override
-	public void saveAtendimento(Atendimento atendimento) {
+	public void saveAtendimento(Atendimento atendimento) throws AtendimentoCadastradoException, IllegalAccessException,
+			AnimalInexistenteException, FuncionarioInvalidoException, ServicoInexistenteException,
+			DataInvalidaException, ObservacaoInvalidaException {
 		controleAtendimentos.saveAtendimento(atendimento);
 	}
 
-	@Override
-	public void updateAtendimento(Atendimento atendimento, long id) {
-		controleAtendimentos.updateAtendimento(atendimento, id);
+	public void updateAtendimento(Atendimento atendimento) throws IllegalAccessException,
+			AtendimentoInexistenteException, AnimalInexistenteException, FuncionarioInvalidoException,
+			ServicoInexistenteException, DataInvalidaException, ObservacaoInvalidaException {
+		controleAtendimentos.updateAtendimento(atendimento);
 	}
 
-	@Override
-	public void deleteAtendimento(long id) {
-		controleAtendimentos.deleteAtendimento(id);
+	public void deleteAtendimento(Atendimento atendimento)
+			throws IllegalAccessException, AtendimentoInexistenteException {
+		controleAtendimentos.deleteAtendimento(atendimento);
 	}
 
-	@Override
-	public Atendimento findAtendimento(long id) {
-		return controleAtendimentos.findAtendimento(id);
+	public List<Atendimento> findAtendimento(String nome) throws IllegalAccessException, NadaEncontradoException {
+		return controleAtendimentos.findAtendimento(nome);
 	}
 
-	@Override
-	public ArrayList<Atendimento> listarTodosAtendimentos() {
+	public List<Atendimento> listarTodosAtendimentos() throws NadaEncontradoException {
 		return controleAtendimentos.listarTodosAtendimentos();
 	}
 
-	@Override
-	public void cadastrarCliente(Cliente c) {
-		controllerClientes.cadastrarCliente(c);
+	public void cadastrarCliente(Pessoa p) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException,
+			EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException,
+			SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException, PessoaCadastradoException {
+		controllerClientes.cadastrarCliente(p);
 	}
 
-	@Override
-	public void descadastrarCliente(long id) {
-		controllerClientes.descadastrarCliente(id);
+	public List<Pessoa> listarCliente(String nome) throws IllegalAccessException, NadaEncontradoException {
+		return controllerClientes.listarCliente(nome);
 	}
 
-	@Override
-	public Cliente listarCliente(long id) {
-		return controllerClientes.listarCliente(id);
-	}
-
-	@Override
-	public ArrayList<Cliente> listarTudo() {
+	public List<Pessoa> listarTudo() throws NadaEncontradoException {
 		return controllerClientes.listarTudo();
 	}
 
-	@Override
-	public boolean existe(Cliente c) {
-		return controllerClientes.existe(c);
+	public void excluirCliente(Pessoa p) throws IllegalAccessException, PessoaInexistenteException {
+		controllerClientes.excluirCliente(p);
 	}
 
-	@Override
-	public void excluirCliente(long id) {
-		controllerClientes.excluirCliente(id);
+	public void alterarCliente(Pessoa p) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException,
+			EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException,
+			SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException {
+		controllerClientes.alterarCliente(p);
 	}
 
-	@Override
-	public void alterarCliente(Cliente novoCliente, long id) {
-		controllerClientes.alterarCliente(novoCliente, id);
-	}
-
-	@Override
-	public void cadastrarFuncionario(Funcionario f) {
-		controllerFuncionario.cadastrarFuncionario(f);
-	}
-
-	@Override
-	public void descadastrarFuncionario(long id) {
-		controllerFuncionario.descadastrarFuncionario(id);
-	}
-
-	@Override
-	public Funcionario listarFuncionario(long id) {
-		return controllerFuncionario.listarFuncionario(id);
-	}
-
-	@Override
-	public boolean existe(Funcionario f) {
-		return controllerFuncionario.existe(f);
-	}
-
-	@Override
-	public void excluirFuncionario(long id) {
-		controllerFuncionario.excluirFuncionario(id);
-	}
-
-	@Override
-	public ArrayList<Funcionario> listarTudoFuncionario() {
-		return controllerFuncionario.listarTudoFuncionario();
-	}
-
-	@Override
-	public void alteraFuncionario(Funcionario novoFuncionario, long id) {
-		controllerFuncionario.alteraFuncionario(novoFuncionario, id);
-	}
-
-	@Override
-	public void cadastrarProduto(Produto p) {
+	public void cadastrarProduto(Produto p) throws IllegalAccessException, NomeInvalidoException,
+			PrecoInvalidoException, QtdEstoqueInvalidoException, ProdutoCadastradoException {
 		controllerProdutos.cadastrarProduto(p);
 	}
 
-	@Override
-	public void descadastrarProduto(long id) {
-		controllerProdutos.descadastrarProduto(id);
+	public List<Produto> listarProduto(String nome) throws IllegalAccessException, NadaEncontradoException {
+		return controllerProdutos.listarProduto(nome);
 	}
 
-	@Override
-	public Produto listarProduto(long id) {
-		return controllerProdutos.listarProduto(id);
+	public void excluirProduto(Produto p) throws IllegalAccessException, ProdutoInexistenteException {
+		controllerProdutos.excluirProduto(p);
 	}
 
-	@Override
-	public boolean existe(Produto p) {
-		return controllerProdutos.existe(p);
-	}
-
-	@Override
-	public void excluirProduto(long id) {
-		controllerProdutos.excluirProduto(id);
-	}
-
-	@Override
-	public ArrayList<Produto> listarTudoProduto() {
+	public List<Produto> listarTudoProduto() throws NadaEncontradoException {
 		return controllerProdutos.listarTudoProduto();
 	}
 
-	@Override
-	public void alteraProduto(Produto novoProduto, long id) {
-		controllerProdutos.alteraProduto(novoProduto, id);
+	public void alterarProduto(Produto p) throws IllegalAccessException, NomeInvalidoException, PrecoInvalidoException,
+			QtdEstoqueInvalidoException, ProdutoInexistenteException {
+		controllerProdutos.alterarProduto(p);
 	}
 
-	@Override
-	public void saveServico(Servico servico) {
+	public void saveServico(Servico servico) throws IllegalAccessException, ServicoCadastradoException,
+			PrecoInvalidoException, NomeInvalidoException, AnimalInvalidoException {
 		controllerServico.saveServico(servico);
 	}
 
-	@Override
-	public void updateServico(Servico servico, long id) {
-		controllerServico.updateServico(servico, id);
+	public void updateServico(Servico servico) throws IllegalAccessException, ServicoInexistenteException,
+			NomeInvalidoException, PrecoInvalidoException, AnimalInvalidoException {
+		controllerServico.updateServico(servico);
 	}
 
-	@Override
-	public void deleteServico(long id) {
-		controllerServico.deleteServico(id);
+	public void deleteServico(Servico servico) throws IllegalAccessException, ServicoInexistenteException {
+		controllerServico.deleteServico(servico);
 	}
 
-	@Override
-	public Servico findServico(long id) {
-		return controllerServico.findServico(id);
+	public List<Servico> findServico(String nome) throws IllegalAccessException, NadaEncontradoException {
+		return controllerServico.findServico(nome);
 	}
 
-	@Override
-	public ArrayList<Servico> listarTodosServicos() {
+	public List<Servico> listarTodosServicos() throws NadaEncontradoException {
 		return controllerServico.listarTodosServicos();
 	}
 
-	@Override
-	public void saveVenda(Venda venda) {
+	public void saveVenda(Venda venda)
+			throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException,
+			AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException {
 		controllerVenda.saveVenda(venda);
 	}
 
-	@Override
-	public void updateVenda(Venda venda, long id) {
-		controllerVenda.updateVenda(venda, id);
+	public void updateVenda(Venda venda)
+			throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException,
+			AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException {
+		controllerVenda.updateVenda(venda);
 	}
 
-	@Override
-	public void deleteVenda(long id) {
-		controllerVenda.deleteVenda(id);
+	public void deleteVenda(Venda venda) throws IllegalAccessException, VendaInexistenteException {
+		controllerVenda.deleteVenda(venda);
 	}
 
-	@Override
-	public Venda findVenda(long id) {
-		return controllerVenda.findVenda(id);
+	public List<Venda> findVenda(String nome) throws IllegalAccessException, NadaEncontradoException {
+		return controllerVenda.findVenda(nome);
 	}
 
-	@Override
-	public ArrayList<Venda> listarTodasVendas() {
+	public List<Venda> listarTodasVendas() throws NadaEncontradoException {
 		return controllerVenda.listarTodasVendas();
 	}
-
 
 }

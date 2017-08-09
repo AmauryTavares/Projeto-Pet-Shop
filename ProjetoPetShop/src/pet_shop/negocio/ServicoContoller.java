@@ -1,10 +1,17 @@
 package pet_shop.negocio;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pet_shop.DAO.ServicoDAO;
 import pet_shop.DAO.IRepositorios.IRepositorioServico;
 import pet_shop.negocio.beans.Servico;
+import pet_shop.negocio.excecoes.AnimalInvalidoException;
+import pet_shop.negocio.excecoes.NadaEncontradoException;
+import pet_shop.negocio.excecoes.NomeInvalidoException;
+import pet_shop.negocio.excecoes.PrecoInvalidoException;
+import pet_shop.negocio.excecoes.ServicoCadastradoException;
+import pet_shop.negocio.excecoes.ServicoInexistenteException;
 
 public class ServicoContoller 
 {
@@ -24,52 +31,102 @@ public class ServicoContoller
 		return instance;
 	}
 	
-	public void saveServico(Servico servico) {
+	public void saveServico(Servico servico) throws IllegalAccessException, ServicoCadastradoException, PrecoInvalidoException, NomeInvalidoException, AnimalInvalidoException {
 		
-		if( (servico != null) && (!this.servicoRepository.existe(servico)) && (servico.getNome() != null) 
-				&& (servico.getPreco() > 0)) {
-			
-			this.servicoRepository.cadastrar(servico);
-		}
-		
-	}
-	
-	public void updateServico(Servico servico, long id) {
-		
-		if(servico != null) {
-			Servico a = this.servicoRepository.procurar(id);
-			
-			if( (a != null) && (!this.servicoRepository.existe(servico)) && (servico.getNome() != null) 
-					&& (servico.getPreco() > 0)) {
-				
-				this.servicoRepository.alterar(servico, id);
+		if (servico != null) {
+			if (!this.servicoRepository.existe(servico)) {
+				if (servico.getNome() != null) {
+					if (servico.getPreco() > 0) {
+						if (servico.getAnimal() != null) {
+							this.servicoRepository.cadastrar(servico);
+						} else {
+							throw new AnimalInvalidoException();
+						}
+					} else {
+						throw new PrecoInvalidoException();
+					}
+				} else {
+					throw new NomeInvalidoException();
+				}
+			} else {
+				throw new ServicoCadastradoException(servico.getNome());
 			}
-		}
-		
-	}
-	public void deleteServico(long id) {
-		
-		if(id >= 0 && this.servicoRepository.existe(id)) {
-			this.servicoRepository.excluir(id);
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
 		}
 		
 	}
 	
-	public Servico findServico(long id) {
+	public void updateServico(Servico servico) throws IllegalAccessException, ServicoInexistenteException, NomeInvalidoException, PrecoInvalidoException, AnimalInvalidoException {
 		
-		if(id >= 0 && this.servicoRepository.existe(id)) 
-		{
-			return this.servicoRepository.procurar(id);
-			
-		}
-		else 
-		{
-			return null;
+		if (servico != null) {
+			ServicoDAO s1 = (ServicoDAO) this.servicoRepository;
+			int indice = this.servicoRepository.procurarID(servico.getId());
+			if (indice != s1.listar().size()) {
+				if (servico.getNome() != null) {
+					if (servico.getPreco() > 0) {
+						if (servico.getAnimal() != null) {
+							s1.alterar(servico);
+						} else {
+							throw new AnimalInvalidoException();
+						}
+					} else {
+						throw new PrecoInvalidoException();
+					}
+				} else {
+					throw new NomeInvalidoException();
+				}
+			} else {
+				throw new ServicoInexistenteException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
 		}
 		
 	}
-	public ArrayList<Servico> listarTodosServicos() 
-	{
-	return this.servicoRepository.listarTudo();
+	public void deleteServico(Servico servico) throws IllegalAccessException, ServicoInexistenteException {
+		
+		if (servico != null) {
+			if (this.servicoRepository.existe(servico)) {
+				ServicoDAO s1 = (ServicoDAO) this.servicoRepository;
+				s1.excluir(servico);
+			} else {
+				throw new ServicoInexistenteException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
+		}
+		
+	}
+	
+	public List<Servico> findServico(String nome) throws IllegalAccessException, NadaEncontradoException {
+		
+		List<Servico> lista = new ArrayList<>();
+		
+		if (nome != null) {
+			if (this.servicoRepository.procurar(nome).size() > 0) {
+				lista = this.servicoRepository.procurar(nome);
+			} else {
+				throw new NadaEncontradoException();
+			}
+		} else {
+			throw new IllegalAccessException("Parâmetro inválido!");
+		}
+		
+		return lista;
+		
+	}
+	public List<Servico> listarTodosServicos() throws NadaEncontradoException {
+
+		List<Servico> lista = new ArrayList<>();
+		ServicoDAO s1 = (ServicoDAO) this.servicoRepository;
+		
+		if (s1.listar().size() > 0) {
+			lista = s1.listar();
+		} else {
+			throw new NadaEncontradoException();
+		}
+		
+		return lista;
 	}
 }
