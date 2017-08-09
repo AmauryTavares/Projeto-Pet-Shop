@@ -1,5 +1,6 @@
 package pet_shop.negocio;
 
+import java.io.IOException;
 import java.util.List;
 
 import pet_shop.negocio.beans.Consulta;
@@ -47,45 +48,45 @@ import pet_shop.negocio.excecoes.VendaInexistenteException;
 
 public interface IFachada {
 	
-	public abstract void saveAgenda(Consulta agenda) throws IllegalAccessException, AnimalInexistenteException, AtendimentoInexistenteException, DataInvalidaException, ConsultaCadastradaException;
+	public abstract void saveAgenda(Consulta agenda) throws IllegalAccessException, AnimalInexistenteException, AtendimentoInexistenteException, DataInvalidaException, ConsultaCadastradaException, IOException;
 	public abstract List<Consulta> findAgenda(String nome) throws IllegalAccessException, NadaEncontradoException;
-	public abstract void updateAgenda(Consulta newAgenda) throws IllegalAccessException, ConsultaInexistenteException, AnimalInexistenteException, AtendimentoInexistenteException, DataInvalidaException;
-	public abstract void deleteAgenda(Consulta agenda) throws IllegalAccessException, ConsultaInexistenteException;
+	public abstract void updateAgenda(Consulta newAgenda) throws IllegalAccessException, ConsultaInexistenteException, AnimalInexistenteException, AtendimentoInexistenteException, DataInvalidaException, IOException;
+	public abstract void deleteAgenda(Consulta agenda) throws IllegalAccessException, ConsultaInexistenteException, IOException;
 	public abstract List<Consulta> listarTodasAgendas() throws NadaEncontradoException;
 	
-	public abstract void saveAnimal(Animal animal) throws AnimalCadastradoException, DonoInvalidoException, DataInvalidaException, EspecieInvalidaException, NomeInvalidoException, PesoInvalidoException, RacaInvalidaException;
-	public abstract void updateAnimal(Animal animal) throws RacaInvalidaException, PesoInvalidoException, DonoInvalidoException, DataInvalidaException, EspecieInvalidaException, NomeInvalidoException, AnimalInexistenteException;
-	public abstract void deleteAnimal(Animal animal) throws AnimalInexistenteException ;
+	public abstract void saveAnimal(Animal animal) throws AnimalCadastradoException, DonoInvalidoException, DataInvalidaException, EspecieInvalidaException, NomeInvalidoException, PesoInvalidoException, RacaInvalidaException, IOException;
+	public abstract void updateAnimal(Animal animal) throws RacaInvalidaException, PesoInvalidoException, DonoInvalidoException, DataInvalidaException, EspecieInvalidaException, NomeInvalidoException, AnimalInexistenteException, IOException;
+	public abstract void deleteAnimal(Animal animal) throws AnimalInexistenteException, IOException ;
 	public abstract List<Animal> findAnimal(String nome) throws IllegalAccessException, NadaEncontradoException ;
 	public abstract List<Animal> listarTodosAnimais() throws NadaEncontradoException;
 
-	public abstract void saveAtendimento(Atendimento atendimento) throws AtendimentoCadastradoException, IllegalAccessException, AnimalInexistenteException, FuncionarioInvalidoException, ServicoInexistenteException, DataInvalidaException, ObservacaoInvalidaException;
-	public abstract void updateAtendimento(Atendimento atendimento) throws IllegalAccessException, AtendimentoInexistenteException, AnimalInexistenteException, FuncionarioInvalidoException, ServicoInexistenteException, DataInvalidaException, ObservacaoInvalidaException;
-	public abstract void deleteAtendimento(Atendimento atendimento) throws IllegalAccessException, AtendimentoInexistenteException;
+	public abstract void saveAtendimento(Atendimento atendimento) throws AtendimentoCadastradoException, IllegalAccessException, AnimalInexistenteException, FuncionarioInvalidoException, ServicoInexistenteException, DataInvalidaException, ObservacaoInvalidaException, IOException;
+	public abstract void updateAtendimento(Atendimento atendimento) throws IllegalAccessException, AtendimentoInexistenteException, AnimalInexistenteException, FuncionarioInvalidoException, ServicoInexistenteException, DataInvalidaException, ObservacaoInvalidaException, IOException;
+	public abstract void deleteAtendimento(Atendimento atendimento) throws IllegalAccessException, AtendimentoInexistenteException, IOException;
 	public abstract List<Atendimento> findAtendimento(String nome) throws IllegalAccessException, NadaEncontradoException ;
 	public abstract List<Atendimento> listarTodosAtendimentos() throws NadaEncontradoException;
 
-	public abstract void cadastrarCliente(Pessoa pessoa) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException, EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException, SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException, PessoaCadastradoException;
+	public abstract void cadastrarCliente(Pessoa pessoa) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException, EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException, SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException, PessoaCadastradoException, IOException;
 	public abstract List<Pessoa> listarCliente(String nome) throws IllegalAccessException, NadaEncontradoException;
 	public abstract List<Pessoa> listarTudo() throws NadaEncontradoException ;
-	public abstract void excluirCliente(Pessoa pessoa) throws IllegalAccessException, PessoaInexistenteException;
-	public abstract void alterarCliente(Pessoa novaPessoa) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException, EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException, SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException;
+	public abstract void excluirCliente(Pessoa pessoa) throws IllegalAccessException, PessoaInexistenteException, IOException;
+	public abstract void alterarCliente(Pessoa novaPessoa) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException, EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException, SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException, IOException;
 
-	public abstract void cadastrarProduto(Produto produto) throws IllegalAccessException, NomeInvalidoException, PrecoInvalidoException, QtdEstoqueInvalidoException, ProdutoCadastradoException;
+	public abstract void cadastrarProduto(Produto produto) throws IllegalAccessException, NomeInvalidoException, PrecoInvalidoException, QtdEstoqueInvalidoException, ProdutoCadastradoException, IOException;
 	public abstract List<Produto> listarProduto(String nome) throws IllegalAccessException, NadaEncontradoException;
-	public abstract void excluirProduto(Produto produto) throws IllegalAccessException, ProdutoInexistenteException;
+	public abstract void excluirProduto(Produto produto) throws IllegalAccessException, ProdutoInexistenteException, IOException;
 	public abstract List<Produto> listarTudoProduto() throws NadaEncontradoException;
-	public abstract void alterarProduto(Produto novoProduto) throws IllegalAccessException, NomeInvalidoException, PrecoInvalidoException, QtdEstoqueInvalidoException, ProdutoInexistenteException;
+	public abstract void alterarProduto(Produto novoProduto) throws IllegalAccessException, NomeInvalidoException, PrecoInvalidoException, QtdEstoqueInvalidoException, ProdutoInexistenteException, IOException;
 
-	public abstract void saveServico(Servico servico) throws IllegalAccessException, ServicoCadastradoException, PrecoInvalidoException, NomeInvalidoException, AnimalInvalidoException;
-	public abstract void updateServico(Servico servico) throws IllegalAccessException, ServicoInexistenteException, NomeInvalidoException, PrecoInvalidoException, AnimalInvalidoException;
-	public abstract void deleteServico(Servico servico) throws IllegalAccessException, ServicoInexistenteException;
+	public abstract void saveServico(Servico servico) throws IllegalAccessException, ServicoCadastradoException, PrecoInvalidoException, NomeInvalidoException, AnimalInvalidoException, IOException;
+	public abstract void updateServico(Servico servico) throws IllegalAccessException, ServicoInexistenteException, NomeInvalidoException, PrecoInvalidoException, AnimalInvalidoException, IOException;
+	public abstract void deleteServico(Servico servico) throws IllegalAccessException, ServicoInexistenteException, IOException;
 	public abstract List<Servico> findServico(String nome) throws IllegalAccessException, NadaEncontradoException;
 	public abstract List<Servico> listarTodosServicos() throws NadaEncontradoException;
 
-	public abstract void saveVenda(Venda venda) throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException, AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException;
-	public abstract void updateVenda(Venda venda) throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException, AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException;
-	public abstract void deleteVenda(Venda venda) throws IllegalAccessException, VendaInexistenteException;
+	public abstract void saveVenda(Venda venda) throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException, AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException, IOException;
+	public abstract void updateVenda(Venda venda) throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException, AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException, IOException;
+	public abstract void deleteVenda(Venda venda) throws IllegalAccessException, VendaInexistenteException, IOException;
 	public abstract List<Venda> findVenda(String nome) throws IllegalAccessException, NadaEncontradoException;
 	public abstract List<Venda> listarTodasVendas() throws NadaEncontradoException;
 

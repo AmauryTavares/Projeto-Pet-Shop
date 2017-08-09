@@ -1,5 +1,6 @@
 package pet_shop.negocio;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class ConsultaController {
 	}
 	
 	//Controle dos métodos do repositório
-	public void saveAgenda(Consulta agenda) throws IllegalAccessException, AnimalInexistenteException, AtendimentoInexistenteException, DataInvalidaException, ConsultaCadastradaException {
+	public void saveAgenda(Consulta agenda) throws IllegalAccessException, AnimalInexistenteException, AtendimentoInexistenteException, DataInvalidaException, ConsultaCadastradaException, IOException {
 		
 		if (agenda != null) {
 			if (!this.agendaRepository.existe(agenda)) {
@@ -43,6 +44,7 @@ public class ConsultaController {
 							Period p = Period.between(LocalDate.now(), agenda.getDataMarcada());
 							if (p.getDays() >= 0 && p.getMonths() >= 0 && p.getYears() >= 0) {
 								this.agendaRepository.cadastrar(agenda);
+								this.agendaRepository.salvarArquivo();
 							} else {
 								throw new DataInvalidaException();
 							}
@@ -81,7 +83,7 @@ public class ConsultaController {
 		return lista;
 	}
 	
-	public void updateAgenda(Consulta newAgenda) throws IllegalAccessException, ConsultaInexistenteException, AnimalInexistenteException, AtendimentoInexistenteException, DataInvalidaException {
+	public void updateAgenda(Consulta newAgenda) throws IllegalAccessException, ConsultaInexistenteException, AnimalInexistenteException, AtendimentoInexistenteException, DataInvalidaException, IOException {
 		
 		if (newAgenda != null) {
 			ConsultaDAO c1 = (ConsultaDAO) this.agendaRepository;
@@ -93,6 +95,7 @@ public class ConsultaController {
 							Period p = Period.between(LocalDate.now(), newAgenda.getDataMarcada());
 							if (p.getDays() >= 0 && p.getMonths() >= 0 && p.getYears() >= 0) {
 								c1.alterar(newAgenda);
+								this.agendaRepository.salvarArquivo();
 							} else {
 								throw new DataInvalidaException();
 							}
@@ -114,12 +117,13 @@ public class ConsultaController {
 			
 	}
 	
-	public void deleteAgenda(Consulta consulta) throws IllegalAccessException, ConsultaInexistenteException {
+	public void deleteAgenda(Consulta consulta) throws IllegalAccessException, ConsultaInexistenteException, IOException {
 		
 		if (consulta != null) {
 			if (this.agendaRepository.existe(consulta)) {
 				ConsultaDAO c1 = (ConsultaDAO) this.agendaRepository;
 				c1.excluir(consulta);
+				this.agendaRepository.salvarArquivo();
 			} else {
 				throw new ConsultaInexistenteException();
 			}

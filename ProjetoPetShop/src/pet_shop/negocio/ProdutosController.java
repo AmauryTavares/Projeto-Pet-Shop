@@ -1,5 +1,6 @@
 package pet_shop.negocio;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,13 +31,14 @@ public class ProdutosController {
 	}
 	
 	//Cadastro do produto
-	public void cadastrarProduto(Produto p) throws IllegalAccessException, NomeInvalidoException, PrecoInvalidoException, QtdEstoqueInvalidoException, ProdutoCadastradoException {
+	public void cadastrarProduto(Produto p) throws IllegalAccessException, NomeInvalidoException, PrecoInvalidoException, QtdEstoqueInvalidoException, ProdutoCadastradoException, IOException {
 	    if (p != null) {
 	    	if (!this.repositorioProdutos.existe(p)) {
 	    		if (p.getNome() != null) {
 	    			if (p.getPreco() > 0) {
 	    				if (p.getQtdEstoque() > 0) {
 	    					this.repositorioProdutos.cadastrar(p);
+	    					this.repositorioProdutos.salvarArquivo();
 	    				} else {
 	    					throw new QtdEstoqueInvalidoException();
 	    				}
@@ -54,7 +56,7 @@ public class ProdutosController {
 	    }
 	}
 	
-	//Lista produto de acordo com o id repassado
+	//Lista produto de acordo com o nome repassado
 	public List<Produto> listarProduto(String nome) throws IllegalAccessException, NadaEncontradoException{
 		
 		List<Produto> lista = new ArrayList<>();
@@ -72,13 +74,14 @@ public class ProdutosController {
 		return lista;
 	}
 	
-	//Exclui o produto de acordo com o id repassado
-	public void excluirProduto(Produto p) throws IllegalAccessException, ProdutoInexistenteException{
+
+	public void excluirProduto(Produto p) throws IllegalAccessException, ProdutoInexistenteException, IOException{
 
 		if (p != null) {
 			if (this.repositorioProdutos.existe(p)) {
 				ProdutoDAO p1 = (ProdutoDAO) this.repositorioProdutos;
 				p1.excluir(p);
+				this.repositorioProdutos.salvarArquivo();
 			} else {
 				throw new ProdutoInexistenteException();
 			}
@@ -100,7 +103,7 @@ public class ProdutosController {
 		return lista;
 	}
 	
-	public void alterarProduto(Produto p) throws IllegalAccessException, NomeInvalidoException, PrecoInvalidoException, QtdEstoqueInvalidoException, ProdutoInexistenteException {
+	public void alterarProduto(Produto p) throws IllegalAccessException, NomeInvalidoException, PrecoInvalidoException, QtdEstoqueInvalidoException, ProdutoInexistenteException, IOException {
 		
 		if (p != null) {
 			ProdutoDAO p1 = (ProdutoDAO) this.repositorioProdutos;
@@ -110,6 +113,7 @@ public class ProdutosController {
 	    			if (p.getPreco() > 0) {
 	    				if (p.getQtdEstoque() > 0) {
 	    					p1.alterar(p);
+	    					this.repositorioProdutos.salvarArquivo();
 	    				} else {
 	    					throw new QtdEstoqueInvalidoException();
 	    				}

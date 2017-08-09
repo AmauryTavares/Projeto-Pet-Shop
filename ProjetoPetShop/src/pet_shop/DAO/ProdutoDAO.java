@@ -1,13 +1,21 @@
 package pet_shop.DAO;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import pet_shop.DAO.IRepositorios.IRepositorioProduto;
 import pet_shop.negocio.beans.Produto;
 
-public class ProdutoDAO extends RepositorioAbstrato<Produto> implements IRepositorioProduto {
+public class ProdutoDAO extends RepositorioAbstrato<Produto> implements IRepositorioProduto, Serializable {
 	
+	private static final long serialVersionUID = -5258187152061595343L;
 	private static ProdutoDAO instance;
 	private static long proximoID = 0;
 	
@@ -18,7 +26,7 @@ public class ProdutoDAO extends RepositorioAbstrato<Produto> implements IReposit
 	
 	public static ProdutoDAO getInstance() {
 		if (instance == null) {
-			instance = new ProdutoDAO();
+			instance = lerArquivo();
 		}
 		return instance;
 	}
@@ -74,6 +82,63 @@ public class ProdutoDAO extends RepositorioAbstrato<Produto> implements IReposit
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void salvarArquivo() throws IOException {
+		if (instance == null) {
+			return;
+		}
+		
+		File out = new File("repositorio_produto.dat");
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		if (!out.exists()) {
+			out.createNewFile();
+		}
+		
+		try{
+			fos = new FileOutputStream(out);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(instance);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (oos != null) {
+				try{
+					oos.close();
+				} catch (IOException e) {
+					// Silencia a exceção
+				}
+			}
+		}
+	}
+	
+	private static ProdutoDAO lerArquivo() {
+		ProdutoDAO repositorioLocal = null;
+		
+		File in = new File("repositorio_produto.dat");
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		
+		try {
+			fis = new FileInputStream(in);
+			ois = new ObjectInputStream(fis);
+			Object o = ois.readObject();
+			repositorioLocal = (ProdutoDAO) o;
+		} catch (Exception e) {
+			repositorioLocal = new ProdutoDAO();
+		} finally {
+			if (ois != null) {
+				try{
+					ois.close();
+				} catch (IOException e) {
+					// Silencia a exceção
+				}
+			}
+		}
+		
+		return repositorioLocal;
 	}
 	
 }

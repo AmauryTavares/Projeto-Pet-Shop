@@ -1,5 +1,6 @@
 package pet_shop.negocio;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class ServicoContoller
 		return instance;
 	}
 	
-	public void saveServico(Servico servico) throws IllegalAccessException, ServicoCadastradoException, PrecoInvalidoException, NomeInvalidoException, AnimalInvalidoException {
+	public void saveServico(Servico servico) throws IllegalAccessException, ServicoCadastradoException, PrecoInvalidoException, NomeInvalidoException, AnimalInvalidoException, IOException {
 		
 		if (servico != null) {
 			if (!this.servicoRepository.existe(servico)) {
@@ -39,6 +40,7 @@ public class ServicoContoller
 					if (servico.getPreco() > 0) {
 						if (servico.getAnimal() != null) {
 							this.servicoRepository.cadastrar(servico);
+							this.servicoRepository.salvarArquivo();
 						} else {
 							throw new AnimalInvalidoException();
 						}
@@ -57,7 +59,7 @@ public class ServicoContoller
 		
 	}
 	
-	public void updateServico(Servico servico) throws IllegalAccessException, ServicoInexistenteException, NomeInvalidoException, PrecoInvalidoException, AnimalInvalidoException {
+	public void updateServico(Servico servico) throws IllegalAccessException, ServicoInexistenteException, NomeInvalidoException, PrecoInvalidoException, AnimalInvalidoException, IOException {
 		
 		if (servico != null) {
 			ServicoDAO s1 = (ServicoDAO) this.servicoRepository;
@@ -67,6 +69,7 @@ public class ServicoContoller
 					if (servico.getPreco() > 0) {
 						if (servico.getAnimal() != null) {
 							s1.alterar(servico);
+							this.servicoRepository.salvarArquivo();
 						} else {
 							throw new AnimalInvalidoException();
 						}
@@ -84,12 +87,13 @@ public class ServicoContoller
 		}
 		
 	}
-	public void deleteServico(Servico servico) throws IllegalAccessException, ServicoInexistenteException {
+	public void deleteServico(Servico servico) throws IllegalAccessException, ServicoInexistenteException, IOException {
 		
 		if (servico != null) {
 			if (this.servicoRepository.existe(servico)) {
 				ServicoDAO s1 = (ServicoDAO) this.servicoRepository;
 				s1.excluir(servico);
+				this.servicoRepository.salvarArquivo();
 			} else {
 				throw new ServicoInexistenteException();
 			}

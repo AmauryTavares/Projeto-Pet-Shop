@@ -1,5 +1,6 @@
 package pet_shop.negocio;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class VendaController {
 		return instance;
 	}
 
-	public void saveVenda(Venda venda) throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException, AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException {
+	public void saveVenda(Venda venda) throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException, AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException, IOException {
 
 		if (venda != null) {
 			if (venda.getCliente() != null) {
@@ -41,6 +42,7 @@ public class VendaController {
 							if (venda.getData() != null) {
 								if (venda.getValorTotal() > 0) {
 									this.vendaRepository.cadastrar(venda);
+									this.vendaRepository.salvarArquivo();
 								} else {
 									throw new PrecoInvalidoException();
 								}
@@ -65,7 +67,7 @@ public class VendaController {
 
 	}
 
-	public void updateVenda(Venda venda) throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException, AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException {
+	public void updateVenda(Venda venda) throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException, AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException, IOException {
 		
 		if (venda != null) {
 			if (venda.getCliente() != null) {
@@ -76,6 +78,7 @@ public class VendaController {
 								if (venda.getValorTotal() > 0) {
 									VendaDAO v1 = (VendaDAO) this.vendaRepository;
 									v1.alterar(venda);
+									this.vendaRepository.salvarArquivo();
 								} else {
 									throw new PrecoInvalidoException();
 								}
@@ -100,12 +103,13 @@ public class VendaController {
 
 	}
 
-	public void deleteVenda(Venda venda) throws IllegalAccessException, VendaInexistenteException {
+	public void deleteVenda(Venda venda) throws IllegalAccessException, VendaInexistenteException, IOException {
 		
 		if (venda != null) {
 			if (this.vendaRepository.existe(venda)) {
 				VendaDAO v1 = (VendaDAO) this.vendaRepository;
 				v1.excluir(venda);
+				this.vendaRepository.salvarArquivo();
 			} else {
 				throw new VendaInexistenteException();
 			}

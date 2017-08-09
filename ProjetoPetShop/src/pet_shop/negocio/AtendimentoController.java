@@ -1,5 +1,6 @@
 package pet_shop.negocio;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class AtendimentoController {
 		return instance;
 	}
 	
-	public void saveAtendimento(Atendimento atendimento) throws AtendimentoCadastradoException, IllegalAccessException, AnimalInexistenteException, FuncionarioInvalidoException, ServicoInexistenteException, DataInvalidaException, ObservacaoInvalidaException {
+	public void saveAtendimento(Atendimento atendimento) throws AtendimentoCadastradoException, IllegalAccessException, AnimalInexistenteException, FuncionarioInvalidoException, ServicoInexistenteException, DataInvalidaException, ObservacaoInvalidaException, IOException {
 		
 		if (atendimento != null) {
 			if (!this.atendimentoRepository.existe(atendimento)) {
@@ -46,6 +47,7 @@ public class AtendimentoController {
 								if (p.getDays() >= 0 && p.getMonths() >= 0 && p.getYears() >= 0) {
 									if (atendimento.getObservacao() != null) {
 										this.atendimentoRepository.cadastrar(atendimento);
+										this.atendimentoRepository.salvarArquivo();
 									} else {
 										throw new ObservacaoInvalidaException();
 									}
@@ -72,7 +74,7 @@ public class AtendimentoController {
 		}
 	}
 	
-	public void updateAtendimento(Atendimento atendimento) throws IllegalAccessException, AtendimentoInexistenteException, AnimalInexistenteException, FuncionarioInvalidoException, ServicoInexistenteException, DataInvalidaException, ObservacaoInvalidaException {
+	public void updateAtendimento(Atendimento atendimento) throws IllegalAccessException, AtendimentoInexistenteException, AnimalInexistenteException, FuncionarioInvalidoException, ServicoInexistenteException, DataInvalidaException, ObservacaoInvalidaException, IOException {
 		
 		if (atendimento != null) {
 			AtendimentoDAO a1 = (AtendimentoDAO) this.atendimentoRepository;
@@ -84,6 +86,7 @@ public class AtendimentoController {
 							if (atendimento.getData() != null) {
 								if (atendimento.getObservacao() != null) {
 									a1.alterar(atendimento);
+									this.atendimentoRepository.salvarArquivo();
 								} else {
 									throw new ObservacaoInvalidaException();
 								}
@@ -107,12 +110,13 @@ public class AtendimentoController {
 		}
 	}
 	
-	public void deleteAtendimento(Atendimento atendimento) throws IllegalAccessException, AtendimentoInexistenteException {
+	public void deleteAtendimento(Atendimento atendimento) throws IllegalAccessException, AtendimentoInexistenteException, IOException {
 		
 		if (atendimento != null) {
 			if (this.atendimentoRepository.existe(atendimento)) {
 				AtendimentoDAO a1 = (AtendimentoDAO) this.atendimentoRepository;
 				a1.excluir(atendimento);
+				this.atendimentoRepository.salvarArquivo();
 			} else {
 				throw new AtendimentoInexistenteException();
 			}
