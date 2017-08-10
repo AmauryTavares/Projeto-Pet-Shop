@@ -126,6 +126,7 @@ public class Venda {
 		return valorTotalProdutos;
 	}
 	
+	@Override
 	public String toString() {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String text = "\nID: " + this.id + "\nData: " + this.data.format(fmt) + "\nNome do funcionário: " + this.funcionario.getNome() + "\nProduto(s): ";

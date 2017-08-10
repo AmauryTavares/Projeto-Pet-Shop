@@ -48,6 +48,7 @@ public class Funcionario extends Pessoa{
 		this.cargo = cargo;
 	}
 	
+	@Override
 	public String toString() {
 		return "ID: " + this.id + "\nNome: " + this.nome + "\nCPF: " + this.cpf + "\nEndereco: " + this.endereco + 
 				"\nEmail: " + this.email + "\nTelefone: " + this.telefone + "\nCargo: " + this.cargo + "\nSalário: R$" + String.format("%.2f", this.salario) ;

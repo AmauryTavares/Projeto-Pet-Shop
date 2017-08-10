@@ -107,7 +107,7 @@ public class PessoaController {
 	public List<Pessoa> listarTudo() throws NadaEncontradoException {
 		
 		List<Pessoa> lista = new ArrayList<>();
-		PessoaDAO p1 = (PessoaDAO) this.repositorioPessoa;
+		PessoaDAO p1 = this.repositorioPessoa;
 		if (p1.listar().size() > 0) {
 			lista = p1.listar();
 		} else {
@@ -120,7 +120,7 @@ public class PessoaController {
 
 		if (p != null) {
 			if (this.repositorioPessoa.existe(p)) {
-				PessoaDAO p1 = (PessoaDAO) this.repositorioPessoa;
+				PessoaDAO p1 = this.repositorioPessoa;
 				p1.excluir(p);
 				this.repositorioPessoa.salvarArquivo();
 			} else {
@@ -134,7 +134,7 @@ public class PessoaController {
 	
 	public void alterarCliente(Pessoa p) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException, EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException, SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException, IOException {
 		if (p != null) {
-			PessoaDAO p1 = (PessoaDAO) this.repositorioPessoa;
+			PessoaDAO p1 = this.repositorioPessoa;
 			int indice = this.repositorioPessoa.procurarID(p.getId());
 			if (indice != p1.listar().size()) {
 				if (p.getNome() != null) {

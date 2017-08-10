@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import pet_shop.DAO.IRepositorios.IRepositorioAtendimento;
@@ -21,7 +22,11 @@ public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements 
 	
 	private AtendimentoDAO() {
 		super();
-		proximoID = this.list.get(this.list.size() - 1).getId();
+		if (this.list.size() > 0) {
+			proximoID = this.list.get(this.list.size() - 1).getId();
+		} else {
+			proximoID = 1;
+		}
 	}
 	
 	public static AtendimentoDAO getInstance() {
@@ -55,12 +60,12 @@ public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements 
 		List<Atendimento> lista = new ArrayList<>();
 
 		for (int i = 0; i < this.list.size(); i++) {
-			if (this.list.get(i).getAnimal().getDono().getNome().equals(nome)) {
+			if (this.list.get(i).getAnimal().getDono().getNome().contains(nome)) {
 				lista.add(this.list.get(i));
 			}	
 		}
 		
-		return lista;
+		return Collections.unmodifiableList(lista);
 	}
 	
 	@Override

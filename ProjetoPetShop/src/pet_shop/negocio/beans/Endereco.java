@@ -2,16 +2,26 @@ package pet_shop.negocio.beans;
 
 public class Endereco {
 	
+	private EnumUF uf;
 	private String rua;
 	private String numCasa;
 	private String bairro;
 	private String complemento;
 	
-	public Endereco (String rua, String numCasa, String bairro, String complemento) {
+	public Endereco (String rua, String numCasa, String bairro, String complemento, EnumUF uf) {
 		this.setRua(rua);
 		this.setNumCasa(numCasa);
 		this.setBairro(bairro);
 		this.setComplemento(complemento);
+		this.setUf(uf);
+	}
+
+	public EnumUF getUf() {
+		return uf;
+	}
+
+	public void setUf(EnumUF uf) {
+		this.uf = uf;
 	}
 
 	public String getRua() {

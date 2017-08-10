@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import pet_shop.DAO.IRepositorios.IRepositorioVenda;
@@ -21,7 +22,11 @@ public class VendaDAO extends RepositorioAbstrato<Venda> implements IRepositorio
 	
 	private VendaDAO() {
 		super();
-		proximoID = this.list.get(this.list.size() - 1).getId();
+		if (this.list.size() > 0) {
+			proximoID = this.list.get(this.list.size() - 1).getId();
+		} else {
+			proximoID = 1;
+		}
 	}
 	
 	public static VendaDAO getInstance() {
@@ -55,12 +60,12 @@ public class VendaDAO extends RepositorioAbstrato<Venda> implements IRepositorio
 		List<Venda> lista = new ArrayList<>();
 
 		for (int i = 0; i < this.list.size(); i++) {
-			if (this.list.get(i).getCliente().getNome().equals(nome)) {
+			if (this.list.get(i).getCliente().getNome().contains(nome)) {
 				lista.add(this.list.get(i));
 			}	
 		}
 		
-		return lista;
+		return Collections.unmodifiableList(lista);
 	}
 	
 	@Override

@@ -48,6 +48,7 @@ public class Consulta {
 		this.id = id;
 	}
 	
+	@Override
 	public String toString() {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String text = "\nID: " + this.id + "\nData: " + this.dataMarcada.format(fmt) + "\nNome do animal: " + this.animal.getNome() + this.atendimento;

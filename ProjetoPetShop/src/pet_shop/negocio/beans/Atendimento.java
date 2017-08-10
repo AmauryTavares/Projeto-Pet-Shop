@@ -68,6 +68,7 @@ public class Atendimento {
 		this.id = id;
 	}
 	
+	@Override
 	public String toString() {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		return "\nID: " + this.id + "\nNome do animal: " + this.animal.getNome() + "\nNome do funcionário: " + this.funcionario.getNome() 

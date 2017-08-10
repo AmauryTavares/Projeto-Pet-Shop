@@ -83,6 +83,7 @@ public class Animal {
 		this.dataNascimento = dataNascimento;
 	}
 	
+	@Override
 	public String toString() {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		return "ID: " + this.id + "\nNome: " + this.nome + "\nDono: " +this.dono.getNome() + "\nPeso: " + String.format("%.2f", this.peso) + " kg \nEspécie: " + this.especie + 

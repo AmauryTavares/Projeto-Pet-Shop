@@ -55,6 +55,7 @@ public class Servico {
 		this.animal = animal;
 	}
 
+	@Override
 	public String toString() {
 		String text ="ID: " + this.id + "\nNome do produto: " + this.nome + "\nPreço: R$" + String.format("%.2f", this.preco) +
 				"\nAnimal: " + this.getAnimal() + "\nConsulta: ";
