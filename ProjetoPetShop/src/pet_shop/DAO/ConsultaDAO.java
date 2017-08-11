@@ -18,16 +18,10 @@ public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepos
 
 	private static final long serialVersionUID = -7506014228033153273L;
 	private static ConsultaDAO instance;
-	private static long proximoID = 0;
+	private static long proximoID;
 	
 	private ConsultaDAO() {
-		super();
-		if (this.list.size() > 0) {
-			proximoID = this.list.get(this.list.size() - 1).getId();
-		} else {
-			proximoID = 1;
-		}
-		
+		super();		
 	}
 	
 	public static ConsultaDAO getInstance() {
@@ -40,7 +34,12 @@ public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepos
 	@Override
 	public void cadastrar(Consulta c) {
 		if(!this.list.contains(c)) {
-			c.setId(proximoID++);
+			if (this.list.size() > 0) {
+				proximoID = this.list.get(this.list.size() - 1).getId() + 1;
+			} else {
+				proximoID = 1;
+			}
+			c.setId(proximoID);
 			this.list.add(c);
 		}
 	}
@@ -80,7 +79,7 @@ public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepos
 				achou = true;
 			}	
 		}
-		return i;
+		return i - 1;
 	}
 
 	@Override
@@ -108,7 +107,7 @@ public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepos
 	private static ConsultaDAO lerArquivo() {
 		ConsultaDAO repositorioLocal = null;
 		
-		File in = new File("repositorio_consulta.dat");
+		File in = new File("arquivos/repositorio_consulta.dat");
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		
@@ -138,7 +137,7 @@ public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepos
 			return;
 		}
 		
-		File out = new File("repositorio_consulta.dat");
+		File out = new File("arquivos/repositorio_consulta.dat");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		if (!out.exists()) {

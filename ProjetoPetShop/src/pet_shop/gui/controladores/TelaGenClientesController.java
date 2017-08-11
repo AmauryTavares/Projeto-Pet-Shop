@@ -1,20 +1,32 @@
 package pet_shop.gui.controladores;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import pet_shop.Main;
 import pet_shop.negocio.SistemaFachada;
 import pet_shop.negocio.beans.Cliente;
+import pet_shop.negocio.beans.Endereco;
+import pet_shop.negocio.beans.EnumUF;
 import pet_shop.negocio.beans.Pessoa;
 import pet_shop.negocio.excecoes.NadaEncontradoException;
 
@@ -33,45 +45,158 @@ public class TelaGenClientesController implements Initializable{
 	private Button btnExcluir;
 	
 	@FXML
-	private TableView<Pessoa> tbViewClientes;
+	private Button btnVoltar;
 	
 	@FXML
-	private TableColumn<Pessoa, String> tbColumnNome;
+	private TableView<Cliente> tbViewClientes;
 	
 	@FXML
-	private TableColumn<Pessoa, String> tbColumnCPF;
+	private TableColumn<Cliente, String> tbColumnNome;
 	
 	@FXML
-	private TableColumn<Pessoa, String> tbColumnUF;
+	private TableColumn<Cliente, String> tbColumnCPF;
 	
 	@FXML
-	private TableColumn<Pessoa, String> tbColumnRua;
+	private TableColumn<Cliente, String> tbColumnUF;
 	
 	@FXML
-	private TableColumn<Pessoa, String> tbColumnBairro;
+	private TableColumn<Cliente, String> tbColumnRua;
 	
 	@FXML
-	private TableColumn<Pessoa, String> tbColumnNCasa;
+	private TableColumn<Cliente, String> tbColumnCidade;
 	
 	@FXML
-	private TableColumn<Pessoa, String> tbColumnEmail;
+	private TableColumn<Cliente, String> tbColumnBairro;
 	
 	@FXML
-	private TableColumn<Pessoa, String> tbColumnTelefone;
+	private TableColumn<Cliente, String> tbColumnNCasa;
+	
+	@FXML
+	private TableColumn<Cliente, String> tbColumnEmail;
+	
+	@FXML
+	private TableColumn<Cliente, String> tbColumnTelefone;
+	
+	public static Cliente clienteAlterar = null;
+	SistemaFachada fachada = SistemaFachada.getInstance();
 	
 	public void atualizarTabela() throws NadaEncontradoException {
-		SistemaFachada fachada = SistemaFachada.getInstance();
 		tbColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		tbColumnBairro.setCellValueFactory(new PropertyValueFactory<>("enredereco.bairro"));
+		tbColumnBairro.setCellValueFactory(new PropertyValueFactory<>("bairro"));
 		tbColumnCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 		tbColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-		tbColumnNCasa.setCellValueFactory(new PropertyValueFactory<>("enrereco.numCasa"));
-		tbColumnRua.setCellValueFactory(new PropertyValueFactory<>("endereco.rua"));
+		tbColumnNCasa.setCellValueFactory(new PropertyValueFactory<>("numCasa"));
+		tbColumnRua.setCellValueFactory(new PropertyValueFactory<>("rua"));
 		tbColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
-		tbColumnUF.setCellValueFactory(new PropertyValueFactory<>("endereco.uf"));
+		tbColumnUF.setCellValueFactory(new PropertyValueFactory<>("uf"));
+		tbColumnCidade.setCellValueFactory(new PropertyValueFactory<>("cidade"));
 		
-		tbViewClientes.setItems(FXCollections.observableList(fachada.listarTudo()));
-		//tbViewClientes.getColumns().addAll(tbColumnNome, tbColumnBairro, tbColumnCPF, tbColumnEmail, tbColumnNCasa, tbColumnRua, tbColumnTelefone, tbColumnUF);
+		List<Cliente> novaLista = new ArrayList<>();
+		//gera a nova lista apenas com clientes
+		for (Pessoa p : fachada.listarTudo()) {
+			if (p instanceof Cliente) {
+				novaLista.add((Cliente) p);
+			}
+		}
+		
+		tbViewClientes.setItems(FXCollections.observableList(novaLista));
+		
+	}
+	
+	@FXML
+	public void cadastrar(){
+		try{
+			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaCadastroCliente.fxml"));
+			Stage newStage = new Stage();
+			Scene scene = new Scene(bPane);
+			newStage.setScene(scene);
+			Main.myStage.hide();
+			Main main = new Main();
+			newStage.setTitle("Sistema PetShop - Cadastro de Cliente");
+			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+			Main.myStage = newStage;
+			main.start(newStage);
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void alterar() {
+		clienteAlterar = tbViewClientes.getSelectionModel().getSelectedItem();
+		try{
+			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaAlterarCliente.fxml"));
+			Stage newStage = new Stage();
+			Scene scene = new Scene(bPane);
+			newStage.setScene(scene);
+			Main.myStage.hide();
+			Main main = new Main();
+			newStage.setTitle("Sistema PetShop - Alteração de Cliente");
+			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+			Main.myStage = newStage;
+			main.start(newStage);
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void excluir() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Excluir");
+		alert.setContentText("Deseja excluir esse cliente?");
+		Optional<ButtonType> resultado = alert.showAndWait();
+		
+		if (resultado.get() == ButtonType.OK) {
+			try{
+				Cliente clienteExcluir = tbViewClientes.getSelectionModel().getSelectedItem();
+				Endereco end = new Endereco(clienteExcluir.getRua(), clienteExcluir.getNumCasa(), clienteExcluir.getBairro(),
+						clienteExcluir.getCidade(), verificar(clienteExcluir.getUf()));
+				clienteExcluir.setEndereco(end);
+				fachada.excluirCliente(clienteExcluir);
+				atualizarTabela();
+				tbViewClientes.getSelectionModel().select(0);
+				Alert alert3 = new Alert(AlertType.INFORMATION);
+				alert3.setTitle("Sucesso!");
+				alert3.setContentText("O cliente foi excluído com sucesso!");
+				alert3.showAndWait();
+			} catch (Exception e) {
+				Alert alert2 = new Alert(AlertType.INFORMATION);
+				alert2.setTitle("Ocorreu um problema!");
+				alert2.setContentText(e.getMessage());
+				alert2.showAndWait();
+			}
+		}
+	}
+	
+	private EnumUF verificar(String uf) {
+		for (EnumUF ufCorrente : EnumUF.values()) {
+			if (ufCorrente.getNome().equals(uf)) {
+				return ufCorrente;
+			}
+		}
+		return EnumUF.AC; // valor padrao
+	}
+	
+	@FXML
+	public void voltar() {
+		try{
+			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaMenu.fxml"));
+			Stage newStage = new Stage();
+			Scene scene = new Scene(bPane);
+			newStage.setScene(scene);
+			Main.myStage.hide();
+			Main main = new Main();
+			newStage.setTitle("Sistema PetShop - Painel Inicial");
+			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+			Main.myStage = newStage;
+			main.start(newStage);
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -84,6 +209,8 @@ public class TelaGenClientesController implements Initializable{
 			alert.setContentText(e.getMessage());
 			alert.showAndWait();
 		}
+		
+		tbViewClientes.getSelectionModel().select(0);
 
 	}
 

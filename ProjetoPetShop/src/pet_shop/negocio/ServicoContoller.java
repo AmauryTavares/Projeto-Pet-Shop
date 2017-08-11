@@ -68,7 +68,7 @@ public class ServicoContoller
 				if (servico.getNome() != null) {
 					if (servico.getPreco() > 0) {
 						if (servico.getAnimal() != null) {
-							s1.alterar(servico);
+							s1.alterar(servico, indice);
 							this.servicoRepository.salvarArquivo();
 						} else {
 							throw new AnimalInvalidoException();

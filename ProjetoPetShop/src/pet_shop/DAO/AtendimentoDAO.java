@@ -18,15 +18,10 @@ public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements 
 
 	private static final long serialVersionUID = 392420856491222323L;
 	private static AtendimentoDAO instance;
-	private static long proximoID = 0;
+	private static long proximoID;
 	
 	private AtendimentoDAO() {
 		super();
-		if (this.list.size() > 0) {
-			proximoID = this.list.get(this.list.size() - 1).getId();
-		} else {
-			proximoID = 1;
-		}
 	}
 	
 	public static AtendimentoDAO getInstance() {
@@ -39,7 +34,12 @@ public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements 
 	@Override
 	public void cadastrar(Atendimento a) {
 		if (!this.list.contains(a)) {
-			a.setId(proximoID++);
+			if (this.list.size() > 0) {
+				proximoID = this.list.get(this.list.size() - 1).getId() + 1;
+			} else {
+				proximoID = 1;
+			}
+			a.setId(proximoID);
 			this.list.add(a);
 		}
 	}
@@ -78,7 +78,7 @@ public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements 
 				achou = true;
 			}	
 		}
-		return i;
+		return i - 1;
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements 
 	private static AtendimentoDAO lerArquivo() {
 		AtendimentoDAO repositorioLocal = null;
 		
-		File in = new File("repositorio_atendimento.dat");
+		File in = new File("arquivos/repositorio_atendimento.dat");
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		
@@ -122,7 +122,7 @@ public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements 
 			return;
 		}
 		
-		File out = new File("repositorio_atendimento.dat");
+		File out = new File("arquivos/repositorio_atendimento.dat");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		if (!out.exists()) {

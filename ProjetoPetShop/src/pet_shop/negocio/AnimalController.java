@@ -84,7 +84,7 @@ public class AnimalController {
 							if (newAnimal.getNome() != null) {
 								if (newAnimal.getPeso() > 0) {
 									if (newAnimal.getRaca() != null) {
-										t1.alterar(newAnimal);
+										t1.alterar(newAnimal, indice);
 										this.animalRepository.salvarArquivo();
 									} else {
 										throw new RacaInvalidaException();

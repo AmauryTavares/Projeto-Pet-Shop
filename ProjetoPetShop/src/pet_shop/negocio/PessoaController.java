@@ -43,7 +43,7 @@ public class PessoaController {
 					if (p.getCpf() != null) {
 						if (p.getEmail() != null) {
 							if (p.getEndereco() != null && p.getEndereco().getRua() != null && p.getEndereco().getBairro() != null 
-									&& p.getEndereco().getComplemento() != null && p.getEndereco().getNumCasa() != null) {
+									&& p.getEndereco().getCidade() != null && p.getEndereco().getNumCasa() != null) {
 								if (p.getTelefone() != null) {
 									if (p instanceof Funcionario) {
 										if (((Funcionario) p).getLogin() != null) {
@@ -141,13 +141,13 @@ public class PessoaController {
 					if (p.getCpf() != null) {
 						if (p.getEmail() != null) {
 							if (p.getEndereco() != null && p.getEndereco().getRua() != null && p.getEndereco().getBairro() != null 
-									&& p.getEndereco().getComplemento() != null && p.getEndereco().getNumCasa() != null) {
+									&& p.getEndereco().getCidade() != null && p.getEndereco().getNumCasa() != null) {
 								if (p.getTelefone() != null) {
 									if (p instanceof Funcionario) {
 										if (((Funcionario) p).getLogin() != null) {
 											if (((Funcionario) p).getSenha() != null) {
 												if (((Funcionario) p).getCargo() != null) {
-													p1.alterar(p);
+													p1.alterar(p, indice);
 													this.repositorioPessoa.salvarArquivo();
 												} else {
 													throw new CargoInvalidoException();
@@ -159,7 +159,7 @@ public class PessoaController {
 											throw new LoginInvalidoException();
 										}
 									} else {
-										p1.alterar(p);
+										p1.alterar(p, indice);
 										this.repositorioPessoa.salvarArquivo();
 									}
 								} else {

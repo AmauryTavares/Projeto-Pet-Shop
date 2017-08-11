@@ -1,10 +1,12 @@
 package pet_shop.negocio.beans;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Animal {
-	
+public class Animal implements Serializable{
+
+	private static final long serialVersionUID = -5498584819484000187L;
 	private long id;
 	private Pessoa dono;
 	private String nome;

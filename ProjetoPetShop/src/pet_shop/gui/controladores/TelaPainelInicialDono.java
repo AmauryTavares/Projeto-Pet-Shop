@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import pet_shop.Main;
 
@@ -55,6 +56,26 @@ public class TelaPainelInicialDono implements Initializable{
 			Main.myStage.hide();
 			Main main = new Main();
 			newStage.setTitle("Sistema PetShop - Gerenciamento de Clientes");
+			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+			Main.myStage = newStage;
+			main.start(newStage);
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void voltarLogin() {
+		try{
+			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaLogin.fxml"));
+			Stage newStage = new Stage();
+			Scene scene = new Scene(bPane);
+			newStage.setScene(scene);
+			Main.myStage.hide();
+			Main main = new Main();
+			newStage.setTitle("Sistema PetShop - Login");
+			Main.myStage = newStage;
 			main.start(newStage);
 		} catch (Exception exc) {
 			exc.printStackTrace();

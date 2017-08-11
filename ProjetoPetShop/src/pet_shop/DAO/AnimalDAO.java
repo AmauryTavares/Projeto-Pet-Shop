@@ -18,15 +18,10 @@ public class AnimalDAO extends RepositorioAbstrato<Animal> implements IRepositor
 
 	private static final long serialVersionUID = 7330642223297731236L;
 	private static AnimalDAO instance;
-	private static long proximoID = 0;
+	private static long proximoID;
 	
 	private AnimalDAO() {
 		super();
-		if (this.list.size() > 0) {
-			proximoID = this.list.get(this.list.size() - 1).getId();
-		} else {
-			proximoID = 1;
-		}
 	}
 	
 	public static AnimalDAO getInstance() {
@@ -39,7 +34,12 @@ public class AnimalDAO extends RepositorioAbstrato<Animal> implements IRepositor
 	@Override
 	public void cadastrar(Animal a) {
 		if(!this.list.contains(a)) {
-			a.setId(proximoID++);
+			if (this.list.size() > 0) {
+				proximoID = this.list.get(this.list.size() - 1).getId() + 1;
+			} else {
+				proximoID = 1;
+			}
+			a.setId(proximoID);
 			this.list.add(a);
 		}
 	}
@@ -79,7 +79,7 @@ public class AnimalDAO extends RepositorioAbstrato<Animal> implements IRepositor
 				achou = true;
 			}	
 		}
-		return i;
+		return i - 1;
 	}
 	
 	@Override

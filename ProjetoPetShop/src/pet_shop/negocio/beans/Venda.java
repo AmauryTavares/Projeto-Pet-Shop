@@ -1,11 +1,13 @@
 package pet_shop.negocio.beans;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class Venda {
-	
+public class Venda implements Serializable{
+
+	private static final long serialVersionUID = 5761235742575131970L;
 	private long id;
 	private Cliente cliente;
 	private Funcionario funcionario;

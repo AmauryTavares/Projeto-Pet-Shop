@@ -1,42 +1,48 @@
 package pet_shop.negocio.beans;
 
 public enum EnumUF {
-	AC("Acre"),
-	AL("Alagoas"),
-	AM("Amazonas"),
-	AP("Amapá"),
-	BA("Bahia"),
-	CE("Ceará"),
-	DF("Distrito Federal"),
-	ES("Espírito Santo"),
-	GO("Goiás"),
-	MA("Maranhão"),
-	MG("Minas Gerais"),
-	MS("Mato Grosso do Sul"),
-	MT("Mato Grosso"),
-	PA("Pará"),
-	PB("Paraíba"),
-	PE("Pernambuco"),
-	PI("Piauí"),
-	PR("Paraná"),
-	RJ("Rio de Janeiro"),
-	RN("Rio Grande do Norte"),
-	RO("Rondônia"),
-	RR("Roraima"),
-	RS("Rio Grande do Sul"),
-	SC("Santa Catarina"),
-	SE("Sergipe"),
-	SP("São Paulo"),
-	TO("Tocantins");
+	AC("Acre" , "AC"),
+	AL("Alagoas", "AL"),
+	AM("Amazonas", "AM"),
+	AP("Amapá", "AP"),
+	BA("Bahia", "BA"),
+	CE("Ceará", "CE"),
+	DF("Distrito Federal", "DF"),
+	ES("Espírito Santo", "ES"),
+	GO("Goiás", "GO"),
+	MA("Maranhão", "MA"),
+	MG("Minas Gerais","MG"),
+	MS("Mato Grosso do Sul", "MS"),
+	MT("Mato Grosso", "MT"),
+	PA("Pará", "PA"),
+	PB("Paraíba", "PB"),
+	PE("Pernambuco", "PE"),
+	PI("Piauí", "PI"),
+	PR("Paraná", "PR"),
+	RJ("Rio de Janeiro", "RJ"),
+	RN("Rio Grande do Norte", "RN"),
+	RO("Rondônia", "RO"),
+	RR("Roraima", "RR"),
+	RS("Rio Grande do Sul", "RS"),
+	SC("Santa Catarina", "SC"),
+	SE("Sergipe", "SE"),
+	SP("São Paulo", "SP"),
+	TO("Tocantins", "TO");
 	
 	private String nome;
+	private String sigla;
 	
-    EnumUF(String nome){
+    EnumUF(String nome, String sigla){
 		this.nome = nome;
+		this.sigla = sigla;
 	}
 
 	public String getNome() {
 		return nome;
+	}
+
+	public String getSigla() {
+		return sigla;
 	}
  
 }

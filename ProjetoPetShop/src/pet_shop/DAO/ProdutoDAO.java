@@ -18,15 +18,10 @@ public class ProdutoDAO extends RepositorioAbstrato<Produto> implements IReposit
 	
 	private static final long serialVersionUID = -5258187152061595343L;
 	private static ProdutoDAO instance;
-	private static long proximoID = 0;
+	private static long proximoID;
 	
 	private ProdutoDAO() {
 		super();
-		if (this.list.size() > 0) {
-			proximoID = this.list.get(this.list.size() - 1).getId();
-		} else {
-			proximoID = 1;
-		}
 	}
 	
 	public static ProdutoDAO getInstance() {
@@ -39,7 +34,12 @@ public class ProdutoDAO extends RepositorioAbstrato<Produto> implements IReposit
 	@Override
 	public void cadastrar(Produto p) {
 		if (!this.list.contains(p)) {
-			p.setId(proximoID++);
+			if (this.list.size() > 0) {
+				proximoID = this.list.get(this.list.size() - 1).getId() + 1;
+			} else {
+				proximoID = 1;
+			}
+			p.setId(proximoID);
 			this.list.add(p);
 		}
 	}
@@ -78,7 +78,7 @@ public class ProdutoDAO extends RepositorioAbstrato<Produto> implements IReposit
 				achou = true;
 			}	
 		}
-		return i;
+		return i - 1;
 	}
 	
 	@Override
@@ -95,7 +95,7 @@ public class ProdutoDAO extends RepositorioAbstrato<Produto> implements IReposit
 			return;
 		}
 		
-		File out = new File("repositorio_produto.dat");
+		File out = new File("arquivos/repositorio_produto.dat");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		if (!out.exists()) {
@@ -122,7 +122,7 @@ public class ProdutoDAO extends RepositorioAbstrato<Produto> implements IReposit
 	private static ProdutoDAO lerArquivo() {
 		ProdutoDAO repositorioLocal = null;
 		
-		File in = new File("repositorio_produto.dat");
+		File in = new File("arquivos/repositorio_produto.dat");
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		

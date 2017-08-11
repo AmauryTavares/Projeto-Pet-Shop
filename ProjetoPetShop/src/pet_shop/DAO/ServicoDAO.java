@@ -18,15 +18,10 @@ public class ServicoDAO extends RepositorioAbstrato<Servico> implements IReposit
 	
 	private static final long serialVersionUID = -5248313831869228830L;
 	private static ServicoDAO instance;
-	private static long proximoID = 0;
+	private static long proximoID;
 	
 	private ServicoDAO() {
 		super();
-		if (this.list.size() > 0) {
-			proximoID = this.list.get(this.list.size() - 1).getId();
-		} else {
-			proximoID = 1;
-		}
 	}
 	
 	public static ServicoDAO getInstance() {
@@ -39,7 +34,12 @@ public class ServicoDAO extends RepositorioAbstrato<Servico> implements IReposit
 	@Override
 	public void cadastrar(Servico s) {
 		if (!this.list.contains(s)) {
-			s.setId(proximoID++);
+			if (this.list.size() > 0) {
+				proximoID = this.list.get(this.list.size() - 1).getId() + 1;
+			} else {
+				proximoID = 1;
+			}
+			s.setId(proximoID);
 			this.list.add(s);
 		}
 	}
@@ -78,7 +78,7 @@ public class ServicoDAO extends RepositorioAbstrato<Servico> implements IReposit
 				achou = true;
 			}	
 		}
-		return i;
+		return i - 1;
 	}
 	
 	@Override
@@ -92,7 +92,7 @@ public class ServicoDAO extends RepositorioAbstrato<Servico> implements IReposit
 	private static ServicoDAO lerArquivo() {
 		ServicoDAO repositorioLocal = null;
 		
-		File in = new File("repositorio_servico.dat");
+		File in = new File("arquivos/repositorio_servico.dat");
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		
@@ -122,7 +122,7 @@ public class ServicoDAO extends RepositorioAbstrato<Servico> implements IReposit
 			return;
 		}
 		
-		File out = new File("repositorio_servico.dat");
+		File out = new File("arquivos/repositorio_servico.dat");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		if (!out.exists()) {

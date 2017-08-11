@@ -18,15 +18,10 @@ public class VendaDAO extends RepositorioAbstrato<Venda> implements IRepositorio
 
 	private static final long serialVersionUID = -7572397131810134937L;
 	private static VendaDAO instance;
-	private static long proximoID = 0;
+	private static long proximoID;
 	
 	private VendaDAO() {
 		super();
-		if (this.list.size() > 0) {
-			proximoID = this.list.get(this.list.size() - 1).getId();
-		} else {
-			proximoID = 1;
-		}
 	}
 	
 	public static VendaDAO getInstance() {
@@ -39,7 +34,12 @@ public class VendaDAO extends RepositorioAbstrato<Venda> implements IRepositorio
 	@Override
 	public void cadastrar(Venda v) {
 		if (!this.list.contains(v)) {
-			v.setId(proximoID++);
+			if (this.list.size() > 0) {
+				proximoID = this.list.get(this.list.size() - 1).getId() + 1;
+			} else {
+				proximoID = 1;
+			}
+			v.setId(proximoID);
 			this.list.add(v);
 		}
 	}
@@ -78,7 +78,7 @@ public class VendaDAO extends RepositorioAbstrato<Venda> implements IRepositorio
 				achou = true;
 			}	
 		}
-		return i;
+		return i - 1;
 	}
 	
 	@Override
@@ -95,7 +95,7 @@ public class VendaDAO extends RepositorioAbstrato<Venda> implements IRepositorio
 			return;
 		}
 		
-		File out = new File("repositorio_venda.dat");
+		File out = new File("arquivos/repositorio_venda.dat");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		if (!out.exists()) {
@@ -122,7 +122,7 @@ public class VendaDAO extends RepositorioAbstrato<Venda> implements IRepositorio
 	private static VendaDAO lerArquivo() {
 		VendaDAO repositorioLocal = null;
 		
-		File in = new File("repositorio_venda.dat");
+		File in = new File("arquivos/repositorio_venda.dat");
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		

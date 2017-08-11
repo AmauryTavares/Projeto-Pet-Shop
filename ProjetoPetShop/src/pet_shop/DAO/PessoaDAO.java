@@ -18,15 +18,10 @@ public class PessoaDAO extends RepositorioAbstrato<Pessoa> implements IRepositor
 	
 	private static final long serialVersionUID = 909008147818667938L;
 	private static PessoaDAO instance;
-	private static long proximoID = 0;
+	private static long proximoID;
 	
 	private PessoaDAO() {
 		super();
-		if (this.list.size() > 0) {
-			proximoID = this.list.get(this.list.size() - 1).getId();
-		} else {
-			proximoID = 1;
-		}
 	}
 	
 	public static PessoaDAO getInstance() {
@@ -39,7 +34,12 @@ public class PessoaDAO extends RepositorioAbstrato<Pessoa> implements IRepositor
 	@Override
 	public void cadastrar(Pessoa p) {
 		if(!this.list.contains(p)) {
-			p.setId(proximoID++);
+			if (this.list.size() > 0) {
+				proximoID = this.list.get(this.list.size() - 1).getId() + 1;
+			} else {
+				proximoID = 1;
+			}
+			p.setId(proximoID);
 			this.list.add(p);
 		}
 	}
@@ -79,7 +79,7 @@ public class PessoaDAO extends RepositorioAbstrato<Pessoa> implements IRepositor
 				achou = true;
 			}	
 		}
-		return i;
+		return i - 1;
 	}
 	
 	@Override
@@ -93,7 +93,7 @@ public class PessoaDAO extends RepositorioAbstrato<Pessoa> implements IRepositor
 	private static PessoaDAO lerArquivo() {
 		PessoaDAO repositorioLocal = null;
 		
-		File in = new File("repositorio_pessoa.dat");
+		File in = new File("src/pet_shop/arquivos/repositorio_pessoa.dat");
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		
@@ -123,13 +123,12 @@ public class PessoaDAO extends RepositorioAbstrato<Pessoa> implements IRepositor
 			return;
 		}
 		
-		File out = new File("repositorio_pessoa.dat");
+		File out = new File("src/pet_shop/arquivos/repositorio_pessoa.dat");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		if (!out.exists()) {
 			out.createNewFile();
 		}
-		
 		try{
 			fos = new FileOutputStream(out);
 			oos = new ObjectOutputStream(fos);
@@ -140,7 +139,7 @@ public class PessoaDAO extends RepositorioAbstrato<Pessoa> implements IRepositor
 			if (oos != null) {
 				try{
 					oos.close();
-				} catch (Exception e) {
+				} catch (IOException e) {
 					// Silencia a exceção
 				}
 			}

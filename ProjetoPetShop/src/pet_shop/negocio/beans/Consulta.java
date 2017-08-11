@@ -1,10 +1,12 @@
 package pet_shop.negocio.beans;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Consulta {
-	
+public class Consulta implements Serializable{
+
+	private static final long serialVersionUID = 8569864996320890960L;
 	private long id;
 	private Animal animal;
 	private LocalDate dataMarcada;

@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import pet_shop.Main;
 import javafx.scene.control.Button;
@@ -52,6 +53,9 @@ public class TelaLoginController implements Initializable{
 				Main.myStage.hide();
 				Main main = new Main();
 				newStage.setTitle("Sistema PetShop - Painel Inicial");
+				newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+				newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+				Main.myStage = newStage;
 				main.start(newStage);
 			} catch (Exception exc) {
 				exc.printStackTrace();

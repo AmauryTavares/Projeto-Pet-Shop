@@ -2,6 +2,7 @@ package pet_shop.negocio.beans;
 
 public class Funcionario extends Pessoa{
 
+	private static final long serialVersionUID = -3106867012115470098L;
 	private String login;
 	private String senha;
 	private double salario;
@@ -73,7 +74,7 @@ public class Funcionario extends Pessoa{
 				return false;
 		} else if (!login.equals(other.login))
 			return false;
-		if (salario != other.salario)
+		if (Double.doubleToLongBits(salario) != Double.doubleToLongBits(other.salario))
 			return false;
 		if (senha == null) {
 			if (other.senha != null)
@@ -82,6 +83,5 @@ public class Funcionario extends Pessoa{
 			return false;
 		return true;
 	}
-
 	
 }

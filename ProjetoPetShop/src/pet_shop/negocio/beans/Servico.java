@@ -1,7 +1,10 @@
 package pet_shop.negocio.beans;
 
-public class Servico {
-	
+import java.io.Serializable;
+
+public class Servico implements Serializable{
+
+	private static final long serialVersionUID = 7453463179631013178L;
 	private long id;
 	private String nome;
 	private double preco;

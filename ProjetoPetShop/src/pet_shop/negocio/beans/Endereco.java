@@ -1,18 +1,21 @@
 package pet_shop.negocio.beans;
 
-public class Endereco {
-	
+import java.io.Serializable;
+
+public class Endereco implements Serializable{
+
+	private static final long serialVersionUID = -2086842017446725271L;
 	private EnumUF uf;
 	private String rua;
 	private String numCasa;
 	private String bairro;
-	private String complemento;
+	private String cidade;
 	
-	public Endereco (String rua, String numCasa, String bairro, String complemento, EnumUF uf) {
+	public Endereco (String rua, String numCasa, String bairro, String cidade, EnumUF uf) {
 		this.setRua(rua);
 		this.setNumCasa(numCasa);
 		this.setBairro(bairro);
-		this.setComplemento(complemento);
+		this.setCidade(cidade);
 		this.setUf(uf);
 	}
 
@@ -48,12 +51,12 @@ public class Endereco {
 		this.bairro = bairro;
 	}
 
-	public String getComplemento() {
-		return complemento;
+	public String getCidade() {
+		return cidade;
 	}
 
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
 
 	@Override
@@ -70,10 +73,10 @@ public class Endereco {
 				return false;
 		} else if (!bairro.equals(other.bairro))
 			return false;
-		if (complemento == null) {
-			if (other.complemento != null)
+		if (cidade == null) {
+			if (other.cidade != null)
 				return false;
-		} else if (!complemento.equals(other.complemento))
+		} else if (!cidade.equals(other.cidade))
 			return false;
 		if (numCasa == null) {
 			if (other.numCasa != null)
@@ -91,7 +94,7 @@ public class Endereco {
 	@Override
 	public String toString() {
 		return "Endereco: " + this.getRua() + ", " + this.getNumCasa() + ", " + this.getBairro() +
-				", " + this.getComplemento() + "\n";
+				", " + this.getCidade() + "\n";
 	}
 	
 	

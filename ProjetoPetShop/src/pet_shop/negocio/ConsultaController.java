@@ -94,7 +94,7 @@ public class ConsultaController {
 						if (newAgenda.getDataMarcada() != null) {
 							Period p = Period.between(LocalDate.now(), newAgenda.getDataMarcada());
 							if (p.getDays() >= 0 && p.getMonths() >= 0 && p.getYears() >= 0) {
-								c1.alterar(newAgenda);
+								c1.alterar(newAgenda, indice);
 								this.agendaRepository.salvarArquivo();
 							} else {
 								throw new DataInvalidaException();

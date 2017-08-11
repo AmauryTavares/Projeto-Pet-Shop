@@ -77,7 +77,8 @@ public class VendaController {
 							if (venda.getData() != null) {
 								if (venda.getValorTotal() > 0) {
 									VendaDAO v1 = (VendaDAO) this.vendaRepository;
-									v1.alterar(venda);
+									int indice = this.vendaRepository.procurarID(venda.getId());
+									v1.alterar(venda, indice);
 									this.vendaRepository.salvarArquivo();
 								} else {
 									throw new PrecoInvalidoException();

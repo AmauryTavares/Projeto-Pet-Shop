@@ -112,7 +112,7 @@ public class ProdutosController {
 	    		if (p.getNome() != null) {
 	    			if (p.getPreco() > 0) {
 	    				if (p.getQtdEstoque() > 0) {
-	    					p1.alterar(p);
+	    					p1.alterar(p, indice);
 	    					this.repositorioProdutos.salvarArquivo();
 	    				} else {
 	    					throw new QtdEstoqueInvalidoException();

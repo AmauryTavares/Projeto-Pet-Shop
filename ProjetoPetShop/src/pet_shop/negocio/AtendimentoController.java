@@ -85,7 +85,7 @@ public class AtendimentoController {
 						if (atendimento.getServico() != null) {
 							if (atendimento.getData() != null) {
 								if (atendimento.getObservacao() != null) {
-									a1.alterar(atendimento);
+									a1.alterar(atendimento, indice);
 									this.atendimentoRepository.salvarArquivo();
 								} else {
 									throw new ObservacaoInvalidaException();
