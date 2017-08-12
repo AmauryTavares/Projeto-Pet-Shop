@@ -1,10 +1,12 @@
 package pet_shop.negocio.beans;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Consulta {
-	
+public class Consulta implements Serializable{
+
+	private static final long serialVersionUID = 8569864996320890960L;
 	private long id;
 	private Animal animal;
 	private LocalDate dataMarcada;
@@ -48,6 +50,7 @@ public class Consulta {
 		this.id = id;
 	}
 	
+	@Override
 	public String toString() {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String text = "\nID: " + this.id + "\nData: " + this.dataMarcada.format(fmt) + "\nNome do animal: " + this.animal.getNome() + this.atendimento;

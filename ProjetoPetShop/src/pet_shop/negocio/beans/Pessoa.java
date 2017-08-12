@@ -1,7 +1,10 @@
 package pet_shop.negocio.beans;
 
-public abstract class Pessoa {
-	
+import java.io.Serializable;
+
+public abstract class Pessoa implements Serializable{
+
+	private static final long serialVersionUID = -8126349004285615850L;
 	protected long id;
 	protected String nome;
 	protected String cpf;
@@ -64,6 +67,26 @@ public abstract class Pessoa {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+	
+	public String getUf() { // teste
+        return endereco.getUf().getNome();
+    }
+	
+	public String getRua() { 
+        return endereco.getRua();
+    }
+	
+	public String getBairro() { 
+        return endereco.getBairro();
+    }
+	
+	public String getCidade() { 
+        return endereco.getCidade();
+    }
+	
+	public String getNumCasa() { 
+        return endereco.getNumCasa();
+    }
 
 	@Override
 	public boolean equals(Object obj) {
@@ -89,8 +112,6 @@ public abstract class Pessoa {
 				return false;
 		} else if (!endereco.equals(other.endereco))
 			return false;
-		if (id != other.id)
-			return false;
 		if (nome == null) {
 			if (other.nome != null)
 				return false;
@@ -103,8 +124,6 @@ public abstract class Pessoa {
 			return false;
 		return true;
 	}
-
-	
 
 	
 }

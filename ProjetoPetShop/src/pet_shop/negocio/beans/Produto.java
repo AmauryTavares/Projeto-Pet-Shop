@@ -1,7 +1,10 @@
 package pet_shop.negocio.beans;
 
-public class Produto {
+import java.io.Serializable;
 
+public class Produto implements Serializable{
+
+	private static final long serialVersionUID = -1186909563420929568L;
 	private long id;
 	private String nome;
 	private double preco;
@@ -40,6 +43,7 @@ public class Produto {
 		this.id = id;
 	}
 	
+	@Override
 	public String toString() {
 		return "ID: " + this.id + "\nNome do produto: " + this.nome + "\nPreço: R$" + String.format("%.2f", this.preco) + "\nQuantidade: " + this.qtdEstoque + " u/kg";
 	}

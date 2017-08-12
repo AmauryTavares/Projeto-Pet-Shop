@@ -1,10 +1,12 @@
 package pet_shop.negocio.beans;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Animal {
-	
+public class Animal implements Serializable{
+
+	private static final long serialVersionUID = -5498584819484000187L;
 	private long id;
 	private Pessoa dono;
 	private String nome;
@@ -83,6 +85,7 @@ public class Animal {
 		this.dataNascimento = dataNascimento;
 	}
 	
+	@Override
 	public String toString() {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		return "ID: " + this.id + "\nNome: " + this.nome + "\nDono: " +this.dono.getNome() + "\nPeso: " + String.format("%.2f", this.peso) + " kg \nEspécie: " + this.especie + 

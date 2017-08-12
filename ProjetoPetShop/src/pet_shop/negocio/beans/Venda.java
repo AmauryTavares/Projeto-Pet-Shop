@@ -1,11 +1,13 @@
 package pet_shop.negocio.beans;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class Venda {
-	
+public class Venda implements Serializable{
+
+	private static final long serialVersionUID = 5761235742575131970L;
 	private long id;
 	private Cliente cliente;
 	private Funcionario funcionario;
@@ -126,6 +128,7 @@ public class Venda {
 		return valorTotalProdutos;
 	}
 	
+	@Override
 	public String toString() {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String text = "\nID: " + this.id + "\nData: " + this.data.format(fmt) + "\nNome do funcionário: " + this.funcionario.getNome() + "\nProduto(s): ";

@@ -1,5 +1,6 @@
 package pet_shop.negocio;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class PessoaController {
 		return instance;
 	}
 	
-	public void cadastrarCliente(Pessoa p) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException, EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException, SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException, PessoaCadastradoException {
+	public void cadastrarCliente(Pessoa p) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException, EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException, SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException, PessoaCadastradoException, IOException {
 	    
 		if (p != null) {
 			if (!this.repositorioPessoa.existe(p)) {
@@ -42,13 +43,14 @@ public class PessoaController {
 					if (p.getCpf() != null) {
 						if (p.getEmail() != null) {
 							if (p.getEndereco() != null && p.getEndereco().getRua() != null && p.getEndereco().getBairro() != null 
-									&& p.getEndereco().getComplemento() != null && p.getEndereco().getNumCasa() != null) {
+									&& p.getEndereco().getCidade() != null && p.getEndereco().getNumCasa() != null) {
 								if (p.getTelefone() != null) {
 									if (p instanceof Funcionario) {
 										if (((Funcionario) p).getLogin() != null) {
 											if (((Funcionario) p).getSenha() != null) {
 												if (((Funcionario) p).getCargo() != null) {
 													this.repositorioPessoa.cadastrar(p);
+													this.repositorioPessoa.salvarArquivo();
 												} else {
 													throw new CargoInvalidoException();
 												}
@@ -60,6 +62,7 @@ public class PessoaController {
 										}
 									} else {
 										this.repositorioPessoa.cadastrar(p);
+										this.repositorioPessoa.salvarArquivo();
 									}
 								} else {
 									throw new TelefoneInvalidoException();
@@ -104,7 +107,7 @@ public class PessoaController {
 	public List<Pessoa> listarTudo() throws NadaEncontradoException {
 		
 		List<Pessoa> lista = new ArrayList<>();
-		PessoaDAO p1 = (PessoaDAO) this.repositorioPessoa;
+		PessoaDAO p1 = this.repositorioPessoa;
 		if (p1.listar().size() > 0) {
 			lista = p1.listar();
 		} else {
@@ -113,12 +116,13 @@ public class PessoaController {
 		return lista;
 	}
 	
-	public void excluirCliente(Pessoa p) throws IllegalAccessException, PessoaInexistenteException{
+	public void excluirCliente(Pessoa p) throws IllegalAccessException, PessoaInexistenteException, IOException{
 
 		if (p != null) {
 			if (this.repositorioPessoa.existe(p)) {
-				PessoaDAO p1 = (PessoaDAO) this.repositorioPessoa;
+				PessoaDAO p1 = this.repositorioPessoa;
 				p1.excluir(p);
+				this.repositorioPessoa.salvarArquivo();
 			} else {
 				throw new PessoaInexistenteException();
 			}
@@ -128,22 +132,23 @@ public class PessoaController {
 		
 	}
 	
-	public void alterarCliente(Pessoa p) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException, EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException, SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException {
+	public void alterarCliente(Pessoa p) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException, EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException, SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException, IOException {
 		if (p != null) {
-			PessoaDAO p1 = (PessoaDAO) this.repositorioPessoa;
+			PessoaDAO p1 = this.repositorioPessoa;
 			int indice = this.repositorioPessoa.procurarID(p.getId());
 			if (indice != p1.listar().size()) {
 				if (p.getNome() != null) {
 					if (p.getCpf() != null) {
 						if (p.getEmail() != null) {
 							if (p.getEndereco() != null && p.getEndereco().getRua() != null && p.getEndereco().getBairro() != null 
-									&& p.getEndereco().getComplemento() != null && p.getEndereco().getNumCasa() != null) {
+									&& p.getEndereco().getCidade() != null && p.getEndereco().getNumCasa() != null) {
 								if (p.getTelefone() != null) {
 									if (p instanceof Funcionario) {
 										if (((Funcionario) p).getLogin() != null) {
 											if (((Funcionario) p).getSenha() != null) {
 												if (((Funcionario) p).getCargo() != null) {
-													p1.alterar(p);
+													p1.alterar(p, indice);
+													this.repositorioPessoa.salvarArquivo();
 												} else {
 													throw new CargoInvalidoException();
 												}
@@ -154,7 +159,8 @@ public class PessoaController {
 											throw new LoginInvalidoException();
 										}
 									} else {
-										p1.alterar(p);
+										p1.alterar(p, indice);
+										this.repositorioPessoa.salvarArquivo();
 									}
 								} else {
 									throw new TelefoneInvalidoException();

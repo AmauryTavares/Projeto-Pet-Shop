@@ -1,5 +1,6 @@
 package pet_shop.DAO.IRepositorios;
 
+import java.io.IOException;
 import java.util.List;
 
 import pet_shop.negocio.beans.Produto;
@@ -11,5 +12,6 @@ public interface IRepositorioProduto {
 	public abstract int procurarID(long id);
 	public abstract boolean existe(Produto a);
 	public abstract List<Produto> procurar(String nome);
+	public abstract void salvarArquivo() throws IOException;
 	
 }

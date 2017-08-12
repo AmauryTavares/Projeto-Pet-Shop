@@ -1,24 +1,32 @@
 package pet_shop.DAO;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import pet_shop.DAO.IRepositorios.IRepositorioAtendimento;
 import pet_shop.negocio.beans.Atendimento;
 
-public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements IRepositorioAtendimento {
-	
+public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements IRepositorioAtendimento, Serializable {
+
+	private static final long serialVersionUID = 392420856491222323L;
 	private static AtendimentoDAO instance;
-	private static long proximoID = 0;
+	private static long proximoID;
 	
 	private AtendimentoDAO() {
 		super();
-		proximoID = this.list.get(this.list.size() - 1).getId();
 	}
 	
 	public static AtendimentoDAO getInstance() {
 		if (instance == null) {
-			instance = new AtendimentoDAO();
+			instance = lerArquivo();
 		}
 		return instance;
 	}
@@ -26,7 +34,12 @@ public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements 
 	@Override
 	public void cadastrar(Atendimento a) {
 		if (!this.list.contains(a)) {
-			a.setId(proximoID++);
+			if (this.list.size() > 0) {
+				proximoID = this.list.get(this.list.size() - 1).getId() + 1;
+			} else {
+				proximoID = 1;
+			}
+			a.setId(proximoID);
 			this.list.add(a);
 		}
 	}
@@ -47,12 +60,12 @@ public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements 
 		List<Atendimento> lista = new ArrayList<>();
 
 		for (int i = 0; i < this.list.size(); i++) {
-			if (this.list.get(i).getAnimal().getDono().getNome().equals(nome)) {
+			if (this.list.get(i).getAnimal().getDono().getNome().contains(nome)) {
 				lista.add(this.list.get(i));
 			}	
 		}
 		
-		return lista;
+		return Collections.unmodifiableList(lista);
 	}
 	
 	@Override
@@ -65,7 +78,7 @@ public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements 
 				achou = true;
 			}	
 		}
-		return i;
+		return i - 1;
 	}
 
 	@Override
@@ -74,6 +87,63 @@ public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements 
 			return true;
 		}
 		return false;
+	}
+	
+	private static AtendimentoDAO lerArquivo() {
+		AtendimentoDAO repositorioLocal = null;
+		
+		File in = new File("arquivos/repositorio_atendimento.dat");
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		
+		try{
+			fis = new FileInputStream(in);
+			ois = new ObjectInputStream(fis);
+			Object o = ois.readObject();
+			repositorioLocal = (AtendimentoDAO) o;
+		} catch (Exception e) {
+			repositorioLocal = new AtendimentoDAO();
+		} finally {
+			if (ois != null) {
+				try{
+					ois.close();
+				} catch (IOException e) {
+					// Silencia a exceção
+				}
+			}
+		}
+		
+		return repositorioLocal;
+	}
+
+	@Override
+	public void salvarArquivo() throws IOException {
+		if (instance == null) {
+			return;
+		}
+		
+		File out = new File("arquivos/repositorio_atendimento.dat");
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		if (!out.exists()) {
+			out.createNewFile();
+		}
+		
+		try{
+			fos = new FileOutputStream(out);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(instance);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (oos != null) {
+				try{
+					oos.close();
+				} catch (IOException e) {
+					// Silencia a exceção
+				}
+			}
+		}
 	}
 	
 }

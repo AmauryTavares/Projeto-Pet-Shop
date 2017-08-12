@@ -1,24 +1,32 @@
 package pet_shop.DAO;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import pet_shop.DAO.IRepositorios.IRepositorioConsulta;
 import pet_shop.negocio.beans.Consulta;
 
-public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepositorioConsulta {
+public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepositorioConsulta, Serializable {
 
+	private static final long serialVersionUID = -7506014228033153273L;
 	private static ConsultaDAO instance;
-	private static long proximoID = 0;
+	private static long proximoID;
 	
 	private ConsultaDAO() {
-		super();
-		proximoID = this.list.get(this.list.size() - 1).getId();
+		super();		
 	}
 	
 	public static ConsultaDAO getInstance() {
 		if (instance == null) {
-			instance = new ConsultaDAO();
+			instance = lerArquivo();
 		}
 		return instance;
 	}
@@ -26,7 +34,12 @@ public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepos
 	@Override
 	public void cadastrar(Consulta c) {
 		if(!this.list.contains(c)) {
-			c.setId(proximoID++);
+			if (this.list.size() > 0) {
+				proximoID = this.list.get(this.list.size() - 1).getId() + 1;
+			} else {
+				proximoID = 1;
+			}
+			c.setId(proximoID);
 			this.list.add(c);
 		}
 	}
@@ -48,12 +61,12 @@ public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepos
 		List<Consulta> lista = new ArrayList<>();
 
 		for (int i = 0; i < this.list.size(); i++) {
-			if (this.list.get(i).getAnimal().getDono().getNome().equals(nome)) {
+			if (this.list.get(i).getAnimal().getDono().getNome().contains(nome)) {
 				lista.add(this.list.get(i));
 			}	
 		}
 		
-		return lista;
+		return Collections.unmodifiableList(lista);
 	}
 
 	@Override
@@ -66,7 +79,7 @@ public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepos
 				achou = true;
 			}	
 		}
-		return i;
+		return i - 1;
 	}
 
 	@Override
@@ -80,7 +93,7 @@ public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepos
 				achou = true;
 			}	
 		}	
-		return lista;	
+		return Collections.unmodifiableList(lista);	
 	}
 	
 	@Override
@@ -89,5 +102,62 @@ public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepos
 			return true;
 		}
 		return false;
+	}
+
+	private static ConsultaDAO lerArquivo() {
+		ConsultaDAO repositorioLocal = null;
+		
+		File in = new File("arquivos/repositorio_consulta.dat");
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		
+		try {
+			fis = new FileInputStream(in);
+			ois = new ObjectInputStream(fis);
+			Object o = ois.readObject();
+			repositorioLocal = (ConsultaDAO) o;
+		} catch (Exception e) {
+			repositorioLocal = new ConsultaDAO();
+		} finally {
+			if (ois != null) {
+				try{
+					ois.close();
+				} catch (IOException e) {
+					// Silencia a exceção
+				}
+			}
+		}
+		
+		return repositorioLocal;
+	}
+	
+	@Override
+	public void salvarArquivo() throws IOException {
+		if (instance == null) {
+			return;
+		}
+		
+		File out = new File("arquivos/repositorio_consulta.dat");
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		if (!out.exists()) {
+			out.createNewFile();
+		}
+		
+		try{
+			fos = new FileOutputStream(out);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(instance);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (oos != null) {
+				try{
+					oos.close();
+				} catch (IOException e) {
+					// Silencia a exceção
+				}
+			}
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package pet_shop.negocio;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class AnimalController {
 	}
 	
 	//Controle dos métodos do repositório
-	public void saveAnimal(Animal animal) throws AnimalCadastradoException, DonoInvalidoException, DataInvalidaException, EspecieInvalidaException, NomeInvalidoException, PesoInvalidoException, RacaInvalidaException {
+	public void saveAnimal(Animal animal) throws AnimalCadastradoException, DonoInvalidoException, DataInvalidaException, EspecieInvalidaException, NomeInvalidoException, PesoInvalidoException, RacaInvalidaException, IOException {
 		if (animal != null) {
 			if (!this.animalRepository.existe(animal)) {
 				if (animal.getDono() != null) {
@@ -44,6 +45,7 @@ public class AnimalController {
 								if (animal.getPeso() > 0) {
 									if (animal.getRaca() != null) {
 										this.animalRepository.cadastrar(animal);
+										this.animalRepository.salvarArquivo();
 									} else {
 										throw new RacaInvalidaException();
 									}
@@ -70,7 +72,7 @@ public class AnimalController {
 		}
 	}
 	
-	public void updateAnimal(Animal newAnimal) throws RacaInvalidaException, PesoInvalidoException, DonoInvalidoException, DataInvalidaException, EspecieInvalidaException, NomeInvalidoException, AnimalInexistenteException {
+	public void updateAnimal(Animal newAnimal) throws RacaInvalidaException, PesoInvalidoException, DonoInvalidoException, DataInvalidaException, EspecieInvalidaException, NomeInvalidoException, AnimalInexistenteException, IOException {
 		
 		if (newAnimal != null) {
 			AnimalDAO t1 = (AnimalDAO) this.animalRepository;
@@ -82,7 +84,8 @@ public class AnimalController {
 							if (newAnimal.getNome() != null) {
 								if (newAnimal.getPeso() > 0) {
 									if (newAnimal.getRaca() != null) {
-										t1.alterar(newAnimal);
+										t1.alterar(newAnimal, indice);
+										this.animalRepository.salvarArquivo();
 									} else {
 										throw new RacaInvalidaException();
 									}
@@ -109,12 +112,13 @@ public class AnimalController {
 		}
 	}
 	
-	public void deleteAnimal(Animal animal) throws AnimalInexistenteException {
+	public void deleteAnimal(Animal animal) throws AnimalInexistenteException, IOException {
 		
 		if (animal != null) {
 			if (this.animalRepository.existe(animal)) {
 				AnimalDAO t1 = (AnimalDAO) this.animalRepository;
 				t1.excluir(animal);
+				this.animalRepository.salvarArquivo();
 			} else {
 				throw new AnimalInexistenteException();
 			}
