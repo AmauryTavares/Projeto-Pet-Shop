@@ -6,7 +6,7 @@ public class PessoaCadastradoException extends Exception{
 	private String cpf;
 	
 	public PessoaCadastradoException(String pessoa, String cpf) {
-		super("Cliente/Funcionário" + pessoa +", CPF: " + cpf + "já cadastrado!");
+		super("Cliente/Funcionário " + pessoa +", CPF: " + cpf + " já cadastrado!");
 		this.pessoa = pessoa;
 		this.cpf = cpf;
 	}

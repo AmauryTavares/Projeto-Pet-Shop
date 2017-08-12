@@ -18,6 +18,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
@@ -40,6 +41,15 @@ public class TelaGenClientesController implements Initializable{
 	
 	@FXML
 	private Button btnAlterar;
+	
+	@FXML
+	private Button btnAtualizar;
+	
+	@FXML
+	private Button btnPesquisar;
+	
+	@FXML
+	private TextField txtFieldPesquisar;
 	
 	@FXML
 	private Button btnExcluir;
@@ -80,7 +90,7 @@ public class TelaGenClientesController implements Initializable{
 	public static Cliente clienteAlterar = null;
 	SistemaFachada fachada = SistemaFachada.getInstance();
 	
-	public void atualizarTabela() throws NadaEncontradoException {
+	public void atualizarTabela(List<Pessoa> lista) throws NadaEncontradoException {
 		tbColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		tbColumnBairro.setCellValueFactory(new PropertyValueFactory<>("bairro"));
 		tbColumnCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
@@ -93,14 +103,14 @@ public class TelaGenClientesController implements Initializable{
 		
 		List<Cliente> novaLista = new ArrayList<>();
 		//gera a nova lista apenas com clientes
-		for (Pessoa p : fachada.listarTudo()) {
+		for (Pessoa p : lista) {
 			if (p instanceof Cliente) {
 				novaLista.add((Cliente) p);
 			}
 		}
 		
 		tbViewClientes.setItems(FXCollections.observableList(novaLista));
-		
+
 	}
 	
 	@FXML
@@ -156,7 +166,7 @@ public class TelaGenClientesController implements Initializable{
 						clienteExcluir.getCidade(), verificar(clienteExcluir.getUf()));
 				clienteExcluir.setEndereco(end);
 				fachada.excluirCliente(clienteExcluir);
-				atualizarTabela();
+				atualizarTabela(fachada.listarTudo());
 				tbViewClientes.getSelectionModel().select(0);
 				Alert alert3 = new Alert(AlertType.INFORMATION);
 				alert3.setTitle("Sucesso!");
@@ -199,11 +209,44 @@ public class TelaGenClientesController implements Initializable{
 		}
 	}
 	
+	@FXML
+	public void atualizarAcaoButton() throws NadaEncontradoException {
+		try {
+			atualizarTabela(fachada.listarTudo());
+		} catch (NadaEncontradoException e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText(e.getMessage());
+			alert.showAndWait();
+		}
+	}
+	
+	@FXML
+	public void pesquisarAcaoButton() throws IllegalAccessException, NadaEncontradoException {
+		if (!txtFieldPesquisar.getText().isEmpty()) {
+			try{
+				atualizarTabela(fachada.listarCliente(txtFieldPesquisar.getText()));
+			} catch (IllegalAccessException e) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText(e.getMessage());
+				alert.showAndWait();
+			} catch (NadaEncontradoException e) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText(e.getMessage());
+				alert.showAndWait();
+			}
+		} else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Busca Incorreta");
+			alert.setContentText("Digite algo antes de pesquisar");
+			alert.showAndWait();
+		}
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		labelLogin.setText("Bem vindo(a), Administrador");
 		try {
-			atualizarTabela();
+			atualizarTabela(fachada.listarTudo());
 		} catch (NadaEncontradoException e) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText(e.getMessage());

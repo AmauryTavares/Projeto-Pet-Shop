@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -34,15 +35,30 @@
             </StackPane>
             <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" text="Voltar">
-                     <font>
-                        <Font name="Comic Sans MS" size="12.0" />
-                     </font>
-                  </Button>
+                  <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
                </children>
                <StackPane.margin>
                   <Insets left="20.0" />
                </StackPane.margin>
+            </StackPane>
+            <StackPane alignment="BOTTOM_RIGHT" maxWidth="-Infinity" prefHeight="82.0" prefWidth="748.0" StackPane.alignment="BASELINE_RIGHT">
+               <children>
+                  <Button fx:id="btnAtualizar" mnemonicParsing="false" onAction="#atualizarAcaoButton" text="Atualizar">
+                     <StackPane.margin>
+                        <Insets bottom="25.0" right="190.0" />
+                     </StackPane.margin>
+                  </Button>
+                  <TextField fx:id="txtFieldPesquisar" maxWidth="-Infinity" prefHeight="25.0" prefWidth="107.0" promptText="Pesquisar...">
+                     <StackPane.margin>
+                        <Insets bottom="25.0" right="75.0" />
+                     </StackPane.margin>
+                  </TextField>
+                  <Button fx:id="btnPesquisar" mnemonicParsing="false" onAction="#pesquisarAcaoButton" text="Pesquisar">
+                     <StackPane.margin>
+                        <Insets bottom="25.0" right="10.0" />
+                     </StackPane.margin>
+                  </Button>
+               </children>
             </StackPane>
          </children>
       </StackPane>

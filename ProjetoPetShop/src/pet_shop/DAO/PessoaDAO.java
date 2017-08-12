@@ -61,7 +61,7 @@ public class PessoaDAO extends RepositorioAbstrato<Pessoa> implements IRepositor
 		List<Pessoa> lista = new ArrayList<>();
 
 		for (int i = 0; i < this.list.size(); i++) {
-			if (this.list.get(i).getNome().contains(nome)) {
+			if (this.list.get(i).getNome().contains(nome) || this.list.get(i).getCpf().contains(nome)) {
 				lista.add(this.list.get(i));
 			}	
 		}
