@@ -66,6 +66,44 @@ public class TelaPainelInicialDono implements Initializable{
 	}
 	
 	@FXML
+	public void gerenciamentoFuncionarios() {
+		try{
+			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaGenFuncionarios.fxml"));
+			Stage newStage = new Stage();
+			Scene scene = new Scene(bPane);
+			newStage.setScene(scene);
+			Main.myStage.hide();
+			Main main = new Main();
+			newStage.setTitle("Sistema PetShop - Gerenciamento de Funcionários");
+			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+			Main.myStage = newStage;
+			main.start(newStage);
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void gerenciamentoProdutos() {
+		try{
+			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaGenProdutos.fxml"));
+			Stage newStage = new Stage();
+			Scene scene = new Scene(bPane);
+			newStage.setScene(scene);
+			Main.myStage.hide();
+			Main main = new Main();
+			newStage.setTitle("Sistema PetShop - Gerenciamento de Produtos");
+			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+			Main.myStage = newStage;
+			main.start(newStage);
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	@FXML
 	public void voltarLogin() {
 		try{
 			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaLogin.fxml"));

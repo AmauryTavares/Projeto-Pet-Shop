@@ -71,7 +71,7 @@ public interface IFachada {
 	public abstract List<Pessoa> listarTudo() throws NadaEncontradoException ;
 	public abstract void excluirCliente(Pessoa pessoa) throws IllegalAccessException, PessoaInexistenteException, IOException;
 	public abstract void alterarCliente(Pessoa novaPessoa) throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException, EmailInvalidoException, EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException, SenhaInvalidaException, CargoInvalidoException, PessoaInexistenteException, IOException;
-
+	
 	public abstract void cadastrarProduto(Produto produto) throws IllegalAccessException, NomeInvalidoException, PrecoInvalidoException, QtdEstoqueInvalidoException, ProdutoCadastradoException, IOException;
 	public abstract List<Produto> listarProduto(String nome) throws IllegalAccessException, NadaEncontradoException;
 	public abstract void excluirProduto(Produto produto) throws IllegalAccessException, ProdutoInexistenteException, IOException;
