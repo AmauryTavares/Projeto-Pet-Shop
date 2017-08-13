@@ -15,6 +15,8 @@ public class Animal implements Serializable{
 	private String raca;
 	private LocalDate dataNascimento;
 	
+	
+	
 	public Animal(Cliente dono, String nome, double peso, String especie, String raca,
 			LocalDate dataNascimento2) {
 		this.dono = dono;
@@ -24,6 +26,8 @@ public class Animal implements Serializable{
 		this.raca = raca;
 		this.dataNascimento = dataNascimento2;
 	}
+	
+	
 	
 	public Animal() {
 		
