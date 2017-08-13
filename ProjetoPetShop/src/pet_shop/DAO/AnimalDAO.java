@@ -93,7 +93,7 @@ public class AnimalDAO extends RepositorioAbstrato<Animal> implements IRepositor
 	private static AnimalDAO lerArquivo(){
 		AnimalDAO repositorioLocal = null;
 		
-		File input = new File("arquivos/repositorio_animal.dat");
+		File input = new File("src/pet_shop/arquivos/repositorio_animal.dat");
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		
@@ -122,7 +122,7 @@ public class AnimalDAO extends RepositorioAbstrato<Animal> implements IRepositor
 			return;
 		}
 		
-		File output = new File("arquivos/repositorio_animal.dat");
+		File output = new File("src/pet_shop/arquivos/repositorio_animal.dat");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		if (!output.exists()) {

@@ -66,6 +66,25 @@ public class TelaPainelInicialDono implements Initializable{
 	}
 	
 	@FXML
+	public void genrenciamentoAnimais() {
+		try{
+			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaGenAnimais.fxml"));
+			Stage newStage = new Stage();
+			Scene scene = new Scene(bPane);
+			newStage.setScene(scene);
+			Main.myStage.hide();
+			Main main = new Main();
+			newStage.setTitle("Sistema PetShop - Gerenciamento de Animais");
+			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+			Main.myStage = newStage;
+			main.start(newStage);
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	@FXML
 	public void voltarLogin() {
 		try{
 			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaLogin.fxml"));

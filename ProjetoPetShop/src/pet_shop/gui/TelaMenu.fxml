@@ -42,7 +42,7 @@
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="btnGenAnimais" mnemonicParsing="false" prefHeight="39.0" prefWidth="250.0" text="Gerenciamento de Animais" GridPane.rowIndex="3">
+            <Button fx:id="btnGenAnimais" mnemonicParsing="false" onAction="#genrenciamentoAnimais" prefHeight="39.0" prefWidth="250.0" text="Gerenciamento de Animais" GridPane.rowIndex="3">
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font>

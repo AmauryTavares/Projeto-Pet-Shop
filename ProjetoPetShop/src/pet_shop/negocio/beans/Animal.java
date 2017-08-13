@@ -15,7 +15,7 @@ public class Animal implements Serializable{
 	private String raca;
 	private LocalDate dataNascimento;
 	
-	public Animal(Cliente dono, String nome, double peso, String especie, String raca,
+	public Animal(Pessoa dono, String nome, double peso, String especie, String raca,
 			LocalDate dataNascimento2) {
 		this.dono = dono;
 		this.nome = nome;
@@ -41,7 +41,7 @@ public class Animal implements Serializable{
 		return dono;
 	}
 
-	public void setDono(Cliente dono) {
+	public void setDono(Pessoa dono) {
 		this.dono = dono;
 	}
 
@@ -85,6 +85,14 @@ public class Animal implements Serializable{
 		this.dataNascimento = dataNascimento;
 	}
 	
+	public String getDonoNome(){
+		return this.dono.getNome();
+	}
+	
+	public String getCpf() {
+		return this.dono.getCpf();
+	}
+	
 	@Override
 	public String toString() {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -121,7 +129,7 @@ public class Animal implements Serializable{
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
-		if (peso != other.peso)
+		if (Double.doubleToLongBits(peso) != Double.doubleToLongBits(other.peso))
 			return false;
 		if (raca == null) {
 			if (other.raca != null)
@@ -130,6 +138,8 @@ public class Animal implements Serializable{
 			return false;
 		return true;
 	}
+
+	
 
 	
 	

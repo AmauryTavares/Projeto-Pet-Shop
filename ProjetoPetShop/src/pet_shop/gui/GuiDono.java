@@ -2463,7 +2463,7 @@ public class GuiDono {
 		}
 
 		if (voltar == false) {
-			animalAlterado = new Animal((Cliente)donoAlt, nome, peso, especie, raca, dataNascimentoAlt);
+			animalAlterado = new Animal(donoAlt, nome, peso, especie, raca, dataNascimentoAlt);
 			fachada.updateAnimal(animalAlterado, alterarAnimal.getId());
 			animalAlterado = null;
 			alterarAnimal = null;

@@ -3,7 +3,6 @@ package pet_shop.gui.controladores;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -14,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -29,16 +27,13 @@ import pet_shop.negocio.beans.Cliente;
 import pet_shop.negocio.beans.Pessoa;
 import pet_shop.negocio.excecoes.NadaEncontradoException;
 
-public class TelaGenClientesController implements Initializable{
+public class TelaAlterarAnimal1Controller implements Initializable{
 
 	@FXML
 	private Label labelLogin;
 	
 	@FXML
-	private Button btnCadastrar;
-	
-	@FXML
-	private Button btnAlterar;
+	private Button btnSelecionar;
 	
 	@FXML
 	private Button btnAtualizar;
@@ -48,9 +43,6 @@ public class TelaGenClientesController implements Initializable{
 	
 	@FXML
 	private TextField txtFieldPesquisar;
-	
-	@FXML
-	private Button btnExcluir;
 	
 	@FXML
 	private Button btnVoltar;
@@ -85,7 +77,8 @@ public class TelaGenClientesController implements Initializable{
 	@FXML
 	private TableColumn<Pessoa, String> tbColumnTelefone;
 	
-	public static Pessoa clienteAlterar = null;
+	public static Pessoa clienteSelecionado = null;
+	public static boolean passou;
 	SistemaFachada fachada = SistemaFachada.getInstance();
 	
 	public void atualizarTabela(List<Pessoa> lista) throws NadaEncontradoException {
@@ -112,81 +105,45 @@ public class TelaGenClientesController implements Initializable{
 	}
 	
 	@FXML
-	public void cadastrar(){
+	public void selecionar(){
 		try{
-			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaCadastroCliente.fxml"));
-			Stage newStage = new Stage();
-			Scene scene = new Scene(bPane);
-			newStage.setScene(scene);
-			Main.myStage.hide();
-			Main main = new Main();
-			newStage.setTitle("Sistema PetShop - Cadastro de Cliente");
-			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-			Main.myStage = newStage;
-			main.start(newStage);
-		} catch (Exception exc) {
-			exc.printStackTrace();
-		}
-	}
-	
-	@FXML
-	public void alterar() {
-		clienteAlterar = tbViewClientes.getSelectionModel().getSelectedItem();
-		try{
-			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaAlterarCliente.fxml"));
-			Stage newStage = new Stage();
-			Scene scene = new Scene(bPane);
-			newStage.setScene(scene);
-			Main.myStage.hide();
-			Main main = new Main();
-			newStage.setTitle("Sistema PetShop - Alteração de Cliente");
-			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-			Main.myStage = newStage;
-			main.start(newStage);
-		} catch (Exception exc) {
-			exc.printStackTrace();
-		}
-	}
-	
-	@FXML
-	public void excluir() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Excluir");
-		alert.setContentText("Deseja excluir esse cliente?");
-		Optional<ButtonType> resultado = alert.showAndWait();
-		
-		if (resultado.get() == ButtonType.OK) {
-			try{
-				Pessoa clienteExcluir = tbViewClientes.getSelectionModel().getSelectedItem();
-			
-				fachada.excluirCliente(clienteExcluir);
-				atualizarTabela(fachada.listarTudo());
-				tbViewClientes.getSelectionModel().select(0);
-				Alert alert3 = new Alert(AlertType.INFORMATION);
-				alert3.setTitle("Sucesso!");
-				alert3.setContentText("O cliente foi excluído com sucesso!");
-				alert3.showAndWait();
-			} catch (Exception e) {
-				Alert alert2 = new Alert(AlertType.INFORMATION);
-				alert2.setTitle("Ocorreu um problema!");
-				alert2.setContentText(e.getMessage());
-				alert2.showAndWait();
+			 // seleciona o cliente
+			clienteSelecionado = tbViewClientes.getSelectionModel().getSelectedItem();
+			for (Pessoa p : fachada.listarTudo()) {
+				if (p instanceof Cliente) {
+					if (p.equals(clienteSelecionado)) {
+						clienteSelecionado = (Cliente) p;
+					}
+				}
 			}
+			//
+			passou = true;
+			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaAlterarAnimal2.fxml"));
+			Stage newStage = new Stage();
+			Scene scene = new Scene(bPane);
+			newStage.setScene(scene);
+			Main.myStage.hide();
+			Main main = new Main();
+			newStage.setTitle("Sistema PetShop - Alteração de Animal");
+			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+			Main.myStage = newStage;
+			main.start(newStage);
+		} catch (Exception exc) {
+			exc.printStackTrace();
 		}
 	}
 	
 	@FXML
 	public void voltar() {
 		try{
-			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaMenu.fxml"));
+			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaGenAnimais.fxml"));
 			Stage newStage = new Stage();
 			Scene scene = new Scene(bPane);
 			newStage.setScene(scene);
 			Main.myStage.hide();
 			Main main = new Main();
-			newStage.setTitle("Sistema PetShop - Painel Inicial");
+			newStage.setTitle("Sistema PetShop - Gerenciamento de Animais");
 			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
 			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
 			Main.myStage = newStage;
@@ -234,6 +191,7 @@ public class TelaGenClientesController implements Initializable{
 		labelLogin.setText("Bem vindo(a), Administrador");
 		try {
 			atualizarTabela(fachada.listarTudo());
+			tbViewClientes.getSelectionModel().select(TelaGenAnimaisController.animalAlterar.getDono());
 		} catch (NadaEncontradoException e) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText(e.getMessage());
@@ -241,7 +199,7 @@ public class TelaGenClientesController implements Initializable{
 		}
 		
 		tbViewClientes.getSelectionModel().select(0);
-
+		passou = false;
 	}
 
 }
