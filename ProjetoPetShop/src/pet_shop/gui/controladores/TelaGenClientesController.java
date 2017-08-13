@@ -8,10 +8,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -20,10 +17,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import pet_shop.Main;
 import pet_shop.negocio.SistemaFachada;
 import pet_shop.negocio.beans.Cliente;
 import pet_shop.negocio.beans.Pessoa;
@@ -87,6 +80,7 @@ public class TelaGenClientesController implements Initializable{
 	
 	public static Pessoa clienteAlterar = null;
 	SistemaFachada fachada = SistemaFachada.getInstance();
+	Funcoes funcoes = new Funcoes();
 	
 	public void atualizarTabela(List<Pessoa> lista) throws NadaEncontradoException {
 		tbColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -114,17 +108,7 @@ public class TelaGenClientesController implements Initializable{
 	@FXML
 	public void cadastrar(){
 		try{
-			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaCadastroCliente.fxml"));
-			Stage newStage = new Stage();
-			Scene scene = new Scene(bPane);
-			newStage.setScene(scene);
-			Main.myStage.hide();
-			Main main = new Main();
-			newStage.setTitle("Sistema PetShop - Cadastro de Cliente");
-			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-			Main.myStage = newStage;
-			main.start(newStage);
+			funcoes.chamarTela("../TelaCadastroCliente.fxml", "Sistema PetShop - Cadastro de Cliente");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -134,17 +118,7 @@ public class TelaGenClientesController implements Initializable{
 	public void alterar() {
 		clienteAlterar = tbViewClientes.getSelectionModel().getSelectedItem();
 		try{
-			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaAlterarCliente.fxml"));
-			Stage newStage = new Stage();
-			Scene scene = new Scene(bPane);
-			newStage.setScene(scene);
-			Main.myStage.hide();
-			Main main = new Main();
-			newStage.setTitle("Sistema PetShop - Alteração de Cliente");
-			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-			Main.myStage = newStage;
-			main.start(newStage);
+			funcoes.chamarTela("../TelaAlterarCliente.fxml", "Sistema PetShop - Alteração de Cliente");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -152,10 +126,8 @@ public class TelaGenClientesController implements Initializable{
 	
 	@FXML
 	public void excluir() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Excluir");
-		alert.setContentText("Deseja excluir esse cliente?");
-		Optional<ButtonType> resultado = alert.showAndWait();
+	
+		Optional<ButtonType> resultado = funcoes.alerta(AlertType.CONFIRMATION, "Excluir", "", "Deseja excluir esse cliente?");
 		
 		if (resultado.get() == ButtonType.OK) {
 			try{
@@ -164,15 +136,9 @@ public class TelaGenClientesController implements Initializable{
 				fachada.excluirCliente(clienteExcluir);
 				atualizarTabela(fachada.listarTudo());
 				tbViewClientes.getSelectionModel().select(0);
-				Alert alert3 = new Alert(AlertType.INFORMATION);
-				alert3.setTitle("Sucesso!");
-				alert3.setContentText("O cliente foi excluído com sucesso!");
-				alert3.showAndWait();
+				funcoes.alerta(AlertType.INFORMATION, "Sucesso!", "", "O cliente foi excluído com sucesso!");
 			} catch (Exception e) {
-				Alert alert2 = new Alert(AlertType.INFORMATION);
-				alert2.setTitle("Ocorreu um problema!");
-				alert2.setContentText(e.getMessage());
-				alert2.showAndWait();
+				funcoes.alerta(AlertType.INFORMATION, "Ocorreu um problema!", "", e.getMessage());
 			}
 		}
 	}
@@ -180,17 +146,7 @@ public class TelaGenClientesController implements Initializable{
 	@FXML
 	public void voltar() {
 		try{
-			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaMenu.fxml"));
-			Stage newStage = new Stage();
-			Scene scene = new Scene(bPane);
-			newStage.setScene(scene);
-			Main.myStage.hide();
-			Main main = new Main();
-			newStage.setTitle("Sistema PetShop - Painel Inicial");
-			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-			Main.myStage = newStage;
-			main.start(newStage);
+			funcoes.chamarTela("../TelaMenu.fxml", "Sistema PetShop - Painel Inicial");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -201,9 +157,7 @@ public class TelaGenClientesController implements Initializable{
 		try {
 			atualizarTabela(fachada.listarTudo());
 		} catch (NadaEncontradoException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText(e.getMessage());
-			alert.showAndWait();
+			funcoes.alerta(AlertType.ERROR, "Lista vazia", "", e.getMessage());
 		}
 	}
 	
@@ -213,19 +167,12 @@ public class TelaGenClientesController implements Initializable{
 			try{
 				atualizarTabela(fachada.listarCliente(txtFieldPesquisar.getText()));
 			} catch (IllegalAccessException e) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setContentText(e.getMessage());
-				alert.showAndWait();
+				funcoes.alerta(AlertType.ERROR, "Ocorreu um problema!", "", e.getMessage());
 			} catch (NadaEncontradoException e) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setContentText(e.getMessage());
-				alert.showAndWait();
+				funcoes.alerta(AlertType.ERROR, "Lista vazia", "", e.getMessage());
 			}
 		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Busca Incorreta");
-			alert.setContentText("Digite algo antes de pesquisar");
-			alert.showAndWait();
+			funcoes.alerta(AlertType.ERROR, "Busca Incorreta", "", "Digite algo antes de pesquisar");
 		}
 	}
 	
@@ -235,9 +182,7 @@ public class TelaGenClientesController implements Initializable{
 		try {
 			atualizarTabela(fachada.listarTudo());
 		} catch (NadaEncontradoException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText(e.getMessage());
-			alert.showAndWait();
+			funcoes.alerta(AlertType.ERROR, "Lista vazia", "", e.getMessage());
 		}
 		
 		tbViewClientes.getSelectionModel().select(0);

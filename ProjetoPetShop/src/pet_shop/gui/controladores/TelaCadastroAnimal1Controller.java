@@ -7,10 +7,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,10 +15,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import pet_shop.Main;
 import pet_shop.negocio.SistemaFachada;
 import pet_shop.negocio.beans.Cliente;
 import pet_shop.negocio.beans.Pessoa;
@@ -79,6 +72,7 @@ public class TelaCadastroAnimal1Controller implements Initializable{
 	
 	public static Pessoa clienteSelecionado = null;
 	SistemaFachada fachada = SistemaFachada.getInstance();
+	Funcoes funcoes = new Funcoes();
 	
 	public void atualizarTabela(List<Pessoa> lista) throws NadaEncontradoException {
 		tbColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -111,22 +105,12 @@ public class TelaCadastroAnimal1Controller implements Initializable{
 			for (Pessoa p : fachada.listarTudo()) {
 				if (p instanceof Cliente) {
 					if (p.equals(clienteSelecionado)) {
-						clienteSelecionado = (Cliente) p;
+						clienteSelecionado = p;
 					}
 				}
 			}
 			//
-			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaCadastroAnimal2.fxml"));
-			Stage newStage = new Stage();
-			Scene scene = new Scene(bPane);
-			newStage.setScene(scene);
-			Main.myStage.hide();
-			Main main = new Main();
-			newStage.setTitle("Sistema PetShop - Cadastro de Animal");
-			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-			Main.myStage = newStage;
-			main.start(newStage);
+			funcoes.chamarTela("../TelaCadastroAnimal2.fxml", "Sistema PetShop - Cadastro de Animal");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -135,17 +119,7 @@ public class TelaCadastroAnimal1Controller implements Initializable{
 	@FXML
 	public void voltar() {
 		try{
-			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaGenAnimais.fxml"));
-			Stage newStage = new Stage();
-			Scene scene = new Scene(bPane);
-			newStage.setScene(scene);
-			Main.myStage.hide();
-			Main main = new Main();
-			newStage.setTitle("Sistema PetShop - Gerenciamento de Animais");
-			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-			Main.myStage = newStage;
-			main.start(newStage);
+			funcoes.chamarTela("../TelaGenAnimais.fxml", "Sistema PetShop - Gerenciamento de Animais");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -156,9 +130,7 @@ public class TelaCadastroAnimal1Controller implements Initializable{
 		try {
 			atualizarTabela(fachada.listarTudo());
 		} catch (NadaEncontradoException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText(e.getMessage());
-			alert.showAndWait();
+			funcoes.alerta(AlertType.ERROR, "Ocorreu um problema!", "", e.getMessage());
 		}
 	}
 	
@@ -168,19 +140,12 @@ public class TelaCadastroAnimal1Controller implements Initializable{
 			try{
 				atualizarTabela(fachada.listarCliente(txtFieldPesquisar.getText()));
 			} catch (IllegalAccessException e) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setContentText(e.getMessage());
-				alert.showAndWait();
+				funcoes.alerta(AlertType.ERROR, "Ocorreu um problema!", "", e.getMessage());
 			} catch (NadaEncontradoException e) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setContentText(e.getMessage());
-				alert.showAndWait();
+				funcoes.alerta(AlertType.ERROR, "Lista vazia", "", e.getMessage());
 			}
 		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Busca Incorreta");
-			alert.setContentText("Digite algo antes de pesquisar");
-			alert.showAndWait();
+			funcoes.alerta(AlertType.ERROR, "Busca Incorreta", "", "Digite algo antes de pesquisar");
 		}
 	}
 	
@@ -190,9 +155,7 @@ public class TelaCadastroAnimal1Controller implements Initializable{
 		try {
 			atualizarTabela(fachada.listarTudo());
 		} catch (NadaEncontradoException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText(e.getMessage());
-			alert.showAndWait();
+			funcoes.alerta(AlertType.ERROR, "Lista vazia", "", e.getMessage());
 		}
 		
 		tbViewClientes.getSelectionModel().select(0);

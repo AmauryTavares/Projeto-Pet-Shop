@@ -92,7 +92,7 @@ public class ServicoDAO extends RepositorioAbstrato<Servico> implements IReposit
 	private static ServicoDAO lerArquivo() {
 		ServicoDAO repositorioLocal = null;
 		
-		File in = new File("arquivos/repositorio_servico.dat");
+		File in = new File("src/pet_shop/arquivos/repositorio_servico.dat");
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		
@@ -122,7 +122,7 @@ public class ServicoDAO extends RepositorioAbstrato<Servico> implements IReposit
 			return;
 		}
 		
-		File out = new File("arquivos/repositorio_servico.dat");
+		File out = new File("src/pet_shop/arquivos/repositorio_servico.dat");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		if (!out.exists()) {

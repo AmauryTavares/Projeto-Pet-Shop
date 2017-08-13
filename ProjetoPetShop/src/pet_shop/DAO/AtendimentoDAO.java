@@ -92,7 +92,7 @@ public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements 
 	private static AtendimentoDAO lerArquivo() {
 		AtendimentoDAO repositorioLocal = null;
 		
-		File in = new File("arquivos/repositorio_atendimento.dat");
+		File in = new File("src/pet_shop/arquivos/repositorio_atendimento.dat");
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		
@@ -122,7 +122,7 @@ public class AtendimentoDAO extends RepositorioAbstrato<Atendimento> implements 
 			return;
 		}
 		
-		File out = new File("arquivos/repositorio_atendimento.dat");
+		File out = new File("src/pet_shop/arquivos/repositorio_atendimento.dat");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		if (!out.exists()) {

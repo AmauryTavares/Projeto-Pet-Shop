@@ -8,15 +8,16 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import pet_shop.negocio.SistemaFachada;
-import pet_shop.negocio.beans.Cliente;
 import pet_shop.negocio.beans.Endereco;
 import pet_shop.negocio.beans.EnumUF;
+import pet_shop.negocio.beans.Funcionario;
 import pet_shop.negocio.excecoes.CargoInvalidoException;
 import pet_shop.negocio.excecoes.CpfInvalidoException;
 import pet_shop.negocio.excecoes.EmailInvalidoException;
@@ -28,63 +29,75 @@ import pet_shop.negocio.excecoes.PessoaInexistenteException;
 import pet_shop.negocio.excecoes.SenhaInvalidaException;
 import pet_shop.negocio.excecoes.TelefoneInvalidoException;
 
-public class TelaCadClienteController implements Initializable {
-
+public class TelaCadFuncionariosController implements Initializable {
+	
 	@FXML
-	private Label labelLogin;
-
+	private Label lblLogin;
+	
 	@FXML
 	private Button btnVoltar;
-
+	
 	@FXML
 	private Button btnCadastrar;
-
+	
+	@FXML
+	private ComboBox<String> cmBoxUF;
+	
 	@FXML
 	private TextField txtFieldNome;
-
+	
 	@FXML
 	private TextField txtFieldCPF;
-
+	
+	@FXML
+	private TextField txtFieldTelefone;
+	
 	@FXML
 	private TextField txtFieldRua;
-
+	
+	@FXML
+	private TextField txtFieldNumCasa;
+	
 	@FXML
 	private TextField txtFieldBairro;
-
+	
 	@FXML
 	private TextField txtFieldCidade;
-
-	@FXML
-	private TextField txtFieldNCasa;
 
 	@FXML
 	private TextField txtFieldEmail;
 
 	@FXML
-	private TextField txtFieldTelefone;
+	private TextField txtFieldCargo;
 
 	@FXML
-	private ComboBox<String> cmBoxUF;
+	private TextField txtFieldLogin;
+	
+	@FXML
+	private PasswordField passFieldSenha;
 
+	@FXML
+	private TextField txtFieldSalario;
+	
 	SistemaFachada fachada = SistemaFachada.getInstance();
 	Funcoes funcoes = new Funcoes();
 
 	@FXML
-	public void cadastrar()
+	public void cadastrarAction()
 			throws IllegalAccessException, NomeInvalidoException, CpfInvalidoException, EmailInvalidoException,
 			EnderecoInvalidoException, TelefoneInvalidoException, LoginInvalidoException, SenhaInvalidaException,
 			CargoInvalidoException, PessoaInexistenteException, PessoaCadastradoException, IOException {
 		try {
 			
-			Endereco end = new Endereco(txtFieldRua.getText(), txtFieldNCasa.getText(), txtFieldBairro.getText(),
+			Endereco end = new Endereco(txtFieldRua.getText(), txtFieldNumCasa.getText(), txtFieldBairro.getText(),
 					txtFieldCidade.getText(), verificar(cmBoxUF.getValue()));
-			Cliente c = new Cliente(txtFieldNome.getText(), txtFieldCPF.getText(), end, txtFieldEmail.getText(),
-					txtFieldTelefone.getText());
+			Funcionario f = new Funcionario(txtFieldNome.getText(), txtFieldCPF.getText(), end, txtFieldEmail.getText(),
+					txtFieldTelefone.getText(), txtFieldLogin.getText(), passFieldSenha.getText(), Double.parseDouble(txtFieldSalario.getText()), txtFieldCargo.getText());
 
-			fachada.cadastrarCliente(c);
-			funcoes.alerta(AlertType.INFORMATION, "Sucesso!", "", "Cliente cadastrado com sucesso!");
+			fachada.cadastrarCliente(f);
+			funcoes.alerta(AlertType.INFORMATION, "Sucesso!", "", "Funcionario cadastrado com sucesso!");
 			try {
-				funcoes.chamarTela("../TelaGenClientes.fxml", "Sistema PetShop - Gerencimantedo de Clientes");
+				funcoes.chamarTela("../TelaGenFuncionarios.fxml", "Sistema PetShop - Gerencimantedo de Funcionarios");
 			} catch (Exception exc) {
 				exc.printStackTrace();
 			}
@@ -92,7 +105,6 @@ public class TelaCadClienteController implements Initializable {
 			funcoes.alerta(AlertType.ERROR, "Ocorreu um problema!", "", e.getMessage());
 		}
 	}
-	
 	
 	private EnumUF verificar(String uf) {
 		for (EnumUF ufCorrente : EnumUF.values()) {
@@ -102,16 +114,17 @@ public class TelaCadClienteController implements Initializable {
 		}
 		return EnumUF.AC; // valor padrao
 	}
-
+	
 	@FXML
-	public void voltar() {
+	public void voltarAction() {
 		try {
-			funcoes.chamarTela("../TelaGenClientes.fxml", "Sistema PetShop - Gerencimantedo de Clientes");
+			funcoes.chamarTela("../TelaGenFuncionarios.fxml", "Sistema PetShop - Gerencimantedo de Funcionarios");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
 	}
 	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -122,6 +135,7 @@ public class TelaCadClienteController implements Initializable {
 		
 		cmBoxUF.getItems().addAll(uf);
 		cmBoxUF.getSelectionModel().select(0);
+		
 	}
 
 }

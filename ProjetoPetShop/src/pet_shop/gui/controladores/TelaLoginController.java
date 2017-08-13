@@ -7,15 +7,9 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import pet_shop.Main;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -42,30 +36,18 @@ public class TelaLoginController implements Initializable{
 	@FXML
 	private Button btnEntrar;
 	
+	Funcoes funcoes = new Funcoes();
+	
 	@FXML
 	private void login(ActionEvent e) throws IOException {
 		if (txtFieldLogin.getText().equals("admin") && passFieldSenha.getText().equals("1234")) {
 			try{
-				BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaMenu.fxml"));
-				Stage newStage = new Stage();
-				Scene scene = new Scene(bPane);
-				newStage.setScene(scene);
-				Main.myStage.hide();
-				Main main = new Main();
-				newStage.setTitle("Sistema PetShop - Painel Inicial");
-				newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-				newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-				Main.myStage = newStage;
-				main.start(newStage);
+				funcoes.chamarTela("../TelaMenu.fxml", "Sistema PetShop - Painel Inicial");
 			} catch (Exception exc) {
 				exc.printStackTrace();
 			}			
 		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setHeaderText("Erro no login");
-			alert.setContentText("Login ou senha incorreto!");
-			alert.setTitle("Erro");
-			alert.showAndWait();
+			funcoes.alerta(AlertType.ERROR, "Erro", "Erro no login", "Login ou senha incorreto!");
 			txtFieldLogin.setText("");
 			passFieldSenha.setText("");
 		}

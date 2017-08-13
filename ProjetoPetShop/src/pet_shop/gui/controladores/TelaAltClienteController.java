@@ -7,20 +7,13 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import pet_shop.Main;
 import pet_shop.negocio.SistemaFachada;
 import pet_shop.negocio.beans.Cliente;
 import pet_shop.negocio.beans.Endereco;
@@ -68,13 +61,12 @@ public class TelaAltClienteController implements Initializable {
 	private ComboBox<String> cmBoxUF;
 
 	SistemaFachada fachada = SistemaFachada.getInstance();
-
+	Funcoes funcoes = new Funcoes();
+	
 	@FXML
 	public void alterar() {
-		Alert alert1 = new Alert(AlertType.CONFIRMATION);
-		alert1.setTitle("Alterar Cliente");
-		alert1.setContentText("Deseja salvar essas alterações?");
-		Optional<ButtonType> resultado = alert1.showAndWait();
+		
+		Optional<ButtonType> resultado = funcoes.alerta(AlertType.CONFIRMATION, "Alterar Cliente", "", "Deseja salvar essas alterações?");
 		if (resultado.get() == ButtonType.OK) {
 			try {
 				Endereco end = new Endereco(txtFieldRua.getText(), txtFieldNCasa.getText(), txtFieldBairro.getText(),
@@ -84,30 +76,14 @@ public class TelaAltClienteController implements Initializable {
 				c.setId(procurarID());
 
 				fachada.alterarCliente(c);
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Sucesso!");
-				alert.setContentText("Cliente alterado com sucesso!");
-				alert.showAndWait();
+				funcoes.alerta(AlertType.INFORMATION, "Sucesso!", "", "Cliente alterado com sucesso!");
 				try {
-					BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaGenClientes.fxml"));
-					Stage newStage = new Stage();
-					Scene scene = new Scene(bPane);
-					newStage.setScene(scene);
-					Main.myStage.hide();
-					Main main = new Main();
-					newStage.setTitle("Sistema PetShop - Painel Inicial");
-					newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-					newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-					Main.myStage = newStage;
-					main.start(newStage);
+					funcoes.chamarTela("../TelaGenClientes.fxml", "Sistema PetShop - Painel Inicial");
 				} catch (Exception exc) {
 					exc.printStackTrace();
 				}
 			} catch (Exception e) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Ocorreu um problema!");
-				alert.setContentText(e.getMessage());
-				alert.showAndWait();
+				funcoes.alerta(AlertType.ERROR, "Ocorreu um problema!", "", e.getMessage());
 			}
 		}
 		
@@ -116,17 +92,7 @@ public class TelaAltClienteController implements Initializable {
 	@FXML
 	public void voltar() {
 		try {
-			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaGenClientes.fxml"));
-			Stage newStage = new Stage();
-			Scene scene = new Scene(bPane);
-			newStage.setScene(scene);
-			Main.myStage.hide();
-			Main main = new Main();
-			newStage.setTitle("Sistema PetShop - Gerenciamento de Clientes");
-			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-			Main.myStage = newStage;
-			main.start(newStage);
+			funcoes.chamarTela("../TelaGenClientes.fxml", "Sistema PetShop - Gerenciamento de Clientes");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}

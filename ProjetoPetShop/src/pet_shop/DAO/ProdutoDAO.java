@@ -95,7 +95,7 @@ public class ProdutoDAO extends RepositorioAbstrato<Produto> implements IReposit
 			return;
 		}
 		
-		File out = new File("arquivos/repositorio_produto.dat");
+		File out = new File("src/pet_shop/arquivos/repositorio_produto.dat");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		if (!out.exists()) {
@@ -122,7 +122,7 @@ public class ProdutoDAO extends RepositorioAbstrato<Produto> implements IReposit
 	private static ProdutoDAO lerArquivo() {
 		ProdutoDAO repositorioLocal = null;
 		
-		File in = new File("arquivos/repositorio_produto.dat");
+		File in = new File("src/pet_shop/arquivos/repositorio_produto.dat");
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		

@@ -8,9 +8,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -20,10 +18,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import pet_shop.Main;
 import pet_shop.negocio.SistemaFachada;
 import pet_shop.negocio.beans.Animal;
 import pet_shop.negocio.beans.Cliente;
@@ -83,6 +77,7 @@ public class TelaGenAnimaisController implements Initializable{
 	public static Animal animalAlterar = null;
 	public static Pessoa donoAlterar = null;
 	SistemaFachada fachada = SistemaFachada.getInstance();
+	Funcoes funcoes = new Funcoes();
 	
 	public void atualizarTabela(List<Animal> lista) throws NadaEncontradoException {
 		tbColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -100,18 +95,7 @@ public class TelaGenAnimaisController implements Initializable{
 	@FXML
 	public void cadastrar(){
 		try{
-			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaCadastroAnimal1.fxml"));
-			Stage newStage = new Stage();
-			Scene scene = new Scene(bPane);
-			newStage.setScene(scene);
-			Main.myStage.hide();
-			Main main = new Main();
-			newStage.setTitle("Sistema PetShop - Cadastro de Animal");
-			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-			Main.myStage = newStage;
-			main.start(newStage);
-			
+			funcoes.chamarTela("../TelaCadastroAnimal1.fxml", "Sistema PetShop - Cadastro de Animal");	
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -132,7 +116,7 @@ public class TelaGenAnimaisController implements Initializable{
 				}
 			}
 		} catch (NadaEncontradoException e) {
-			System.err.println(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 
 		try{
@@ -144,32 +128,11 @@ public class TelaGenAnimaisController implements Initializable{
 			Optional<ButtonType> resultado = dialog.showAndWait();
 			
 			if (resultado.get().equals(ButtonType.YES)) {
-				BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaAlterarAnimal1.fxml"));
-				Stage newStage = new Stage();
-				Scene scene = new Scene(bPane);
-				newStage.setScene(scene);
-				Main.myStage.hide();
-				Main main = new Main();
-				newStage.setTitle("Sistema PetShop - Alteração de Animal");
-				newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-				newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-				Main.myStage = newStage;
-				main.start(newStage);
+				funcoes.chamarTela("../TelaAlterarAnimal1.fxml", "Sistema PetShop - Alteração de Animal");
 			} else {
-				BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaAlterarAnimal2.fxml"));
-				Stage newStage = new Stage();
-				Scene scene = new Scene(bPane);
-				newStage.setScene(scene);
-				Main.myStage.hide();
-				Main main = new Main();
-				newStage.setTitle("Sistema PetShop - Alteração de Animal");
-				newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-				newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-				Main.myStage = newStage;
-				main.start(newStage);
+				funcoes.chamarTela("../TelaAlterarAnimal2.fxml", "Sistema PetShop - Alteração de Animal");
 			}
-			
-			
+
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -177,10 +140,8 @@ public class TelaGenAnimaisController implements Initializable{
 	
 	@FXML
 	public void excluir() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Excluir");
-		alert.setContentText("Deseja excluir esse animal?");
-		Optional<ButtonType> resultado = alert.showAndWait();
+
+		Optional<ButtonType> resultado = funcoes.alerta(AlertType.CONFIRMATION, "Excluir", "", "Deseja excluir esse animal?");
 		
 		if (resultado.get() == ButtonType.OK) {
 			try{
@@ -188,15 +149,9 @@ public class TelaGenAnimaisController implements Initializable{
 				fachada.deleteAnimal(animalExcluir);
 				atualizarTabela(fachada.listarTodosAnimais());
 				tbViewAnimais.getSelectionModel().select(0);
-				Alert alert3 = new Alert(AlertType.INFORMATION);
-				alert3.setTitle("Sucesso!");
-				alert3.setContentText("O animal foi excluído com sucesso!");
-				alert3.showAndWait();
+				funcoes.alerta(AlertType.INFORMATION, "Sucesso!", "", "O animal foi excluído com sucesso!");
 			} catch (Exception e) {
-				Alert alert2 = new Alert(AlertType.INFORMATION);
-				alert2.setTitle("Ocorreu um problema!");
-				alert2.setContentText(e.getMessage());
-				alert2.showAndWait();
+				funcoes.alerta(AlertType.INFORMATION, "Ocorreu um problema!", "", e.getMessage());
 			}
 		}
 	}
@@ -204,17 +159,7 @@ public class TelaGenAnimaisController implements Initializable{
 	@FXML
 	public void voltar() {
 		try{
-			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaMenu.fxml"));
-			Stage newStage = new Stage();
-			Scene scene = new Scene(bPane);
-			newStage.setScene(scene);
-			Main.myStage.hide();
-			Main main = new Main();
-			newStage.setTitle("Sistema PetShop - Painel Inicial");
-			newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-			newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-			Main.myStage = newStage;
-			main.start(newStage);
+			funcoes.chamarTela("../TelaMenu.fxml", "Sistema PetShop - Painel Inicial");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -225,9 +170,7 @@ public class TelaGenAnimaisController implements Initializable{
 		try {
 			atualizarTabela(fachada.listarTodosAnimais());
 		} catch (NadaEncontradoException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText(e.getMessage());
-			alert.showAndWait();
+			funcoes.alerta(AlertType.ERROR, "Ocorreu um problema!", "", e.getMessage());
 		}
 	}
 	
@@ -237,19 +180,12 @@ public class TelaGenAnimaisController implements Initializable{
 			try{
 				atualizarTabela(fachada.findAnimal(txtFieldPesquisar.getText()));
 			} catch (IllegalAccessException e) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setContentText(e.getMessage());
-				alert.showAndWait();
+				funcoes.alerta(AlertType.ERROR, "Ocorreu um problema!", "", e.getMessage());
 			} catch (NadaEncontradoException e) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setContentText(e.getMessage());
-				alert.showAndWait();
+				funcoes.alerta(AlertType.ERROR, "Lista vazia", "", e.getMessage());
 			}
 		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Busca Incorreta");
-			alert.setContentText("Digite algo antes de pesquisar");
-			alert.showAndWait();
+			funcoes.alerta(AlertType.ERROR, "Busca Incorreta", "", "Digite algo antes de pesquisar");
 		}
 	}
 	
@@ -263,9 +199,7 @@ public class TelaGenAnimaisController implements Initializable{
 				tbViewAnimais.getSelectionModel().select(0);
 			}
 		} catch (NadaEncontradoException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText(e.getMessage());
-			alert.showAndWait();
+			funcoes.alerta(AlertType.ERROR, "Ocorreu um problema!", "", e.getMessage());
 		}
 
 	}

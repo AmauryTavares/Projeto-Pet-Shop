@@ -107,7 +107,7 @@ public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepos
 	private static ConsultaDAO lerArquivo() {
 		ConsultaDAO repositorioLocal = null;
 		
-		File in = new File("arquivos/repositorio_consulta.dat");
+		File in = new File("src/pet_shop/arquivos/repositorio_consulta.dat");
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		
@@ -137,7 +137,7 @@ public class ConsultaDAO extends RepositorioAbstrato<Consulta> implements IRepos
 			return;
 		}
 		
-		File out = new File("arquivos/repositorio_consulta.dat");
+		File out = new File("src/pet_shop/arquivos/repositorio_consulta.dat");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		if (!out.exists()) {

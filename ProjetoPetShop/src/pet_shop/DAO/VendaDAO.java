@@ -95,7 +95,7 @@ public class VendaDAO extends RepositorioAbstrato<Venda> implements IRepositorio
 			return;
 		}
 		
-		File out = new File("arquivos/repositorio_venda.dat");
+		File out = new File("src/pet_shop/arquivos/repositorio_venda.dat");
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		if (!out.exists()) {
@@ -122,7 +122,7 @@ public class VendaDAO extends RepositorioAbstrato<Venda> implements IRepositorio
 	private static VendaDAO lerArquivo() {
 		VendaDAO repositorioLocal = null;
 		
-		File in = new File("arquivos/repositorio_venda.dat");
+		File in = new File("src/pet_shop/arquivos/repositorio_venda.dat");
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		
