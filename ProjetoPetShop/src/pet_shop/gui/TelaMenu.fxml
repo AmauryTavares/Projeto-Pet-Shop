@@ -37,7 +37,7 @@
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="btnGenServicos" mnemonicParsing="false" prefHeight="39.0" prefWidth="250.0" text="Gerenciamento de Serviços" GridPane.rowIndex="1">
+            <Button fx:id="btnGenServicos" mnemonicParsing="false" onAction="#gerenciamentoServicos" prefHeight="39.0" prefWidth="250.0" text="Gerenciamento de Serviços" GridPane.rowIndex="1">
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
@@ -52,7 +52,7 @@
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="bnGenAtendimentos" mnemonicParsing="false" prefHeight="39.0" prefWidth="250.0" text="Gerenciamento de Atendimentos" GridPane.rowIndex="5">
+            <Button fx:id="bnGenAtendimentos" mnemonicParsing="false" onAction="#gerenciamentoAtendimentos" prefHeight="39.0" prefWidth="250.0" text="Gerenciamento de Atendimentos" GridPane.rowIndex="5">
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font>

@@ -82,6 +82,24 @@ public class TelaPainelInicialDono implements Initializable{
 	}
 	
 	@FXML
+	public void gerenciamentoServicos() {
+		try{
+			funcoes.chamarTela("../TelaGenServicos.fxml", "Sistema PetShop - Gerenciamento de Servicos");
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void gerenciamentoAtendimentos() {
+		try{
+			funcoes.chamarTela("../TelaGenAtendimentos.fxml", "Sistema PetShop - Gerenciamento de Atendimentos");
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	@FXML
 	public void voltarLogin() {
 		try{
 			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaLogin.fxml"));
