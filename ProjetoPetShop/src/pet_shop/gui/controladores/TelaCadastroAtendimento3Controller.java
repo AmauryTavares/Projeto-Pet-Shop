@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +18,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import pet_shop.negocio.SistemaFachada;
-import pet_shop.negocio.beans.Animal;
 import pet_shop.negocio.beans.Servico;
 import pet_shop.negocio.excecoes.NadaEncontradoException;
 
@@ -44,16 +45,13 @@ public class TelaCadastroAtendimento3Controller implements Initializable {
 	private TableView<Servico> tbViewServicos;
 	
 	@FXML
-	private TableColumn<Animal, String> tbColumnNome;
+	private TableColumn<Servico, String> tbColumnNome;
 	
 	@FXML
-	private TableColumn<Animal, String> tbColumnAnimal;
+	private TableColumn<Servico, String> tbColumnPreco;
 	
 	@FXML
-	private TableColumn<Animal, Double> tbColumnPreco;
-	
-	@FXML
-	private TableColumn<Animal, Boolean> tbColumnNecessitaConsulta;
+	private TableColumn<Servico, String> tbColumnNecessitaConsulta;
 	
 	public static Servico servicoSelecionado = null;
 	SistemaFachada fachada = SistemaFachada.getInstance();
@@ -62,9 +60,18 @@ public class TelaCadastroAtendimento3Controller implements Initializable {
 	public void atualizarTabela(List<Servico> lista) throws NadaEncontradoException {
 		
 		tbColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		tbColumnAnimal.setCellValueFactory(new PropertyValueFactory<>("animal"));
-		tbColumnPreco.setCellValueFactory(new PropertyValueFactory<>("preço"));
-		tbColumnNecessitaConsulta.setCellValueFactory(new PropertyValueFactory<>("necessitaConsulta"));
+		tbColumnPreco.setCellValueFactory(cellData -> 
+	     Bindings.format("%,.2f", cellData.getValue().getPreco()));
+		tbColumnNecessitaConsulta.setCellValueFactory(cellData -> {
+            boolean gender = cellData.getValue().isConsulta();
+            String genderAsString;
+            if(gender == true) {
+                genderAsString = "Sim";
+            } else {
+                genderAsString = "Não";
+            }
+           return new ReadOnlyStringWrapper(genderAsString);
+        });
 		
 		List<Servico> novaLista = new ArrayList<>();
 		//gera a nova lista apenas com serviços

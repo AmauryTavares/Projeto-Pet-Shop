@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,10 +49,10 @@ public class TelaGenProdutosController implements Initializable{
 	private TableColumn<Produto, String> tbColumnNome;
 	
 	@FXML
-	private TableColumn<Produto, Double> tbColumnPreco;
+	private TableColumn<Produto, String> tbColumnPreco;
 	
 	@FXML
-	private TableColumn<Produto, Double> tbColumnQtdEstoque;
+	private TableColumn<Produto, String> tbColumnQtdEstoque;
 	
 	@FXML
 	private TextField txtFieldPesquisar;
@@ -66,8 +67,10 @@ public class TelaGenProdutosController implements Initializable{
 	public void atualizarTabela(List<Produto> lista) throws NadaEncontradoException {
 		
 		tbColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		tbColumnPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
-		tbColumnQtdEstoque.setCellValueFactory(new PropertyValueFactory<>("qtdEstoque"));
+		tbColumnPreco.setCellValueFactory(cellData ->
+	    Bindings.format("%,.2f", cellData.getValue().getPreco()));
+		tbColumnQtdEstoque.setCellValueFactory(cellData -> 
+	     Bindings.format("%,.2f", cellData.getValue().getQtdEstoque()));
 		
 		
 		List<Produto> novaLista = new ArrayList<>();

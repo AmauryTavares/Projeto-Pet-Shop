@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaCadastroAtendimento2Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaCadastroAtendimento2Controller">
    <top>
       <StackPane maxWidth="1.7976931348623157E308" prefHeight="82.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
@@ -77,8 +77,6 @@
                   <TableColumn fx:id="tbColumnNumCasa" prefWidth="50.0" text="Nº da Casa" />
                   <TableColumn fx:id="tbColumnEmail" prefWidth="75.0" text="Email" />
                   <TableColumn fx:id="tbColumnTelefone" prefWidth="75.0" text="Telefone" />
-                  <TableColumn fx:id="tbColumnLogin" prefWidth="75.0" text="Login" />
-                  <TableColumn fx:id="tbColumnSenha" prefWidth="75.0" text="Senha" />
                   <TableColumn fx:id="tbColumnSalario" prefWidth="75.0" text="Salário" />
                   <TableColumn fx:id="tbColumnCargo" prefWidth="75.0" text="Cargo" />
               </columns>

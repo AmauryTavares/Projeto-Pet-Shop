@@ -1930,7 +1930,7 @@ public class GuiDono {
 				funcionarioAlt = alterarAtendimento.getFuncionario();
 				servicoAlt = alterarAtendimento.getServico();
 				dataAlt = alterarAtendimento.getData();
-				diagnosticoAlt = alterarAtendimento.getObservacao();
+				diagnosticoAlt = alterarAtendimento.getDiagnostico();
 				sairLoop = true;
 			} else {
 				System.out.println("\nID inexistente, tente novamente!\n");
@@ -2105,7 +2105,7 @@ public class GuiDono {
 
 		if (voltar == false) {
 			if (servicoAlt.isConsulta()) {
-				System.out.println("Diagnóstico atual: " + alterarAtendimento.getObservacao()); // Imprime
+				System.out.println("Diagnóstico atual: " + alterarAtendimento.getDiagnostico()); // Imprime
 																								// o
 																								// número
 																								// da

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Venda implements Serializable{
 
@@ -11,15 +12,16 @@ public class Venda implements Serializable{
 	private long id;
 	private Cliente cliente;
 	private Funcionario funcionario;
-	private ArrayList<Atendimento> atendimentos;
-	private ArrayList<Produto> produtos;
+	private List<Atendimento> atendimentos;
+	private List<Produto> produtos;
 	private LocalDate data;
 	private double valorTotal;
 	
-	public Venda(Funcionario funcionario, ArrayList<Atendimento> atendimentos, ArrayList<Produto> produtos, LocalDate data) {
+	public Venda(Funcionario funcionario, Cliente clienteSelecionado, List<Atendimento> listaAtendimentos, List<Produto> listaProdutos, LocalDate data) {
 		this.funcionario = funcionario;
-		this.atendimentos = atendimentos;
-		this.produtos = produtos;
+		this.cliente = clienteSelecionado;
+		this.atendimentos = listaAtendimentos;
+		this.produtos = listaProdutos;
 		this.data = data;
 		this.valorTotal = valorAtendimentos() + valorProdutos();
 	}
@@ -40,7 +42,7 @@ public class Venda implements Serializable{
 		this.funcionario = funcionario;
 	}
 
-	public ArrayList<Atendimento> getAtendimentos() {
+	public List<Atendimento> getAtendimentos() {
 		return atendimentos;
 	}
 
@@ -48,7 +50,7 @@ public class Venda implements Serializable{
 		this.atendimentos = atendimentos;
 	}
 
-	public ArrayList<Produto> getProdutos() {
+	public List<Produto> getProdutos() {
 		return produtos;
 	}
 
@@ -84,6 +86,22 @@ public class Venda implements Serializable{
 		if (p != null) {
 			this.produtos.add(p);
 		}
+	}
+	
+	public String getNomeCliente() {
+		return this.cliente.getNome();
+	}
+	
+	public String getNomeFun() {
+		return this.funcionario.getNome();
+	}
+	
+	public int getQtdProdutos(){
+		int valor = 0;
+		for (Produto p : produtos) {
+			valor += p.getQtdEstoque();
+		}
+		return valor;
 	}
 	
 	public void removerProduto(long id) {
@@ -123,7 +141,7 @@ public class Venda implements Serializable{
 	private double valorProdutos() {
 		double valorTotalProdutos = 0;
 		for (int i = 0; i < this.produtos.size(); i++) {
-			valorTotalProdutos += this.produtos.get(i).getPreco();
+			valorTotalProdutos += this.produtos.get(i).getPreco() * this.produtos.get(i).getQtdEstoque();
 		}
 		return valorTotalProdutos;
 	}
@@ -140,12 +158,35 @@ public class Venda implements Serializable{
 		text += "\nServiço(s): ";
 		
 		for (int i = 0; i < this.atendimentos.size(); i++) {
-			text += String.format("\n%20s \tR$%.2f", this.atendimentos.get(i).getServico().getNome(), this.atendimentos.get(i).getServico().getPreco());
+			text += String.format("\n%22s \tR$%.2f", this.atendimentos.get(i).getServico().getNome(), this.atendimentos.get(i).getServico().getPreco());
 		}
 		
-		text += "\n\nValor Total: R$" + String.format("%.2f", this.valorTotal);
+		text += "\n\nValor Total: " + String.format("          R$%.2f", this.valorTotal);
 		
 		return text;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Venda other = (Venda) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
 	
 }

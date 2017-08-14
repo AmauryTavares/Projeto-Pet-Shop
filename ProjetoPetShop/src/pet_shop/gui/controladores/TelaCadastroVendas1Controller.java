@@ -1,7 +1,6 @@
 package pet_shop.gui.controladores;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -9,19 +8,20 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import pet_shop.negocio.SistemaFachada;
-import pet_shop.negocio.beans.Animal;
+import pet_shop.negocio.beans.Cliente;
+import pet_shop.negocio.beans.Pessoa;
 import pet_shop.negocio.excecoes.NadaEncontradoException;
 
-public class TelaCadastroServico1Controller implements Initializable {
-	
+public class TelaCadastroVendas1Controller implements Initializable{
+
 	@FXML
 	private Label labelLogin;
 	
@@ -41,68 +41,76 @@ public class TelaCadastroServico1Controller implements Initializable {
 	private Button btnVoltar;
 	
 	@FXML
-	private TableView<Animal> tbViewAnimais;
+	private TableView<Pessoa> tbViewClientes;
 	
 	@FXML
-	private TableColumn<Animal, String> tbColumnNome;
+	private TableColumn<Pessoa, String> tbColumnNome;
 	
 	@FXML
-	private TableColumn<Animal, String> tbColumnDono;
+	private TableColumn<Pessoa, String> tbColumnCPF;
 	
 	@FXML
-	private TableColumn<Animal, String> tbColumnCPF;
+	private TableColumn<Pessoa, String> tbColumnUF;
 	
 	@FXML
-	private TableColumn<Animal, Double> tbColumnPeso;
+	private TableColumn<Pessoa, String> tbColumnRua;
 	
 	@FXML
-	private TableColumn<Animal, String> tbColumnEspecie;
+	private TableColumn<Pessoa, String> tbColumnCidade;
 	
 	@FXML
-	private TableColumn<Animal, String> tbColumnRaca;
+	private TableColumn<Pessoa, String> tbColumnBairro;
 	
 	@FXML
-	private TableColumn<Animal, LocalDate> tbColumnDataNascimento;
+	private TableColumn<Pessoa, String> tbColumnNCasa;
 	
-	public static Animal animalSelecionado = null;
+	@FXML
+	private TableColumn<Pessoa, String> tbColumnEmail;
+	
+	@FXML
+	private TableColumn<Pessoa, String> tbColumnTelefone;
+	
+	public static Cliente clienteSelecionado = null;
 	SistemaFachada fachada = SistemaFachada.getInstance();
 	Funcoes funcoes = new Funcoes();
 	
-	public void atualizarTabela(List<Animal> lista) throws NadaEncontradoException {
+	public void atualizarTabela(List<Pessoa> lista) throws NadaEncontradoException {
 		tbColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		tbColumnDono.setCellValueFactory(new PropertyValueFactory<>("dono"));
+		tbColumnBairro.setCellValueFactory(new PropertyValueFactory<>("bairro"));
 		tbColumnCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-		tbColumnPeso.setCellValueFactory(new PropertyValueFactory<>("peso"));
-		tbColumnEspecie.setCellValueFactory(new PropertyValueFactory<>("especie"));
-		tbColumnRaca.setCellValueFactory(new PropertyValueFactory<>("raça"));
-		tbColumnDataNascimento.setCellValueFactory(new PropertyValueFactory<>("dataNascimento"));
+		tbColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+		tbColumnNCasa.setCellValueFactory(new PropertyValueFactory<>("numCasa"));
+		tbColumnRua.setCellValueFactory(new PropertyValueFactory<>("rua"));
+		tbColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
+		tbColumnUF.setCellValueFactory(new PropertyValueFactory<>("uf"));
+		tbColumnCidade.setCellValueFactory(new PropertyValueFactory<>("cidade"));
 		
-		List<Animal> novaLista = new ArrayList<>();
-		//gera a nova lista apenas com animais
-		for (Animal a : lista) {
-			if (a instanceof Animal) {
-				novaLista.add(a);
+		List<Pessoa> novaLista = new ArrayList<>();
+		//gera a nova lista apenas com clientes
+		for (Pessoa p : lista) {
+			if (p instanceof Cliente) {
+				novaLista.add(p);
 			}
 		}
 		
-		tbViewAnimais.setItems(FXCollections.observableList(novaLista));
+		tbViewClientes.setItems(FXCollections.observableList(novaLista));
 
 	}
 	
 	@FXML
-	public void selecionar(){
+	public void selecionar() {
 		try{
 			 // seleciona o animal
-			animalSelecionado = tbViewAnimais.getSelectionModel().getSelectedItem();
-			for (Animal a : fachada.listarTodosAnimais()) {
-				if (a instanceof Animal) {
-					if (a.equals(animalSelecionado)) {
-						animalSelecionado = a;
+			clienteSelecionado = (Cliente) tbViewClientes.getSelectionModel().getSelectedItem();
+			for (Pessoa a : fachada.listarTudo()) {
+				if (a instanceof Cliente) {
+					if (a.equals(clienteSelecionado)) {
+						clienteSelecionado = (Cliente) a;
 					}
 				}
 			}
 			//
-			funcoes.chamarTela("../TelaCadastroServico2.fxml", "Sistema PetShop - Cadastro de Serviço");
+			funcoes.chamarTela("../TelaCadastroVendas2.fxml", "Sistema PetShop - Cadastro de Venda");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -111,7 +119,7 @@ public class TelaCadastroServico1Controller implements Initializable {
 	@FXML
 	public void voltar() {
 		try{
-			funcoes.chamarTela("../TelaGenServicos.fxml", "Sistema PetShop - Gerenciamento de Serviços");
+			funcoes.chamarTela("../TelaGenVendas.fxml", "Sistema PetShop - Gerenciamento de Vendas");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -120,9 +128,9 @@ public class TelaCadastroServico1Controller implements Initializable {
 	@FXML
 	public void atualizarAcaoButton() throws NadaEncontradoException {
 		try {
-			atualizarTabela(fachada.listarTodosAnimais());
+			atualizarTabela(fachada.listarTudo());
 		} catch (NadaEncontradoException e) {
-			funcoes.alerta(AlertType.ERROR, "Ocorreu um problema!", "", e.getMessage());
+			funcoes.alerta(AlertType.ERROR, "Lista vazia", "", e.getMessage());
 		}
 	}
 	
@@ -130,7 +138,7 @@ public class TelaCadastroServico1Controller implements Initializable {
 	public void pesquisarAcaoButton() throws IllegalAccessException, NadaEncontradoException {
 		if (!txtFieldPesquisar.getText().isEmpty()) {
 			try{
-				atualizarTabela(fachada.findAnimal(txtFieldPesquisar.getText()));
+				atualizarTabela(fachada.listarCliente(txtFieldPesquisar.getText()));
 			} catch (IllegalAccessException e) {
 				funcoes.alerta(AlertType.ERROR, "Ocorreu um problema!", "", e.getMessage());
 			} catch (NadaEncontradoException e) {
@@ -145,12 +153,12 @@ public class TelaCadastroServico1Controller implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		labelLogin.setText("Bem vindo(a), Administrador");
 		try {
-			atualizarTabela(fachada.listarTodosAnimais());
+			atualizarTabela(fachada.listarTudo());
 		} catch (NadaEncontradoException e) {
 			funcoes.alerta(AlertType.ERROR, "Lista vazia", "", e.getMessage());
 		}
 		
-		tbViewAnimais.getSelectionModel().select(0);
+		tbViewClientes.getSelectionModel().select(0);
 
 	}
 

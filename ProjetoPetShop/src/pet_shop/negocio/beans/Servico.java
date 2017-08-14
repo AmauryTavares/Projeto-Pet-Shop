@@ -9,9 +9,8 @@ public class Servico implements Serializable{
 	private String nome;
 	private double preco;
 	private boolean necessitaConsulta;
-	private Animal animal;
 	
-	public Servico(String nome, double preco, boolean consulta, Animal animal) {
+	public Servico(String nome, double preco, boolean consulta) {
 		this.nome = nome;
 		this.preco = preco;
 		this.necessitaConsulta = consulta;
@@ -50,18 +49,10 @@ public class Servico implements Serializable{
 		this.necessitaConsulta = consulta;
 	}
 
-	public Animal getAnimal() {
-		return animal;
-	}
-
-	public void setAnimal(Animal animal) {
-		this.animal = animal;
-	}
-
 	@Override
 	public String toString() {
 		String text ="ID: " + this.id + "\nNome do produto: " + this.nome + "\nPreço: R$" + String.format("%.2f", this.preco) +
-				"\nAnimal: " + this.getAnimal() + "\nConsulta: ";
+				 "\nConsulta: ";
 		
 		if (this.necessitaConsulta == true) {
 			text += "Sim";
@@ -81,13 +72,6 @@ public class Servico implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Servico other = (Servico) obj;
-		if (animal == null) {
-			if (other.animal != null)
-				return false;
-		} else if (!animal.equals(other.animal))
-			return false;
-		if (id != other.id)
-			return false;
 		if (necessitaConsulta != other.necessitaConsulta)
 			return false;
 		if (nome == null) {
@@ -99,7 +83,5 @@ public class Servico implements Serializable{
 			return false;
 		return true;
 	}
-
-	
 
 }

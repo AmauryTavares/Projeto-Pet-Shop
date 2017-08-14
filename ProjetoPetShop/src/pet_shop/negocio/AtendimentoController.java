@@ -45,7 +45,7 @@ public class AtendimentoController {
 							if (atendimento.getData() != null) {
 								Period p = Period.between(LocalDate.now(), atendimento.getData());
 								if (p.getDays() >= 0 && p.getMonths() >= 0 && p.getYears() >= 0) {
-									if (atendimento.getObservacao() != null) {
+									if (atendimento.getDiagnostico() != null) {
 										this.atendimentoRepository.cadastrar(atendimento);
 										this.atendimentoRepository.salvarArquivo();
 									} else {
@@ -84,7 +84,7 @@ public class AtendimentoController {
 					if (atendimento.getFuncionario() != null) {
 						if (atendimento.getServico() != null) {
 							if (atendimento.getData() != null) {
-								if (atendimento.getObservacao() != null) {
+								if (atendimento.getDiagnostico() != null) {
 									a1.alterar(atendimento, indice);
 									this.atendimentoRepository.salvarArquivo();
 								} else {

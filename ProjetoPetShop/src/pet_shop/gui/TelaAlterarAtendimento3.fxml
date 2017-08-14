@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaAlterarServico3Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaAlterarAtendimento3Controller">
    <top>
       <StackPane maxWidth="1.7976931348623157E308" prefHeight="82.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
@@ -68,7 +68,6 @@
          <children>
             <TableView fx:id="tbViewServicos" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="431.0" prefWidth="912.0">
               <columns>
-                <TableColumn fx:id="tbColumnAnimal" prefWidth="75.0" text="Animal" />
                 <TableColumn fx:id="tbColumnNome" prefWidth="75.0" text="Nome" />
                   <TableColumn fx:id="tbColumnPreco" prefWidth="75.0" text="Preço" />
                   <TableColumn fx:id="tbColumnNecessitaConsulta" prefWidth="75.0" text="Necessita Consulta" />

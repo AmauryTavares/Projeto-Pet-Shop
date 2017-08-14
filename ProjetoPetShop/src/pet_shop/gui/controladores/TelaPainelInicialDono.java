@@ -100,6 +100,15 @@ public class TelaPainelInicialDono implements Initializable{
 	}
 	
 	@FXML
+	public void gerenciamentoVendas() {
+		try{
+			funcoes.chamarTela("../TelaGenVendas.fxml", "Sistema PetShop - Gerenciamento de Vendas");
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	@FXML
 	public void voltarLogin() {
 		try{
 			BorderPane bPane = FXMLLoader.load(getClass().getResource("../TelaLogin.fxml"));
@@ -118,7 +127,7 @@ public class TelaPainelInicialDono implements Initializable{
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		labelLogin.setText("Bem vindo(a), Administrador");	
+		labelLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome());	
 	}
 
 }

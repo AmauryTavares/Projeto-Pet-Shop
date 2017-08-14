@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import pet_shop.negocio.SistemaFachada;
-import pet_shop.negocio.beans.Pessoa;
 import pet_shop.negocio.beans.Produto;
 import pet_shop.negocio.excecoes.NadaEncontradoException;
 
@@ -76,9 +75,9 @@ public class TelaAltProdutosController implements Initializable{
 	private int procurarID() throws NadaEncontradoException{
 		int id = 0;
 		try{
-			List<Pessoa> lista =  fachada.listarTudo();
+			List<Produto> lista =  fachada.listarTudoProduto();
 			for (int i = 0; i < lista.size(); i++) {
-				if (lista.get(i).equals(TelaGenClientesController.clienteAlterar)) {
+				if (lista.get(i).equals(TelaGenProdutosController.produtoAlterar)) {
 					id = (int) lista.get(i).getId();
 				}
 			}

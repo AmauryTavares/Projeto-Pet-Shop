@@ -38,12 +38,8 @@ public class ServicoContoller
 			if (!this.servicoRepository.existe(servico)) {
 				if (servico.getNome() != null) {
 					if (servico.getPreco() > 0) {
-						if (servico.getAnimal() != null) {
-							this.servicoRepository.cadastrar(servico);
-							this.servicoRepository.salvarArquivo();
-						} else {
-							throw new AnimalInvalidoException();
-						}
+						this.servicoRepository.cadastrar(servico);
+						this.servicoRepository.salvarArquivo();
 					} else {
 						throw new PrecoInvalidoException();
 					}
@@ -67,12 +63,8 @@ public class ServicoContoller
 			if (indice != s1.listar().size()) {
 				if (servico.getNome() != null) {
 					if (servico.getPreco() > 0) {
-						if (servico.getAnimal() != null) {
-							s1.alterar(servico, indice);
-							this.servicoRepository.salvarArquivo();
-						} else {
-							throw new AnimalInvalidoException();
-						}
+						s1.alterar(servico, indice);
+						this.servicoRepository.salvarArquivo();
 					} else {
 						throw new PrecoInvalidoException();
 					}

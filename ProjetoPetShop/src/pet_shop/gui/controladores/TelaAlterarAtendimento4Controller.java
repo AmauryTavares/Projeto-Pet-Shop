@@ -41,7 +41,7 @@ public class TelaAlterarAtendimento4Controller implements Initializable {
 	Funcoes funcoes = new Funcoes();
 	
 	@FXML
-	public void alterar() {
+	public void alterarAction() {
 		
 		Optional<ButtonType> resultado = funcoes.alerta(AlertType.CONFIRMATION, "Alterar Atendimento", "", "Deseja salvar essas alterações?");
 		if (resultado.get() == ButtonType.OK) {
@@ -85,7 +85,7 @@ public class TelaAlterarAtendimento4Controller implements Initializable {
 	}
 
 	@FXML
-	public void voltar() {
+	public void voltarAction() {
 		try {
 			funcoes.chamarTela("../TelaCadastroAtendimento3.fxml", "Sistema PetShop - Cadastro de Atendimento");
 		} catch (Exception exc) {
@@ -110,7 +110,7 @@ public class TelaAlterarAtendimento4Controller implements Initializable {
 	
 	public void atualizarValores() {
 		dpData.setValue(TelaGenAtendimentosController.atendimentoAlterar.getData());
-		txtAreaDiagnostico.setText(TelaGenAtendimentosController.atendimentoAlterar.getObservacao());
+		txtAreaDiagnostico.setText(TelaGenAtendimentosController.atendimentoAlterar.getDiagnostico());
 	}
 	
 	@Override

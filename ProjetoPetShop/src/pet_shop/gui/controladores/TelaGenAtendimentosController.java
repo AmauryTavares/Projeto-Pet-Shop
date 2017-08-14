@@ -2,6 +2,7 @@ package pet_shop.gui.controladores;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -62,6 +63,12 @@ public class TelaGenAtendimentosController implements Initializable{
 	private TableColumn<Atendimento, String> tbColumnFuncionario;
 	
 	@FXML
+	private TableColumn<Atendimento, String> tbColumnCpf;
+	
+	@FXML
+	private TableColumn<Atendimento, String> tbColumnNomeDono;
+	
+	@FXML
 	private TableColumn<Atendimento, String> tbColumnServico;
 	
 	@FXML
@@ -70,6 +77,9 @@ public class TelaGenAtendimentosController implements Initializable{
 	@FXML
 	private TableColumn<Atendimento, String> tbColumnDiagnostico;
 	
+	
+	public static List<Atendimento> listaAtendimentos = null;
+	public static boolean possuiItens = false;
 	public static Animal animalAlterar = null;
 	public static Pessoa funcionarioAlterar = null;
 	public static Servico servicoAlterar = null;
@@ -78,8 +88,10 @@ public class TelaGenAtendimentosController implements Initializable{
 	Funcoes funcoes = new Funcoes();
 	
 	public void atualizarTabela(List<Atendimento> lista) throws NadaEncontradoException {
+		tbColumnNomeDono.setCellValueFactory(new PropertyValueFactory<>("nomeDono"));
 		tbColumnAnimal.setCellValueFactory(new PropertyValueFactory<>("nomeAnimal"));
 		tbColumnFuncionario.setCellValueFactory(new PropertyValueFactory<>("nomeFuncionario"));
+		tbColumnCpf.setCellValueFactory(new PropertyValueFactory<>("cpfFuncionario"));
 		tbColumnServico.setCellValueFactory(new PropertyValueFactory<>("nomeServico"));
 		tbColumnData.setCellValueFactory(new PropertyValueFactory<>("data"));
 		tbColumnDiagnostico.setCellValueFactory(new PropertyValueFactory<>("diagnostico"));
@@ -91,6 +103,7 @@ public class TelaGenAtendimentosController implements Initializable{
 	@FXML
 	public void cadastrar(){
 		try{
+			listaAtendimentos = new ArrayList<>();
 			funcoes.chamarTela("../TelaCadastroAtendimento1.fxml", "Sistema PetShop - Cadastro de Atendimento");	
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -99,37 +112,36 @@ public class TelaGenAtendimentosController implements Initializable{
 	
 	@FXML
 	public void alterar() throws NadaEncontradoException {
-
+		
 		atendimentoAlterar = tbViewAtendimentos.getSelectionModel().getSelectedItem();
 		try{
 			
 			for (Animal a : fachada.listarTodosAnimais()) {				
-				if (a.equals(tbViewAtendimentos.getSelectionModel().getSelectedItem().getAnimal())) {
-					atendimentoAlterar.setAnimal(a);
-					System.out.println("ola");		
+				if (a.getDono().getNome().equals(atendimentoAlterar.getAnimal().getDono().getNome())
+						&& a.getNome().equals(atendimentoAlterar.getAnimal().getNome())) {
+							animalAlterar = a;	
 				}
 			}
 			
 			for (Pessoa p : fachada.listarTudo()) {		
 				if(p instanceof Funcionario) {
-					if (p.getNome().equals(tbViewAtendimentos.getSelectionModel().getSelectedItem().getFuncionario().getNome())) {
-						atendimentoAlterar.setFuncionario((Funcionario) p);
-						System.out.println("ola");		
+					if (p.getNome().equals(atendimentoAlterar.getFuncionario().getNome()) 
+							&& p.getCpf().equals(atendimentoAlterar.getFuncionario().getCpf())) {
+						funcionarioAlterar = p;
 					}
 				}
 			}
 			
 			for (Servico s : fachada.listarTodosServicos()) {				
-				if (s.equals(tbViewAtendimentos.getSelectionModel().getSelectedItem().getServico())) {
-					atendimentoAlterar.setServico(s);
-					System.out.println("ola");		
+				if (s.getNome().equals(atendimentoAlterar.getServico().getNome())) {
+					servicoAlterar = s;	
 				}
 			}
 			
 		} catch (NadaEncontradoException e) {
 			System.out.println(e.getMessage());
 		}
-
+		
 		try{
 			Alert dialog = new Alert(AlertType.INFORMATION);
 			dialog.setTitle("Atenção");
@@ -147,7 +159,7 @@ public class TelaGenAtendimentosController implements Initializable{
 				dialog1.setContentText("Deseja alterar o funcionário?");
 				dialog1.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
 				
-				Optional<ButtonType> resultado1 = dialog.showAndWait();
+				Optional<ButtonType> resultado1 = dialog1.showAndWait();
 				
 				if (resultado1.get().equals(ButtonType.YES)) {
 					funcoes.chamarTela("../TelaAlterarAtendimento2.fxml", "Sistema PetShop - Alteração de Atendimento");
@@ -158,7 +170,7 @@ public class TelaGenAtendimentosController implements Initializable{
 					dialog2.setContentText("Deseja alterar o serviço?");
 					dialog2.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
 					
-					Optional<ButtonType> resultado2 = dialog.showAndWait();
+					Optional<ButtonType> resultado2 = dialog2.showAndWait();
 					
 					if (resultado2.get().equals(ButtonType.YES)) {
 						funcoes.chamarTela("../TelaAlterarAtendimento3.fxml", "Sistema PetShop - Alteração de Atendimento");

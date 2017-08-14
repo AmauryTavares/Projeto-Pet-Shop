@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -18,7 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import pet_shop.negocio.SistemaFachada;
-import pet_shop.negocio.beans.Animal;
 import pet_shop.negocio.beans.Servico;
 import pet_shop.negocio.excecoes.NadaEncontradoException;
 
@@ -52,29 +52,34 @@ public class TelaGenServicosController implements Initializable {
 	private TableView<Servico> tbViewServicos;
 	
 	@FXML
-	private TableColumn<Animal, String> tbColumnNome;
+	private TableColumn<Servico, String> tbColumnNome;
 	
 	@FXML
-	private TableColumn<Animal, String> tbColumnAnimal;
+	private TableColumn<Servico, String> tbColumnPreco;
 	
 	@FXML
-	private TableColumn<Animal, Double> tbColumnPreco;
+	private TableColumn<Servico, String> tbColumnNecessitaConsulta;
 	
-	@FXML
-	private TableColumn<Animal, Boolean> tbColumnNecessitaConsulta;
-	
-	public static Animal animalAlterar = null;
 	public static Servico servicoAlterar = null;
 	SistemaFachada fachada = SistemaFachada.getInstance();
 	Funcoes funcoes = new Funcoes();
 	
 	public void atualizarTabela(List<Servico> lista) throws NadaEncontradoException {
 		
-		tbColumnAnimal.setCellValueFactory(new PropertyValueFactory<>("animalNome"));
 		tbColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		tbColumnPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
-		tbColumnNecessitaConsulta.setCellValueFactory(new PropertyValueFactory<>("necessitaConsulta"));
-				
+		tbColumnPreco.setCellValueFactory(cellData -> 
+	     Bindings.format("%,.2f", cellData.getValue().getPreco()));
+		tbColumnNecessitaConsulta.setCellValueFactory(cellData -> {
+            boolean gender = cellData.getValue().isConsulta();
+            String genderAsString;
+            if(gender == true) {
+                genderAsString = "Sim";
+            } else {
+                genderAsString = "Não";
+            }
+           return new ReadOnlyStringWrapper(genderAsString);
+        });
+			
 		tbViewServicos.setItems(FXCollections.observableList(lista));
 
 	}
@@ -82,7 +87,7 @@ public class TelaGenServicosController implements Initializable {
 	@FXML
 	public void cadastrar(){
 		try{
-			funcoes.chamarTela("../TelaCadastroServico1.fxml", "Sistema PetShop - Cadastro de Servico");	
+			funcoes.chamarTela("../TelaCadastroServico2.fxml", "Sistema PetShop - Cadastro de Servico");	
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -92,30 +97,10 @@ public class TelaGenServicosController implements Initializable {
 	public void alterar() throws NadaEncontradoException {
 
 		servicoAlterar = tbViewServicos.getSelectionModel().getSelectedItem();
-		try{
-			for (Animal a : fachada.listarTodosAnimais()) {
-				if (a.getNome().equals(tbViewServicos.getSelectionModel().getSelectedItem().getAnimal().getNome()) ) {
-					servicoAlterar.setAnimal(a);
-					System.out.println("ola");
-				}				
-			}
-		} catch (NadaEncontradoException e) {
-			System.out.println(e.getMessage());
-		}
 
 		try{
-			Alert dialog = new Alert(AlertType.INFORMATION);
-			dialog.setTitle("Atenção");
-			dialog.setContentText("Deseja alterar o animal?");
-			dialog.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-			
-			Optional<ButtonType> resultado = dialog.showAndWait();
-			
-			if (resultado.get().equals(ButtonType.YES)) {
-				funcoes.chamarTela("../TelaAlterarServico1.fxml", "Sistema PetShop - Alteração de Serviço");
-			} else {
-				funcoes.chamarTela("../TelaAlterarServico2.fxml", "Sistema PetShop - Alteração de Serviço");
-			}
+		
+			funcoes.chamarTela("../TelaAlterarServico2.fxml", "Sistema PetShop - Alteração de Serviço");
 
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -186,6 +171,7 @@ public class TelaGenServicosController implements Initializable {
 			funcoes.alerta(AlertType.ERROR, "Ocorreu um problema!", "", e.getMessage());
 		}
 
+		
 	}
 
 }

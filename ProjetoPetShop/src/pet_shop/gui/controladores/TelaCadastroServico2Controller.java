@@ -6,9 +6,10 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import pet_shop.negocio.SistemaFachada;
 import pet_shop.negocio.beans.Servico;
@@ -31,10 +32,13 @@ public class TelaCadastroServico2Controller implements Initializable {
 	private TextField txtFieldPreco;
 
 	@FXML
-	private CheckBox checkBoxSim;
+	private RadioButton rdButtonSim;
 	
 	@FXML
-	private CheckBox checkBoxNao;
+	private RadioButton rdButtonNao;
+	
+	@FXML
+	private ToggleGroup Consulta;
 	
 	SistemaFachada fachada = SistemaFachada.getInstance();
 	Funcoes funcoes = new Funcoes();
@@ -44,13 +48,15 @@ public class TelaCadastroServico2Controller implements Initializable {
 		try {
 			
 			boolean consulta = false;
-			if(checkBoxSim.isSelected()) {
+			RadioButton selectedRadioButton = (RadioButton) Consulta.getSelectedToggle();
+			if(selectedRadioButton.getText().equals("Sim")) {
 				consulta = true;
 			}
 			
-			Servico s = new Servico(txtFieldNome.getText(), Double.parseDouble(txtFieldPreco.getText()), consulta, TelaCadastroServico1Controller.animalSelecionado);
-
+			Servico s = new Servico(txtFieldNome.getText(), Double.parseDouble(txtFieldPreco.getText()), consulta);
+			System.out.println(s);
 			fachada.saveServico(s);
+			
 			funcoes.alerta(AlertType.INFORMATION, "Sucesso!", "", "Serviço cadastrado com sucesso!");
 			try {
 				funcoes.chamarTela("../TelaGenServicos.fxml", "Sistema PetShop - Gerencimantedo de Serviços");
@@ -63,7 +69,7 @@ public class TelaCadastroServico2Controller implements Initializable {
 	}
 
 	@FXML
-	public void voltar() {
+	public void voltarAction() {
 		try {
 			funcoes.chamarTela("../TelaCadastroServico1.fxml", "Sistema PetShop - Cadastro de Serviço");
 		} catch (Exception exc) {

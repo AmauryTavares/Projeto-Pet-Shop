@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaCadastroServico1Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaGenVendasController">
    <top>
       <StackPane maxWidth="1.7976931348623157E308" prefHeight="82.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Cadastro de Serviço">
+            <Label text="Gerenciamento de Vendas">
                <font>
                   <Font name="Comic Sans MS Bold" size="20.0" />
                </font>
@@ -66,15 +66,14 @@
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tbViewAnimais" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="431.0" prefWidth="912.0">
+            <TableView fx:id="tbViewVendas" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="431.0" prefWidth="912.0">
               <columns>
-                <TableColumn fx:id="tbColumnDono" prefWidth="75.0" text="Dono" />
-                <TableColumn fx:id="tbColumnCPF" prefWidth="75.0" text="CPF" />
-                  <TableColumn fx:id="tbColumnNome" prefWidth="75.0" text="Nome" />
-                  <TableColumn fx:id="tbColumnPeso" prefWidth="75.0" text="Peso (kg)" />
-                  <TableColumn fx:id="tbColumnEspecie" prefWidth="75.0" text="Espécie" />
-                  <TableColumn fx:id="tbColumnRaça" prefWidth="75.0" text="Raça" />
-                  <TableColumn fx:id="tbColumnDataNascimento" prefWidth="50.0" text="Data de Nascimento" />
+                  <TableColumn fx:id="tbColumnNomeCliente" prefWidth="75.0" text="Nome do Cliente" />
+                <TableColumn fx:id="tbColumnNomeFun" prefWidth="75.0" text="Nome do Funcionário" />
+                  <TableColumn fx:id="tbColumnQtdServico" prefWidth="75.0" text="Qtd. de Serviços" />
+                  <TableColumn fx:id="tbColumnQtdProduto" prefWidth="75.0" text="Qtd. de Produtos" />
+                <TableColumn fx:id="tbColumnValor" prefWidth="75.0" text="Valor Total" />
+                  <TableColumn fx:id="tbColumnData" prefWidth="75.0" text="Data" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -82,7 +81,17 @@
             </TableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="150.0">
                <children>
-                  <Button fx:id="btnSelecionar" mnemonicParsing="false" onAction="#selecionar" prefHeight="32.0" prefWidth="120.0" text="Selecionar">
+                  <Button fx:id="btnCadastrar" mnemonicParsing="false" onAction="#cadastrar" prefHeight="32.0" prefWidth="153.0" text="Realizar Venda">
+                     <font>
+                        <Font name="Comic Sans MS" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnExcluir" mnemonicParsing="false" onAction="#excluir" prefHeight="28.0" prefWidth="90.0" text="Excluir">
+                     <font>
+                        <Font name="Comic Sans MS" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnInformacoes" mnemonicParsing="false" onAction="#maisInformacoes" prefHeight="32.0" prefWidth="153.0" text="Mais Informações">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>

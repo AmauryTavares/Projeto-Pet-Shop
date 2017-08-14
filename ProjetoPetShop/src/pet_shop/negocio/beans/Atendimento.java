@@ -54,11 +54,11 @@ public class Atendimento implements Serializable{
 		this.data = data;
 	}
 
-	public String getObservacao() {
+	public String getDiagnostico() {
 		return diagnostico;
 	}
 
-	public void setObservacao(String diagnostico) {
+	public void setDiagnostico(String diagnostico) {
 		this.diagnostico = diagnostico;
 	}
 
@@ -68,6 +68,26 @@ public class Atendimento implements Serializable{
 	
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public String getNomeAnimal() {
+		return this.animal.getNome();
+	}
+	
+	public String getNomeFuncionario(){
+		return this.funcionario.getNome();
+	}
+	
+	public String getNomeServico() {
+		return this.servico.getNome();
+	}
+	
+	public String getCpfFuncionario() {
+		return this.funcionario.getCpf();
+	}
+	
+	public String getNomeDono() {
+		return this.animal.getDono().getNome();
 	}
 	
 	@Override

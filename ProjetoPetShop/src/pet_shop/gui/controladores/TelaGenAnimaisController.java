@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -63,7 +64,7 @@ public class TelaGenAnimaisController implements Initializable{
 	private TableColumn<Animal, String> tbColumnCPF;
 	
 	@FXML
-	private TableColumn<Animal, Double> tbColumnPeso;
+	private TableColumn<Animal, String> tbColumnPeso;
 	
 	@FXML
 	private TableColumn<Animal, String> tbColumnEspecie;
@@ -84,7 +85,8 @@ public class TelaGenAnimaisController implements Initializable{
 		tbColumnDono.setCellValueFactory(new PropertyValueFactory<>("donoNome"));
 		tbColumnEspecie.setCellValueFactory(new PropertyValueFactory<>("especie"));
 		tbColumnDataNascimento.setCellValueFactory(new PropertyValueFactory<>("dataNascimento"));
-		tbColumnPeso.setCellValueFactory(new PropertyValueFactory<>("peso"));
+		tbColumnPeso.setCellValueFactory(cellData -> 
+	     Bindings.format("%,.2f", cellData.getValue().getPeso()));
 		tbColumnRaca.setCellValueFactory(new PropertyValueFactory<>("raca"));
 		tbColumnCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 				

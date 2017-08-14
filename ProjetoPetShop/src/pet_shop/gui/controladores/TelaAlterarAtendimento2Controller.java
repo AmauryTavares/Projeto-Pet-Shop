@@ -138,7 +138,7 @@ public class TelaAlterarAtendimento2Controller implements Initializable {
 	@FXML
 	public void voltar() {
 		try{
-			funcoes.chamarTela("../TelaAlterarAtendimento2.fxml", "Sistema PetShop - Gerenciamento de Atendimento");
+			funcoes.chamarTela("../TelaAlterarAtendimento1.fxml", "Sistema PetShop - Gerenciamento de Atendimento");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}

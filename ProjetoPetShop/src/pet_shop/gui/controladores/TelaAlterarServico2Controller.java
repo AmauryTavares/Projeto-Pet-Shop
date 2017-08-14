@@ -9,12 +9,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import pet_shop.negocio.SistemaFachada;
-import pet_shop.negocio.beans.Animal;
 import pet_shop.negocio.beans.Servico;
 import pet_shop.negocio.excecoes.NadaEncontradoException;
 
@@ -36,10 +36,13 @@ public class TelaAlterarServico2Controller implements Initializable {
 	private TextField txtFieldPreco;
 
 	@FXML
-	private CheckBox checkBoxSim;
+	private RadioButton rdButtonSim;
 	
 	@FXML
-	private CheckBox checkBoxNao;
+	private RadioButton rdButtonNao;
+	
+	@FXML
+	private ToggleGroup Consulta;
 
 	SistemaFachada fachada = SistemaFachada.getInstance();
 	Funcoes funcoes = new Funcoes();
@@ -50,19 +53,14 @@ public class TelaAlterarServico2Controller implements Initializable {
 		Optional<ButtonType> resultado = funcoes.alerta(AlertType.CONFIRMATION, "Alterar Serviço", "", "Deseja salvar essas alterações?");
 		if (resultado.get() == ButtonType.OK) {
 			try {
-				Animal a = null;
-				if (TelaAlterarServico1Controller.passou == true) {
-					a = TelaAlterarServico1Controller.animalSelecionado;
-				} else {
-					a = TelaGenServicosController.servicoAlterar.getAnimal();
-				}
 				
 				boolean consulta = false;
-				if(checkBoxSim.isSelected()) {
+				RadioButton checar = (RadioButton) Consulta.getSelectedToggle();
+				if(checar.getText().equals("Sim")){
 					consulta = true;
 				}
 				
-				Servico s = new Servico(txtFieldNome.getText(), Double.parseDouble(txtFieldPreco.getText()), consulta, a);
+				Servico s = new Servico(txtFieldNome.getText(), Double.parseDouble(txtFieldPreco.getText()), consulta);
 
 				s.setId(procurarID());
 
@@ -108,11 +106,9 @@ public class TelaAlterarServico2Controller implements Initializable {
 		txtFieldNome.setText(TelaGenServicosController.servicoAlterar.getNome());
 		txtFieldPreco.setText(String.valueOf(TelaGenServicosController.servicoAlterar.getPreco()));
 		if(TelaGenServicosController.servicoAlterar.isConsulta()) {
-			checkBoxSim.setSelected(true);
-			checkBoxNao.setSelected(false);
+			rdButtonSim.setSelected(true);
 		} else {
-			checkBoxSim.setSelected(false);
-			checkBoxNao.setSelected(true);
+			rdButtonNao.setSelected(true);
 		}
 
 	}

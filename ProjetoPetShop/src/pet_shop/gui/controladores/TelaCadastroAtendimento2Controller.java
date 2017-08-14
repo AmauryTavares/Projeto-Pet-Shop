@@ -71,12 +71,6 @@ public class TelaCadastroAtendimento2Controller implements Initializable {
 	private TableColumn<Funcionario, String> tbColumnTelefone;
 	
 	@FXML
-	private TableColumn<Funcionario, String> tbColumnLogin;
-	
-	@FXML
-	private TableColumn<Funcionario, String> tbColumnSenha;
-	
-	@FXML
 	private TableColumn<Funcionario, String> tbColumnCargo;
 	
 	@FXML
@@ -97,8 +91,6 @@ public class TelaCadastroAtendimento2Controller implements Initializable {
 		tbColumnNumCasa.setCellValueFactory(new PropertyValueFactory<>("numCasa"));
 		tbColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 		tbColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
-		tbColumnLogin.setCellValueFactory(new PropertyValueFactory<>("login"));
-		tbColumnSenha.setCellValueFactory(new PropertyValueFactory<>("senha"));
 		tbColumnSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
 		tbColumnCargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
 		

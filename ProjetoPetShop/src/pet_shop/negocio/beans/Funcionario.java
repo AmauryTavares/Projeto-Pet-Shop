@@ -69,19 +69,11 @@ public class Funcionario extends Pessoa{
 				return false;
 		} else if (!cargo.equals(other.cargo))
 			return false;
-		if (login == null) {
-			if (other.login != null)
-				return false;
-		} else if (!login.equals(other.login))
-			return false;
 		if (Double.doubleToLongBits(salario) != Double.doubleToLongBits(other.salario))
-			return false;
-		if (senha == null) {
-			if (other.senha != null)
-				return false;
-		} else if (!senha.equals(other.senha))
 			return false;
 		return true;
 	}
+
+	
 	
 }
