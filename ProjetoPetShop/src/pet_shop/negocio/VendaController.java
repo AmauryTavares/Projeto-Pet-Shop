@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import pet_shop.DAO.ProdutoDAO;
 import pet_shop.DAO.VendaDAO;
+import pet_shop.DAO.IRepositorios.IRepositorioProduto;
 import pet_shop.DAO.IRepositorios.IRepositorioVenda;
 import pet_shop.negocio.beans.Produto;
 import pet_shop.negocio.beans.Venda;
@@ -20,11 +22,13 @@ import pet_shop.negocio.excecoes.VendaInexistenteException;
 
 public class VendaController {
 	private IRepositorioVenda vendaRepository;
+	private IRepositorioProduto produtoRepository;
 	private static VendaController instance;
 
 	// Singleton
 	private VendaController() {
 		this.vendaRepository = VendaDAO.getInstance();
+		this.produtoRepository = ProdutoDAO.getInstance();
 	}
 
 	public static VendaController getInstance() {
@@ -63,6 +67,7 @@ public class VendaController {
 								if (venda.getValorTotal() > 0) {
 									this.vendaRepository.cadastrar(venda);
 									this.vendaRepository.salvarArquivo();
+									this.produtoRepository.salvarArquivo();
 								} else {
 									throw new PrecoInvalidoException();
 								}

@@ -17,7 +17,7 @@ import pet_shop.negocio.beans.Servico;
 public class TelaCadastroServico2Controller implements Initializable {
 	
 	@FXML
-	private Label lbllLogin;
+	private Label lblLogin;
 
 	@FXML
 	private Button btnVoltar;
@@ -71,7 +71,7 @@ public class TelaCadastroServico2Controller implements Initializable {
 	@FXML
 	public void voltarAction() {
 		try {
-			funcoes.chamarTela("../TelaCadastroServico1.fxml", "Sistema PetShop - Cadastro de Serviço");
+			funcoes.chamarTela("../TelaGenServicos.fxml", "Sistema PetShop - Cadastro de Serviço");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -79,7 +79,7 @@ public class TelaCadastroServico2Controller implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		lbllLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
+		lblLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
 	}
 
 }
