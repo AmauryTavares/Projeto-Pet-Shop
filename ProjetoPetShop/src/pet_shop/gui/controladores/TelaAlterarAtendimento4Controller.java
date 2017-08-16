@@ -23,7 +23,7 @@ import pet_shop.negocio.excecoes.NadaEncontradoException;
 public class TelaAlterarAtendimento4Controller implements Initializable {
 	
 	@FXML
-	private Label lbllLogin;
+	private Label lblLogin;
 
 	@FXML
 	private Button btnVoltar;
@@ -115,7 +115,7 @@ public class TelaAlterarAtendimento4Controller implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		lbllLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
+		lblLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
 		atualizarValores();
 	}
 

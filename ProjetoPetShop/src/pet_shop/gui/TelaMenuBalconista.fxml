@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="600.0" prefWidth="800.0" stylesheets="@controladores/estilo.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaPainelInicialBalconista">
+<BorderPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="600.0" prefWidth="800.0" stylesheets="@controladores/estilo.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaPainelInicialBalconista">
    <center>
       <GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="460.0" prefWidth="485.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -53,11 +53,6 @@
                </font>
             </Button>
             <Button id="glass-grey" fx:id="btnGenVendas" mnemonicParsing="false" onAction="#gerenciamentoVendas" prefHeight="39.0" prefWidth="250.0" text="Gerenciamento de Vendas" GridPane.rowIndex="5">
-               <font>
-                  <Font name="Comic Sans MS" size="15.0" />
-               </font>
-            </Button>
-            <Button id="glass-grey" fx:id="btnGenConsultas" mnemonicParsing="false" prefHeight="39.0" prefWidth="250.0" text="Gerenciamento de Consultas" GridPane.rowIndex="6">
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
