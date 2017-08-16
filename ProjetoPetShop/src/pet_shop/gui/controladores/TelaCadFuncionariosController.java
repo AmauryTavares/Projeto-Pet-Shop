@@ -68,7 +68,7 @@ public class TelaCadFuncionariosController implements Initializable {
 	private TextField txtFieldEmail;
 
 	@FXML
-	private TextField txtFieldCargo;
+	private ComboBox<String> cmBoxCargo;
 
 	@FXML
 	private TextField txtFieldLogin;
@@ -92,7 +92,7 @@ public class TelaCadFuncionariosController implements Initializable {
 			Endereco end = new Endereco(txtFieldRua.getText(), txtFieldNumCasa.getText(), txtFieldBairro.getText(),
 					txtFieldCidade.getText(), verificar(cmBoxUF.getValue()));
 			Funcionario f = new Funcionario(txtFieldNome.getText(), txtFieldCPF.getText(), end, txtFieldEmail.getText(),
-					txtFieldTelefone.getText(), txtFieldLogin.getText(), passFieldSenha.getText(), Double.parseDouble(txtFieldSalario.getText()), txtFieldCargo.getText());
+					txtFieldTelefone.getText(), txtFieldLogin.getText(), passFieldSenha.getText(), Double.parseDouble(txtFieldSalario.getText()), cmBoxCargo.getValue());
 
 			fachada.cadastrarCliente(f);
 			funcoes.alerta(AlertType.INFORMATION, "Sucesso!", "", "Funcionario cadastrado com sucesso!");
@@ -135,6 +135,14 @@ public class TelaCadFuncionariosController implements Initializable {
 		
 		cmBoxUF.getItems().addAll(uf);
 		cmBoxUF.getSelectionModel().select(0);
+		
+		List<String> cargo = new ArrayList<>();
+		cargo.add("Dono");
+		cargo.add("Médico");
+		cargo.add("Balconista");
+		
+		cmBoxCargo.getItems().addAll(cargo);
+		cmBoxCargo.getSelectionModel().select(0);
 		
 	}
 

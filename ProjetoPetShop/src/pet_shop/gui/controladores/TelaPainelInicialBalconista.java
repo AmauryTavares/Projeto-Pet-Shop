@@ -13,7 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import pet_shop.Main;
 
-public class TelaPainelInicialDono implements Initializable{
+public class TelaPainelInicialBalconista implements Initializable {
 
 	@FXML
 	private Label labelLogin;
@@ -31,16 +31,10 @@ public class TelaPainelInicialDono implements Initializable{
 	private Button btnGenAnimais;
 	
 	@FXML
-	private Button btnGenConsultas;
-	
-	@FXML
 	private Button btnGenAtendimentos;
 	
 	@FXML
 	private Button btnSair;
-	
-	@FXML
-	private Button btnGenFuncionarios;
 	
 	@FXML
 	private Button btnGenVendas;
@@ -60,13 +54,6 @@ public class TelaPainelInicialDono implements Initializable{
 	public void genrenciamentoAnimais() {
 		try{
 			funcoes.chamarTela("../TelaGenAnimais.fxml", "Sistema PetShop - Gerenciamento de Animais");
-		} catch (Exception exc) {
-			exc.printStackTrace();
-		}
-	}
-	public void gerenciamentoFuncionarios() {
-		try{
-			funcoes.chamarTela("../TelaGenFuncionarios.fxml", "Sistema PetShop - Gerenciamento de Funcionários");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
@@ -127,7 +114,7 @@ public class TelaPainelInicialDono implements Initializable{
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		labelLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome());
+		labelLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome());	
 	}
-
+	
 }

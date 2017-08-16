@@ -3,38 +3,27 @@ package pet_shop.gui.controladores;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import pet_shop.negocio.SistemaFachada;
 import pet_shop.negocio.beans.Animal;
-import pet_shop.negocio.beans.Cliente;
-import pet_shop.negocio.beans.Pessoa;
 import pet_shop.negocio.excecoes.NadaEncontradoException;
 
-public class TelaGenAnimaisController implements Initializable{
+public class TelaGenAnimaisMedicoController implements Initializable {
 
 	@FXML
 	private Label labelLogin;
-	
-	@FXML
-	private Button btnCadastrar;
-	
-	@FXML
-	private Button btnAlterar;
 	
 	@FXML
 	private Button btnAtualizar;
@@ -44,9 +33,6 @@ public class TelaGenAnimaisController implements Initializable{
 	
 	@FXML
 	private TextField txtFieldPesquisar;
-	
-	@FXML
-	private Button btnExcluir;
 	
 	@FXML
 	private Button btnVoltar;
@@ -75,8 +61,6 @@ public class TelaGenAnimaisController implements Initializable{
 	@FXML
 	private TableColumn<Animal, LocalDate> tbColumnDataNascimento;
 	
-	public static Animal animalAlterar = null;
-	public static Pessoa donoAlterar = null;
 	SistemaFachada fachada = SistemaFachada.getInstance();
 	Funcoes funcoes = new Funcoes();
 	
@@ -95,91 +79,14 @@ public class TelaGenAnimaisController implements Initializable{
 	}
 	
 	@FXML
-	public void cadastrar(){
-		try{
-			funcoes.chamarTela("../TelaCadastroAnimal1.fxml", "Sistema PetShop - Cadastro de Animal");	
-		} catch (Exception exc) {
-			exc.printStackTrace();
-		}
-	}
-	
-	@FXML
-	public void alterar() throws NadaEncontradoException {
-
-		animalAlterar = tbViewAnimais.getSelectionModel().getSelectedItem();
-		try{
-			for (Pessoa p : fachada.listarTudo()) {
-				if (p instanceof Cliente) {
-					if (p.getNome().equals(tbViewAnimais.getSelectionModel().getSelectedItem().getNome()) 
-							&& p.getCpf().equals(tbViewAnimais.getSelectionModel().getSelectedItem().getCpf())) {
-						animalAlterar.setDono(p);
-						System.out.println("ola");
-					}
-				}
-			}
-		} catch (NadaEncontradoException e) {
-			System.out.println(e.getMessage());
-		}
-
-		try{
-			Alert dialog = new Alert(AlertType.INFORMATION);
-			dialog.setTitle("Atenção");
-			dialog.setContentText("Deseja alterar o cliente?");
-			dialog.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-			
-			Optional<ButtonType> resultado = dialog.showAndWait();
-			
-			if (resultado.get().equals(ButtonType.YES)) {
-				funcoes.chamarTela("../TelaAlterarAnimal1.fxml", "Sistema PetShop - Alteração de Animal");
-			} else {
-				funcoes.chamarTela("../TelaAlterarAnimal2.fxml", "Sistema PetShop - Alteração de Animal");
-			}
-
-		} catch (Exception exc) {
-			exc.printStackTrace();
-		}
-	}
-	
-	@FXML
-	public void excluir() {
-
-		Optional<ButtonType> resultado = funcoes.alerta(AlertType.CONFIRMATION, "Excluir", "", "Deseja excluir esse animal?");
-		
-		if (resultado.get() == ButtonType.OK) {
-			try{
-				Animal animalExcluir = tbViewAnimais.getSelectionModel().getSelectedItem();
-				fachada.deleteAnimal(animalExcluir);
-				atualizarTabela(fachada.listarTodosAnimais());
-				tbViewAnimais.getSelectionModel().select(0);
-				funcoes.alerta(AlertType.INFORMATION, "Sucesso!", "", "O animal foi excluído com sucesso!");
-			} catch (Exception e) {
-				funcoes.alerta(AlertType.INFORMATION, "Ocorreu um problema!", "", e.getMessage());
-			}
-		}
-	}
-	
-	@FXML
 	public void voltar() {
 		
-		if(TelaLoginController.logado.getCargo().equals("Balconista")) {
-			try{
-				funcoes.chamarTela("../TelaMenuBalconista.fxml", "Sistema PetShop - Painel Inicial");
-			} catch (Exception exc) {
-				exc.printStackTrace();
-			}
-		} else {
-			try{
-				funcoes.chamarTela("../TelaMenu.fxml", "Sistema PetShop - Painel Inicial");
-			} catch (Exception exc) {
-				exc.printStackTrace();
-			}
+		try{
+			funcoes.chamarTela("../TelaMenuMedico.fxml", "Sistema PetShop - Painel Inicial");
+		} catch (Exception exc) {
+			exc.printStackTrace();
 		}
 		
-//		try{
-//			funcoes.chamarTela("../TelaMenu.fxml", "Sistema PetShop - Painel Inicial");
-//		} catch (Exception exc) {
-//			exc.printStackTrace();
-//		}
 	}
 	
 	@FXML
@@ -222,3 +129,5 @@ public class TelaGenAnimaisController implements Initializable{
 	}
 
 }
+	
+
