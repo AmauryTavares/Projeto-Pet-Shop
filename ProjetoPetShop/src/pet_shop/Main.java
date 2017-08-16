@@ -5,8 +5,7 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -29,14 +28,9 @@ public class Main extends Application{
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Sistema PetShop - Login");
 			Main.myStage = primaryStage;
+			Main.myStage.getIcons().add(new Image("file:src/pet_shop/img/paw_print.png"));
 			primaryStage.show();
 			
-			//Dica teste
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Dica");
-			alert.setContentText("Login : admin\nSenha: 1234");
-			alert.showAndWait();
-			//
 		} else {
 			primaryStage.show();
 		}

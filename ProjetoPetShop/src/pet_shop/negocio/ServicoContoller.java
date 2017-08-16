@@ -36,7 +36,7 @@ public class ServicoContoller
 		
 		if (servico != null) {
 			if (!this.servicoRepository.existe(servico)) {
-				if (servico.getNome() != null) {
+				if (servico.getNome() != null && !servico.getNome().trim().isEmpty() && servico.getNome().matches("[a-zA-Z\\s]+")) {
 					if (servico.getPreco() > 0) {
 						this.servicoRepository.cadastrar(servico);
 						this.servicoRepository.salvarArquivo();
@@ -61,7 +61,7 @@ public class ServicoContoller
 			ServicoDAO s1 = (ServicoDAO) this.servicoRepository;
 			int indice = this.servicoRepository.procurarID(servico.getId());
 			if (indice != s1.listar().size()) {
-				if (servico.getNome() != null) {
+				if (servico.getNome() != null && !servico.getNome().trim().isEmpty() && servico.getNome().matches("[a-zA-Z\\s]+")) {
 					if (servico.getPreco() > 0) {
 						s1.alterar(servico, indice);
 						this.servicoRepository.salvarArquivo();

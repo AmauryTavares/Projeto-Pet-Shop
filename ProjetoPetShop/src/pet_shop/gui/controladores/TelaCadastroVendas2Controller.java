@@ -167,7 +167,7 @@ public class TelaCadastroVendas2Controller implements Initializable {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			funcoes.alerta(AlertType.INFORMATION, "Ocorreu um problema", "", e.getMessage());
 		}
 	}
 	
@@ -224,7 +224,7 @@ public class TelaCadastroVendas2Controller implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		labelLogin.setText("Bem vindo(a), Administrador");
+		labelLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
 		try {
 			List<Produto> lista = fachada.listarTudoProduto();
 			atualizarTabelaEstoque(lista);

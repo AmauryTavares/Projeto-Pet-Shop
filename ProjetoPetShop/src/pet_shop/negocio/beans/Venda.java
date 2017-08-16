@@ -152,7 +152,7 @@ public class Venda implements Serializable{
 		String text = "\nID: " + this.id + "\nData: " + this.data.format(fmt) + "\nNome do funcionário: " + this.funcionario.getNome() + "\nProduto(s): ";
 		
 		for (int i = 0; i < this.produtos.size(); i++) {
-			text += String.format("\n%20s \tR$%.2f", this.produtos.get(i).getNome(), this.produtos.get(i).getPreco());
+			text += String.format("\n%20s \tR$%.2f x%.2f", this.produtos.get(i).getNome(), this.produtos.get(i).getPreco(), this.produtos.get(i).getQtdEstoque());
 		}
 		
 		text += "\nServiço(s): ";

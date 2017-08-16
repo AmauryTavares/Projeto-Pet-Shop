@@ -1,8 +1,11 @@
 package pet_shop.gui.controladores;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,7 +23,7 @@ import pet_shop.negocio.excecoes.PessoaInexistenteException;
 import pet_shop.negocio.excecoes.SenhaInvalidaException;
 import pet_shop.negocio.excecoes.TelefoneInvalidoException;
 
-public class TelaCadProdutosController {
+public class TelaCadProdutosController implements Initializable{
 	
 	@FXML
 	private Button btnVoltar;
@@ -71,6 +74,12 @@ public class TelaCadProdutosController {
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		lblLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
+		
 	}
 
 }

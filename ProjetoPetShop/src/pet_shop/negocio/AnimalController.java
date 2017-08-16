@@ -40,10 +40,10 @@ public class AnimalController {
 			if (!this.animalRepository.existe(animal)) {
 				if (animal.getDono() != null) {
 					if (animal.getDataNascimento() != null) {
-						if (animal.getEspecie() != null) {
-							if (animal.getNome() != null) {
+						if (animal.getEspecie() != null && !animal.getEspecie().trim().isEmpty() && animal.getEspecie().matches("[a-zA-Z\\s]+")) {
+							if (animal.getNome() != null && !animal.getNome().trim().isEmpty() && animal.getNome().matches("[a-zA-Z\\s]+") ) {
 								if (animal.getPeso() > 0) {
-									if (animal.getRaca() != null) {
+									if (animal.getRaca() != null && !animal.getRaca().trim().isEmpty() && animal.getRaca().matches("[a-zA-Z\\s]+")) {
 										this.animalRepository.cadastrar(animal);
 										this.animalRepository.salvarArquivo();
 									} else {
@@ -80,10 +80,10 @@ public class AnimalController {
 			if (indice != t1.listar().size()) {
 				if (newAnimal.getDono() != null) {
 					if (newAnimal.getDataNascimento() != null) {
-						if (newAnimal.getEspecie() != null) {
-							if (newAnimal.getNome() != null) {
+						if (newAnimal.getEspecie() != null && !newAnimal.getEspecie().trim().isEmpty() && newAnimal.getEspecie().matches("[a-zA-Z\\s]+")) {
+							if (newAnimal.getNome() != null && !newAnimal.getNome().trim().isEmpty() && newAnimal.getNome().matches("[a-zA-Z\\s]+")) {
 								if (newAnimal.getPeso() > 0) {
-									if (newAnimal.getRaca() != null) {
+									if (newAnimal.getRaca() != null && !newAnimal.getRaca().trim().isEmpty() && newAnimal.getRaca().matches("[a-zA-Z\\s]+")) {
 										t1.alterar(newAnimal, indice);
 										this.animalRepository.salvarArquivo();
 									} else {

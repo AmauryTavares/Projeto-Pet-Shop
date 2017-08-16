@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaCadFuncionariosController">
+<BorderPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@controladores/estilo.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaCadFuncionariosController">
    <top>
       <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="82.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
@@ -35,7 +35,7 @@
             </StackPane>
             <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltarAction" text="Voltar">
+                  <Button id="glass-grey" fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltarAction" text="Voltar">
                      <font>
                         <Font name="Comic Sans MS" size="12.0" />
                      </font>
@@ -279,7 +279,7 @@
    <bottom>
       <VBox alignment="CENTER" prefHeight="179.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnCadastrar" mnemonicParsing="false" onAction="#cadastrarAction" prefHeight="35.0" prefWidth="103.0" text="Cadastrar">
+            <Button id="glass-green" fx:id="btnCadastrar" mnemonicParsing="false" onAction="#cadastrarAction" prefHeight="35.0" prefWidth="103.0" text="Cadastrar">
                <font>
                   <Font name="Comic Sans MS" size="16.0" />
                </font>

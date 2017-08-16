@@ -44,7 +44,8 @@ public class AtendimentoController {
 						if (atendimento.getServico() != null) {
 							if (atendimento.getData() != null) {
 								Period p = Period.between(LocalDate.now(), atendimento.getData());
-								if (p.getDays() >= 0 && p.getMonths() >= 0 && p.getYears() >= 0) {
+								//p.getDays() >= 0 && p.getMonths() >= 0 && p.getYears() >= 0
+								if (!p.isNegative()) {
 									if (atendimento.getDiagnostico() != null) {
 										this.atendimentoRepository.cadastrar(atendimento);
 										this.atendimentoRepository.salvarArquivo();
@@ -84,11 +85,16 @@ public class AtendimentoController {
 					if (atendimento.getFuncionario() != null) {
 						if (atendimento.getServico() != null) {
 							if (atendimento.getData() != null) {
-								if (atendimento.getDiagnostico() != null) {
-									a1.alterar(atendimento, indice);
-									this.atendimentoRepository.salvarArquivo();
+								Period p = Period.between(LocalDate.now(), atendimento.getData());
+								if (!p.isNegative()) {
+									if (atendimento.getDiagnostico() != null) {
+										a1.alterar(atendimento, indice);
+										this.atendimentoRepository.salvarArquivo();
+									} else {
+										throw new ObservacaoInvalidaException();
+									}
 								} else {
-									throw new ObservacaoInvalidaException();
+									throw new DataInvalidaException();
 								}
 							} else {
 								throw new DataInvalidaException();

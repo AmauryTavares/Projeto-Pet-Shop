@@ -6,6 +6,7 @@ import java.util.List;
 
 import pet_shop.DAO.VendaDAO;
 import pet_shop.DAO.IRepositorios.IRepositorioVenda;
+import pet_shop.negocio.beans.Produto;
 import pet_shop.negocio.beans.Venda;
 import pet_shop.negocio.excecoes.AtendimentoInvalidoException;
 import pet_shop.negocio.excecoes.ClienteInvalidoException;
@@ -14,6 +15,7 @@ import pet_shop.negocio.excecoes.FuncionarioInvalidoException;
 import pet_shop.negocio.excecoes.NadaEncontradoException;
 import pet_shop.negocio.excecoes.PrecoInvalidoException;
 import pet_shop.negocio.excecoes.ProdutoInvalidoException;
+import pet_shop.negocio.excecoes.QtdProdutoInsuficienteException;
 import pet_shop.negocio.excecoes.VendaInexistenteException;
 
 public class VendaController {
@@ -32,13 +34,31 @@ public class VendaController {
 		return instance;
 	}
 
-	public void saveVenda(Venda venda) throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException, AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException, IOException {
-
+	public void saveVenda(Venda venda) throws IllegalAccessException, ClienteInvalidoException, FuncionarioInvalidoException, AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException, PrecoInvalidoException, IOException, NadaEncontradoException, QtdProdutoInsuficienteException {
+		SistemaFachada fachada = SistemaFachada.getInstance();
 		if (venda != null) {
 			if (venda.getCliente() != null) {
 				if (venda.getFuncionario() != null) {
 					if (venda.getAtendimentos() != null) {
 						if (venda.getProdutos() != null) {
+							List<Produto> pLista = fachada.listarTudoProduto();
+							for (Produto p : venda.getProdutos()) {
+								for (Produto produtoLista : pLista) {
+									if (p.getNome().equals(produtoLista.getNome()) 
+											&& p.getQtdEstoque() > produtoLista.getQtdEstoque()) {
+										throw new QtdProdutoInsuficienteException(p.getNome());
+									}
+								}
+							}
+							
+							for (Produto p : venda.getProdutos()) {
+								for (Produto produtoLista : pLista) {
+									if (p.getNome().equals(produtoLista.getNome())) {
+										produtoLista.setQtdEstoque(produtoLista.getQtdEstoque() - p.getQtdEstoque());
+									}
+								}
+							}
+							
 							if (venda.getData() != null) {
 								if (venda.getValorTotal() > 0) {
 									this.vendaRepository.cadastrar(venda);

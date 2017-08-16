@@ -148,7 +148,7 @@ public class TelaAlterarAtendimento1Controller implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		labelLogin.setText("Bem vindo(a), Administrador");
+		labelLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
 		try {
 			atualizarTabela(fachada.listarTodosAnimais());
 			tbViewAnimais.getSelectionModel().select(TelaGenAtendimentosController.atendimentoAlterar.getAnimal());

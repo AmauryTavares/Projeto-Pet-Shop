@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -90,7 +91,7 @@ public class TelaGenFuncionariosController implements Initializable{
 	private TableColumn<Funcionario, String> tbColumnCargo;
 	
 	@FXML
-	private TableColumn<Funcionario, Double> tbColumnSalario;
+	private TableColumn<Funcionario, String> tbColumnSalario;
 	
 	public static Funcionario funcionarioAlterar = null;
 	SistemaFachada fachada = SistemaFachada.getInstance();
@@ -110,7 +111,8 @@ public class TelaGenFuncionariosController implements Initializable{
 		tbColumnLogin.setCellValueFactory(new PropertyValueFactory<>("login"));
 		tbColumnSenha.setCellValueFactory(new PropertyValueFactory<>("senha"));
 		tbColumnCargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
-		tbColumnSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
+		tbColumnSalario.setCellValueFactory(cellData -> 
+	     Bindings.format("%,.2f", cellData.getValue().getSalario()));
 		
 		
 		List<Funcionario> novaLista = new ArrayList<>();

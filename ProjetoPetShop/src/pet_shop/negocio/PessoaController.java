@@ -39,12 +39,16 @@ public class PessoaController {
 	    
 		if (p != null) {
 			if (!this.repositorioPessoa.existe(p)) {
-				if (p.getNome() != null) {
-					if (p.getCpf() != null) {
-						if (p.getEmail() != null) {
+				if (p.getNome() != null && !p.getNome().trim().isEmpty() && p.getNome().matches("[a-zA-Z\\s]+")) {
+					if (p.getCpf() != null && !p.getCpf().trim().isEmpty() && p.getCpf().matches("[0-9]+")) {
+						if (p.getEmail() != null && !p.getEmail().trim().isEmpty()) {
 							if (p.getEndereco() != null && p.getEndereco().getRua() != null && p.getEndereco().getBairro() != null 
-									&& p.getEndereco().getCidade() != null && p.getEndereco().getNumCasa() != null) {
-								if (p.getTelefone() != null) {
+									&& p.getEndereco().getCidade() != null && p.getEndereco().getNumCasa() != null 
+									&& !p.getEndereco().getRua().trim().isEmpty() && p.getEndereco().getRua().matches("[a-zA-Z\\s]+")
+									&& !p.getEndereco().getBairro().trim().isEmpty() && p.getEndereco().getBairro().matches("[a-zA-Z\\s]+")
+									&& !p.getEndereco().getCidade().trim().isEmpty() && p.getEndereco().getCidade().matches("[a-zA-Z\\s]+")
+									&& !p.getEndereco().getNumCasa().trim().isEmpty()) {
+								if (p.getTelefone() != null && !p.getTelefone().trim().isEmpty() && p.getTelefone().matches("[0-9]+")) {
 									if (p instanceof Funcionario) {
 										if (((Funcionario) p).getLogin() != null) {
 											if (((Funcionario) p).getSenha() != null) {
@@ -137,12 +141,16 @@ public class PessoaController {
 			PessoaDAO p1 = this.repositorioPessoa;
 			int indice = this.repositorioPessoa.procurarID(p.getId());
 			if (indice != p1.listar().size()) {
-				if (p.getNome() != null) {
-					if (p.getCpf() != null) {
-						if (p.getEmail() != null) {
+				if (p.getNome() != null && !p.getNome().trim().isEmpty() && p.getNome().matches("[a-zA-Z\\s]+")) {
+					if (p.getCpf() != null && !p.getCpf().trim().isEmpty() && p.getCpf().matches("[0-9]+")) {
+						if (p.getEmail() != null && !p.getEmail().trim().isEmpty()) {
 							if (p.getEndereco() != null && p.getEndereco().getRua() != null && p.getEndereco().getBairro() != null 
-									&& p.getEndereco().getCidade() != null && p.getEndereco().getNumCasa() != null) {
-								if (p.getTelefone() != null) {
+									&& p.getEndereco().getCidade() != null && p.getEndereco().getNumCasa() != null 
+									&& !p.getEndereco().getRua().trim().isEmpty() && p.getEndereco().getRua().matches("[a-zA-Z\\s]+")
+									&& !p.getEndereco().getBairro().trim().isEmpty() && p.getEndereco().getBairro().matches("[a-zA-Z\\s]+")
+									&& !p.getEndereco().getCidade().trim().isEmpty() && p.getEndereco().getCidade().matches("[a-zA-Z\\s]+")
+									&& !p.getEndereco().getNumCasa().trim().isEmpty()) {
+								if (p.getTelefone() != null && !p.getTelefone().trim().isEmpty() && p.getTelefone().matches("[0-9]+")) {
 									if (p instanceof Funcionario) {
 										if (((Funcionario) p).getLogin() != null) {
 											if (((Funcionario) p).getSenha() != null) {

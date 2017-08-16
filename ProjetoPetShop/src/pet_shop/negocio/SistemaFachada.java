@@ -8,7 +8,6 @@ import pet_shop.negocio.excecoes.*;
 
 public class SistemaFachada implements IFachada {
 	
-	private ConsultaController controleAgendas;
 	private AnimalController controleAnimais;
 	private AtendimentoController controleAtendimentos;
 	private PessoaController controllerClientes;
@@ -21,7 +20,6 @@ public class SistemaFachada implements IFachada {
 	//Singleton
 	private SistemaFachada() {
 		
-		this.controleAgendas = ConsultaController.getInstance();
 		this.controleAnimais = AnimalController.getInstance();
 		this.controleAtendimentos = AtendimentoController.getInstance();
 		this.controllerClientes = PessoaController.getInstance();
@@ -35,34 +33,6 @@ public class SistemaFachada implements IFachada {
 			instance = new SistemaFachada();
 		}
 		return instance;
-	}
-
-	@Override
-	public void saveAgenda(Consulta agenda) throws IllegalAccessException, AnimalInexistenteException,
-			AtendimentoInexistenteException, DataInvalidaException, ConsultaCadastradaException, IOException {
-		controleAgendas.saveAgenda(agenda);
-	}
-
-	@Override
-	public List<Consulta> findAgenda(String nome) throws IllegalAccessException, NadaEncontradoException {
-		return controleAgendas.findAgenda(nome);
-	}
-
-	@Override
-	public void updateAgenda(Consulta newAgenda) throws IllegalAccessException, ConsultaInexistenteException,
-			AnimalInexistenteException, AtendimentoInexistenteException, DataInvalidaException, IOException {
-		controleAgendas.updateAgenda(newAgenda);
-	}
-
-	@Override
-	public void deleteAgenda(Consulta consulta)
-			throws IllegalAccessException, ConsultaInexistenteException, IOException {
-		controleAgendas.deleteAgenda(consulta);
-	}
-
-	@Override
-	public List<Consulta> listarTodasAgendas() throws NadaEncontradoException {
-		return controleAgendas.listarTodasAgendas();
 	}
 
 	@Override
@@ -211,7 +181,7 @@ public class SistemaFachada implements IFachada {
 	@Override
 	public void saveVenda(Venda venda) throws IllegalAccessException, ClienteInvalidoException,
 			FuncionarioInvalidoException, AtendimentoInvalidoException, ProdutoInvalidoException, DataInvalidaException,
-			PrecoInvalidoException, IOException {
+			PrecoInvalidoException, IOException, NadaEncontradoException, QtdProdutoInsuficienteException {
 		controllerVenda.saveVenda(venda);
 	}
 

@@ -1,0 +1,156 @@
+#glass-grey {
+    -fx-background-color: 
+        #c3c4c4,
+        linear-gradient(#d6d6d6 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+} 
+
+#glass-grey:pressed, #glass-grey:default:hover:pressed {
+    -fx-background-color: 
+        #ccc,
+        linear-gradient(#d2d1d1 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200%, #dbd9d9 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+#glass-red {
+    -fx-background-color: 
+        #fd2121,
+        linear-gradient(#fd3434 50%, red 100%),
+        radial-gradient(center 50% -40%, radius 200%, #ff4848 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+} 
+
+#glass-red:pressed, #glass-red:default:hover:pressed {
+     -fx-background-color: 
+        #ff5454,
+        linear-gradient(#fd4949 50%, red 100%),
+        radial-gradient(center 50% -40%, radius 200%, #ff3636 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+#glass-green {
+    -fx-background-color: 
+        #20df03,
+        linear-gradient(#1edb01 50%, green 100%),
+        radial-gradient(center 50% -40%, radius 200%, #1cd200 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+} 
+
+#glass-green:pressed, #glass-green:default:hover:pressed {
+  -fx-background-color: 
+        #44ff27,
+        linear-gradient(#37ff18 50%, green 100%),
+        radial-gradient(center 50% -40%, radius 200%, #2bfb0b 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+#glass-blue {
+    -fx-background-color: 
+        #149aff,
+        linear-gradient(#0795ff 50%, blue 100%),
+        radial-gradient(center 50% -40%, radius 200%, #0795ff 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+} 
+
+#glass-blue:pressed, #glass-blue:default:hover:pressed {
+  -fx-background-color: 
+        #3babff,
+        linear-gradient(#30a6ff 50%, blue 100%),
+        radial-gradient(center 50% -40%, radius 200%, #30a6ff 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+#glass-green:focus {
+-fx-background-color: transparent;
+}
+
+.text-field {
+    -fx-background-color: #a9a9a9 , white, white;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -3 0 -3;
+}
+
+.text-field:focused {
+    -fx-background-color: #000 , white , white;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -3 0 -3;
+}
+
+#background {
+  -fx-background-color: 
+        linear-gradient(to right, #ffb75e, #ed8f03);
+}
+
+.table-view{
+   -fx-background-color: transparent;
+   -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+
+.table-view:focused{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(#131313 0%, #424141 100%);
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #fff;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #d3d3d3;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */  
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #5e5e5e;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+
+.combo-box-base {
+    -fx-background-color: white;
+}
+
+.radio-button {
+-fx-font-family: "Arial";
+-fx-font-size: 11;
+-fx-text-fill: #000;
+-fx-border-width: 0px;
+}

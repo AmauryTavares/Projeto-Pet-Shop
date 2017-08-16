@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaCadastroVendas2Controller">
+<BorderPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@controladores/estilo.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaCadastroVendas2Controller">
    <top>
       <StackPane maxWidth="1.7976931348623157E308" prefHeight="119.0" prefWidth="900.0" BorderPane.alignment="CENTER">
          <children>
@@ -65,7 +65,7 @@
             </StackPane>
             <StackPane alignment="CENTER_LEFT" prefHeight="121.0" prefWidth="897.0">
                <children>
-                  <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
+                  <Button id="glass-grey" fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
                </children>
                <StackPane.margin>
                   <Insets left="20.0" />
@@ -76,7 +76,7 @@
             </StackPane>
             <StackPane alignment="BOTTOM_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="2848.0" prefWidth="748.0" StackPane.alignment="BASELINE_RIGHT">
                <children>
-                  <Button fx:id="btnAtualizar" mnemonicParsing="false" onAction="#atualizarAcaoButton" text="Atualizar">
+                  <Button id="glass-grey" fx:id="btnAtualizar" mnemonicParsing="false" onAction="#atualizarAcaoButton" text="Atualizar">
                      <StackPane.margin>
                         <Insets bottom="25.0" right="190.0" />
                      </StackPane.margin>
@@ -86,7 +86,7 @@
                         <Insets bottom="25.0" right="75.0" />
                      </StackPane.margin>
                   </TextField>
-                  <Button fx:id="btnPesquisar" mnemonicParsing="false" onAction="#pesquisarAcaoButton" text="Pesquisar">
+                  <Button id="glass-grey" fx:id="btnPesquisar" mnemonicParsing="false" onAction="#pesquisarAcaoButton" text="Pesquisar">
                      <StackPane.margin>
                         <Insets bottom="25.0" right="10.0" />
                      </StackPane.margin>
@@ -151,17 +151,17 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="150.0">
                <children>
-                  <Button fx:id="btnAdicionar" mnemonicParsing="false" onAction="#adicionar" prefHeight="32.0" prefWidth="190.0" text="Adicionar ao Carrinho">
+                  <Button id="glass-green" fx:id="btnAdicionar" mnemonicParsing="false" onAction="#adicionar" prefHeight="32.0" prefWidth="190.0" text="Adicionar ao Carrinho">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnFinalizar" mnemonicParsing="false" onAction="#finalizar" prefHeight="28.0" prefWidth="100.0" text="Finalizar">
+                  <Button id="glass-blue" fx:id="btnFinalizar" mnemonicParsing="false" onAction="#finalizar" prefHeight="28.0" prefWidth="100.0" text="Finalizar">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnRemover" mnemonicParsing="false" onAction="#remover" prefHeight="28.0" prefWidth="190.0" text="Remover do carrinho">
+                  <Button id="glass-red" fx:id="btnRemover" mnemonicParsing="false" onAction="#remover" prefHeight="28.0" prefWidth="190.0" text="Remover do carrinho">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>

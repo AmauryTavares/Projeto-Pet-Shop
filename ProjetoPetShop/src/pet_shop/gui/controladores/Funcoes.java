@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
@@ -14,17 +15,18 @@ import pet_shop.Main;
 
 public class Funcoes {
 	
-	public void chamarTela(String caminhoTela, String Titulo) throws Exception {
+	public void chamarTela(String caminhoTela, String titulo) throws Exception {
 		BorderPane bPane = FXMLLoader.load(getClass().getResource(caminhoTela));
 		Stage newStage = new Stage();
 		Scene scene = new Scene(bPane);
 		newStage.setScene(scene);
 		Main.myStage.hide();
 		Main main = new Main();
-		newStage.setTitle(Titulo);
+		newStage.setTitle(titulo);
 		newStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
 		newStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
 		Main.myStage = newStage;
+		Main.myStage.getIcons().add(new Image("file:src/pet_shop/img/paw_print.png"));
 		main.start(newStage);
 	}
 	

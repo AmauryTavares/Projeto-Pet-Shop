@@ -139,7 +139,7 @@ public class TelaCadastroAtendimento3Controller implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		labelLogin.setText("Bem vindo(a), Administrador");
+		labelLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
 		try {
 			atualizarTabela(fachada.listarTodosServicos());
 		} catch (NadaEncontradoException e) {

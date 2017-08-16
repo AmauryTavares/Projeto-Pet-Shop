@@ -115,6 +115,7 @@ public class TelaAlterarServico2Controller implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		lblLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
 		atualizarValores();
 	}
 

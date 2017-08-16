@@ -5,15 +5,16 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bPanePainel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="es" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaLoginController">
+<BorderPane id="background" fx:id="bPanePainel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" stylesheets="@controladores/estilo.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaLoginController">
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="21.0" prefWidth="329.0">
                <children>
@@ -25,7 +26,7 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="txtFieldLogin" prefHeight="25.0" prefWidth="220.0" promptText="login" />
+                  <TextField fx:id="txtFieldLogin" prefHeight="25.0" prefWidth="220.0" promptText="login" stylesheets="@controladores/estilo.css" />
                </children>
                <opaqueInsets>
                   <Insets />
@@ -44,7 +45,7 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                   </Label>
-                  <PasswordField fx:id="passFieldSenha" prefHeight="25.0" prefWidth="220.0" promptText="senha">
+                  <PasswordField fx:id="passFieldSenha" prefHeight="25.0" prefWidth="220.0" promptText="senha" stylesheets="@controladores/estilo.css">
                      <HBox.margin>
                         <Insets right="7.0" />
                      </HBox.margin>
@@ -53,7 +54,7 @@
             </HBox>
             <VBox alignment="BASELINE_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="btnEntrar" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="98.0" text="Entrar">
+                  <Button id="glass-green" fx:id="btnEntrar" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="98.0" stylesheets="@controladores/estilo.css" text="Entrar">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
@@ -61,7 +62,7 @@
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnSair" mnemonicParsing="false" onAction="#sairSistema" prefHeight="31.0" prefWidth="54.0" text="Sair">
+                  <Button id="glass-red" fx:id="btnSair" mnemonicParsing="false" onAction="#sairSistema" prefHeight="31.0" prefWidth="54.0" stylesheets="@controladores/estilo.css" text="Sair">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
@@ -72,9 +73,28 @@
                </children>
             </VBox>
          </children>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
    <top>
-      <ImageView fx:id="imgViewLogo" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="imgViewLogo" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/paw_print.png" />
+               </image>
+            </ImageView>
+            <Label text="Sistema PetShop">
+               <font>
+                  <Font name="Comic Sans MS" size="24.0" />
+               </font>
+            </Label>
+         </children>
+         <BorderPane.margin>
+            <Insets top="30.0" />
+         </BorderPane.margin>
+      </VBox>
    </top>
 </BorderPane>

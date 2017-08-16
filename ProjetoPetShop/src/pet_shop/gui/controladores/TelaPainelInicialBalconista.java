@@ -114,7 +114,7 @@ public class TelaPainelInicialBalconista implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		labelLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome());	
+		labelLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
 	}
 	
 }

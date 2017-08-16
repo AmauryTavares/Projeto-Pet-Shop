@@ -79,7 +79,7 @@ public class TelaCadastroServico2Controller implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		lbllLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
 	}
 
 }

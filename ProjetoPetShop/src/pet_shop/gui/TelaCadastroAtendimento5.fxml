@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaCadastroAtendimento5Controller">
+<BorderPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@controladores/estilo.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pet_shop.gui.controladores.TelaCadastroAtendimento5Controller">
    <top>
       <StackPane maxWidth="1.7976931348623157E308" prefHeight="82.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
@@ -34,7 +34,7 @@
             </StackPane>
             <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+                  <Button id="glass-grey" fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
                </children>
                <StackPane.margin>
                   <Insets left="20.0" />
@@ -62,17 +62,17 @@
             </TableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="150.0">
                <children>
-                  <Button fx:id="btnAdicionar" mnemonicParsing="false" onAction="#adicionar" prefHeight="28.0" prefWidth="90.0" text="Adicionar">
+                  <Button id="glass-green" fx:id="btnAdicionar" mnemonicParsing="false" onAction="#adicionar" prefHeight="28.0" prefWidth="90.0" text="Adicionar">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnExcluir" mnemonicParsing="false" onAction="#excluir" prefHeight="28.0" prefWidth="90.0" text="Excluir">
+                  <Button id="glass-red" fx:id="btnExcluir" mnemonicParsing="false" onAction="#excluir" prefHeight="28.0" prefWidth="90.0" text="Excluir">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnFinalizar" mnemonicParsing="false" onAction="#finalizar" prefHeight="32.0" prefWidth="124.0" text="Ir para Venda">
+                  <Button id="glass-blue" fx:id="btnFinalizar" mnemonicParsing="false" onAction="#finalizar" prefHeight="32.0" prefWidth="124.0" text="Ir para Venda">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>

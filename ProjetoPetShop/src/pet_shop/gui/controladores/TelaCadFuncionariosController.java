@@ -128,6 +128,8 @@ public class TelaCadFuncionariosController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
+		lblLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
+		
 		List<String> uf = new ArrayList<>();
 		for (EnumUF ufCorrente : EnumUF.values()) {
 			uf.add(ufCorrente.getSigla());

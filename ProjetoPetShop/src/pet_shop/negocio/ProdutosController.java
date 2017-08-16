@@ -34,7 +34,7 @@ public class ProdutosController {
 	public void cadastrarProduto(Produto p) throws IllegalAccessException, NomeInvalidoException, PrecoInvalidoException, QtdEstoqueInvalidoException, ProdutoCadastradoException, IOException {
 	    if (p != null) {
 	    	if (!this.repositorioProdutos.existe(p)) {
-	    		if (p.getNome() != null) {
+	    		if (p.getNome() != null && !p.getNome().trim().isEmpty() && p.getNome().matches("[a-zA-Z\\s]+")) {
 	    			if (p.getPreco() > 0) {
 	    				if (p.getQtdEstoque() > 0) {
 	    					this.repositorioProdutos.cadastrar(p);
@@ -109,7 +109,7 @@ public class ProdutosController {
 			ProdutoDAO p1 = (ProdutoDAO) this.repositorioProdutos;
 			int indice = this.repositorioProdutos.procurarID(p.getId());
 	    	if (indice != p1.listar().size()) {
-	    		if (p.getNome() != null) {
+	    		if (p.getNome() != null && !p.getNome().trim().isEmpty() && p.getNome().matches("[a-zA-Z\\s]+")) {
 	    			if (p.getPreco() > 0) {
 	    				if (p.getQtdEstoque() > 0) {
 	    					p1.alterar(p, indice);

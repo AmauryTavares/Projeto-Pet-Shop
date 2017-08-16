@@ -46,18 +46,6 @@ public class TelaLoginController implements Initializable{
 	
 	@FXML
 	private void login(ActionEvent e) throws IOException, NadaEncontradoException {
-//		if (txtFieldLogin.getText().equals("admin") && passFieldSenha.getText().equals("1234")) {
-//			try{
-//				logado = (Funcionario) fachada.listarTudo().get(1);
-//				funcoes.chamarTela("../TelaMenu.fxml", "Sistema PetShop - Painel Inicial");
-//			} catch (Exception exc) {
-//				exc.printStackTrace();
-//			}			
-//		} else {
-//			funcoes.alerta(AlertType.ERROR, "Erro", "Erro no login", "Login ou senha incorreto!");
-//			txtFieldLogin.setText("");
-//			passFieldSenha.setText("");
-//		}
 		
 		boolean achou = false;
 		
@@ -65,7 +53,7 @@ public class TelaLoginController implements Initializable{
 			if(p instanceof Funcionario) {
 				Funcionario aux = (Funcionario) p;
 				
-				if(aux.getLogin().equals(txtFieldLogin.getText()) && aux.getSenha().equals(passFieldSenha.getText())) {
+				if(aux.getLogin().equalsIgnoreCase(txtFieldLogin.getText()) && aux.getSenha().equals(passFieldSenha.getText())) {
 					
 					achou = true;
 					

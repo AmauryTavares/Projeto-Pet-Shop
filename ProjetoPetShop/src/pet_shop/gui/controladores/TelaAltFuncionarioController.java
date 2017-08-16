@@ -60,9 +60,6 @@ public class TelaAltFuncionarioController implements Initializable {
 	private TextField txtFieldEmail;
 
 	@FXML
-	private TextField txtFieldCargo;
-
-	@FXML
 	private TextField txtFieldLogin;
 	
 	@FXML
@@ -70,6 +67,9 @@ public class TelaAltFuncionarioController implements Initializable {
 
 	@FXML
 	private TextField txtFieldSalario;
+	
+	@FXML
+	private ComboBox<String> cmBoxCargo;
 	
 	SistemaFachada fachada = SistemaFachada.getInstance();
 	Funcoes funcoes = new Funcoes();
@@ -83,7 +83,7 @@ public class TelaAltFuncionarioController implements Initializable {
 				Endereco end = new Endereco(txtFieldRua.getText(), txtFieldNumCasa.getText(), txtFieldBairro.getText(),
 						txtFieldCidade.getText(), verificarSigla(cmBoxUF.getValue()));
 				Funcionario f = new Funcionario(txtFieldNome.getText(), txtFieldCPF.getText(), end, txtFieldEmail.getText(),
-						txtFieldTelefone.getText(), txtFieldLogin.getText(), txtFieldSenha.getText(), Double.parseDouble(txtFieldSalario.getText()), txtFieldCargo.getText());
+						txtFieldTelefone.getText(), txtFieldLogin.getText(), txtFieldSenha.getText(), Double.parseDouble(txtFieldSalario.getText()), cmBoxCargo.getValue());
 				f.setId(procurarID());
 
 				fachada.alterarCliente(f);
@@ -152,7 +152,7 @@ public class TelaAltFuncionarioController implements Initializable {
 		txtFieldTelefone.setText(TelaGenFuncionariosController.funcionarioAlterar.getTelefone());
 		txtFieldEmail.setText(TelaGenFuncionariosController.funcionarioAlterar.getEmail());
 		cmBoxUF.getSelectionModel().select(verificar(TelaGenFuncionariosController.funcionarioAlterar.getUf()).getSigla());
-		txtFieldCargo.setText(TelaGenFuncionariosController.funcionarioAlterar.getCargo());
+		cmBoxCargo.getSelectionModel().select(TelaGenFuncionariosController.funcionarioAlterar.getCargo());
 		txtFieldLogin.setText(TelaGenFuncionariosController.funcionarioAlterar.getLogin());
 		txtFieldSenha.setText(TelaGenFuncionariosController.funcionarioAlterar.getSenha());
 		txtFieldSalario.setText(String.valueOf(TelaGenFuncionariosController.funcionarioAlterar.getSalario()));		
@@ -160,6 +160,8 @@ public class TelaAltFuncionarioController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		lblLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
 		
 		List<String> uf = new ArrayList<>();
 		for (EnumUF ufCorrente : EnumUF.values()) {
@@ -169,6 +171,13 @@ public class TelaAltFuncionarioController implements Initializable {
 		cmBoxUF.getItems().addAll(uf);
 		atualizarValores();
 		
+		List<String> cargo = new ArrayList<>();
+		cargo.add("Dono");
+		cargo.add("Médico");
+		cargo.add("Balconista");
+		
+		cmBoxCargo.getItems().addAll(cargo);
+			
 	}
 
 }
