@@ -71,7 +71,7 @@ public class TelaCadastroServico2Controller implements Initializable {
 	@FXML
 	public void voltarAction() {
 		try {
-			funcoes.chamarTela("../TelaCadastroServico1.fxml", "Sistema PetShop - Cadastro de Serviço");
+			funcoes.chamarTela("../TelaGenServicos.fxml", "Sistema PetShop - Cadastro de Serviço");
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
