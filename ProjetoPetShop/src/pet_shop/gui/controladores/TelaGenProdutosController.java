@@ -122,11 +122,21 @@ public class TelaGenProdutosController implements Initializable{
 	
 	@FXML
 	public void voltarAction() {
-		try{
-			funcoes.chamarTela("../TelaMenu.fxml", "Sistema PetShop - Painel Inicial");
-		} catch (Exception exc) {
-			exc.printStackTrace();
+		
+		if(TelaLoginController.logado.getCargo().equals("Balconista")) {
+			try{
+				funcoes.chamarTela("../TelaMenuBalconista.fxml", "Sistema PetShop - Painel Inicial");
+			} catch (Exception exc) {
+				exc.printStackTrace();
+			}
+		} else {
+			try{
+				funcoes.chamarTela("../TelaMenu.fxml", "Sistema PetShop - Painel Inicial");
+			} catch (Exception exc) {
+				exc.printStackTrace();
+			}
 		}
+
 	}
 	
 	@FXML
@@ -155,7 +165,7 @@ public class TelaGenProdutosController implements Initializable{
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		lblLogin.setText("Bem vindo(a), Administrador");
+		lblLogin.setText("Bem vindo(a), " + TelaLoginController.logado.getNome() + "!");
 		try {
 			atualizarTabela(fachada.listarTudoProduto());
 		} catch (NadaEncontradoException e) {
