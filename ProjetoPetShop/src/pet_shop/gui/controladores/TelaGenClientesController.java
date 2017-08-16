@@ -159,12 +159,7 @@ public class TelaGenClientesController implements Initializable{
 				exc.printStackTrace();
 			}
 		}
-		
-//		try{
-//			funcoes.chamarTela("../TelaMenu.fxml", "Sistema PetShop - Painel Inicial");
-//		} catch (Exception exc) {
-//			exc.printStackTrace();
-//		}
+
 	}
 	
 	@FXML
